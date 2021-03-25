@@ -21,11 +21,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.davemeier82.homeautomation</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>homeautomation-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>core</artifactId>
+    <artifactId>homeautomation-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>

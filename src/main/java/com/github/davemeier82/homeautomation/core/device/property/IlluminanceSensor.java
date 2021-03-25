@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.mqtt;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-public interface MqttCamera extends MqttSubscriber {
+import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+
+import java.util.Optional;
+
+public interface IlluminanceSensor extends DeviceProperty {
+
+  /**
+   * @return Optional.empty() if illuminance is unknown
+   */
+  Optional<DataWithTimestamp<Integer>> getLux();
+
 }

@@ -16,7 +16,8 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.*;
+import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.*;
 import com.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
 import java.time.ZonedDateTime;
@@ -28,8 +29,6 @@ public interface EventFactory {
   MqttClientConnectedEvent createMqttClientConnectedEvent(MqttClient client);
 
   RelayStateChangedEvent createRelayStateChangedEvent(Relay relay, DataWithTimestamp<Boolean> isOn);
-
-  MultiRelayStateChangedEvent createMultiRelayStateChangedEvent(MultiRelay relay, int indexOfChangedRelay, DataWithTimestamp<Boolean> isOn);
 
   WindowOpenedEvent createWindowOpenedEvent(WindowSensor windowSensor, ZonedDateTime eventTime);
 

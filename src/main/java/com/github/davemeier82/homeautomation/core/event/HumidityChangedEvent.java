@@ -16,7 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.HumiditySensor;
+import com.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
 
 public interface HumidityChangedEvent {
   HumiditySensor getSensor();

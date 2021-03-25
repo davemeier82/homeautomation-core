@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+import com.github.davemeier82.homeautomation.core.device.Device;
 
-import java.util.Optional;
+public interface DeviceProperty {
 
-public interface Dimmer extends Relay {
+  long getId();
 
-  void setDimmingLevel(int percent);
-
-  /**
-   * @return Optional.empty() if state is unknown
-   */
-  Optional<DataWithTimestamp<Integer>> getDimmingLevelInPercent();
+  Device getDevice();
 }

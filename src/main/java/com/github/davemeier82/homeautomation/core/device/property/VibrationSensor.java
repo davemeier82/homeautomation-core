@@ -14,16 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-
-import java.util.Optional;
-
-public interface BatteryStateSensor {
-
-  /**
-   * @return Optional.empty() if illuminance is unknown
-   */
-  Optional<DataWithTimestamp<Integer>> batteryLevelInPercent();
+public interface VibrationSensor extends DeviceProperty {
 }

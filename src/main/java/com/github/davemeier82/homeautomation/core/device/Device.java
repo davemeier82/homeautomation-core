@@ -16,6 +16,10 @@
 
 package com.github.davemeier82.homeautomation.core.device;
 
+import com.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
+
+import java.util.List;
+
 public interface Device {
 
   String getType();
@@ -25,5 +29,7 @@ public interface Device {
   String getDisplayName();
 
   void setDisplayName(String displayName);
+
+  List<? extends DeviceProperty> getDeviceProperties();
 
 }

@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.event;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-import com.github.davemeier82.homeautomation.core.device.MultiRelay;
+import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
-public interface MultiRelayStateChangedEvent {
+import java.util.Optional;
 
-  MultiRelay getRelay();
-
-  int getIndexOfChangedRelay();
-
-  DataWithTimestamp<Boolean> isOn();
-
+public interface HumiditySensor extends DeviceProperty {
+  /**
+   * @return Optional.empty() if angle is unknown
+   */
+  Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent();
 }

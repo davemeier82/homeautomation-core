@@ -16,7 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.Relay;
+import com.github.davemeier82.homeautomation.core.device.property.Relay;
 
 public interface RelayStateChangedEvent {
 

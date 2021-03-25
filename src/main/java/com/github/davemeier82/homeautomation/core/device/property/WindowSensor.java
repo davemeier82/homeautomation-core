@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-public interface Camera extends Device {
+import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+
+import java.util.Optional;
+
+public interface WindowSensor extends DeviceProperty {
+  /**
+   * @return Optional.empty() if state is unknown
+   */
+  Optional<DataWithTimestamp<Boolean>> isOpen();
+
+  /**
+   * @return Optional.empty() if angle is unknown
+   */
+  Optional<DataWithTimestamp<Integer>> getTiltAngleInDegree();
+
+  boolean isTiltingSupported();
 }

@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.mqtt;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-import com.github.davemeier82.homeautomation.core.device.HumiditySensor;
+import java.time.ZonedDateTime;
+import java.util.Optional;
 
-public interface MqttHumiditySensor extends HumiditySensor, MqttSubscriber {
+public interface MotionSensor extends DeviceProperty {
+
+  /**
+   * @return Optional.empty() if angle is unknown
+   */
+  Optional<ZonedDateTime> getLastMotionDetected();
 
 }

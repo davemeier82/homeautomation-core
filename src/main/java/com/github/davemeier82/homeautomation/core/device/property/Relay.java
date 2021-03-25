@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device;
+package com.github.davemeier82.homeautomation.core.device.property;
 
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
-public interface IlluminanceSensor extends Device {
+public interface Relay extends DeviceProperty {
+
+  void turnOn();
+
+  void turnOff();
 
   /**
-   * @return Optional.empty() if illuminance is unknown
+   * @return Optional.empty() if state is unknown
    */
-  Optional<DataWithTimestamp<Integer>> getLux();
-
+  Optional<DataWithTimestamp<Boolean>> isOn();
 }

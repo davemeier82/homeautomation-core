@@ -16,7 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.BatteryStateSensor;
+import com.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
 
 public interface BatteryLevelChangedEvent {
   BatteryStateSensor getSensor();

@@ -16,7 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.Dimmer;
+import com.github.davemeier82.homeautomation.core.device.property.Dimmer;
 
 public interface DimmingLevelChangedEvent {
   Dimmer getDimmer();

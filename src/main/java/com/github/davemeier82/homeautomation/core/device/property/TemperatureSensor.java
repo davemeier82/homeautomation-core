@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.mqtt;
+package com.github.davemeier82.homeautomation.core.device.property;
 
-import com.github.davemeier82.homeautomation.core.device.Relay;
+import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
-public interface MqttRelay extends MqttSubscriber, Relay {
+import java.util.Optional;
 
+public interface TemperatureSensor extends DeviceProperty {
+  /**
+   * @return Optional.empty() if angle is unknown
+   */
+  Optional<DataWithTimestamp<Float>> getTemperatureInDegree();
 }

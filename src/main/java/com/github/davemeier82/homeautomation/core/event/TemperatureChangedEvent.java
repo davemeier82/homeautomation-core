@@ -16,7 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.TemperatureSensor;
+import com.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 
 public interface TemperatureChangedEvent {
   TemperatureSensor getSensor();
