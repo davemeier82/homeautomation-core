@@ -45,4 +45,8 @@ public interface EventFactory {
   DevicesLoadedEvent createDevicesLoadedEvent(Object source);
 
   NewDeviceCreatedEvent createNewDeviceCreatedEvent(Device device);
+
+  RollerStateChangedEvent createRollerStateChangedEvent(Roller roller, DataWithTimestamp<RollerState> state);
+
+  RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller, DataWithTimestamp<Integer> positionInPercent);
 }
