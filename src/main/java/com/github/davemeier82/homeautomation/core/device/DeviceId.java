@@ -24,7 +24,7 @@ public class DeviceId {
   private final String type;
 
   public DeviceId(String id, String type) {
-    this.id = id.toUpperCase();
+    this.id = id;
     this.type = type.toUpperCase();
   }
 
@@ -49,12 +49,12 @@ public class DeviceId {
       return false;
     }
     DeviceId deviceId = (DeviceId) o;
-    return Objects.equals(id, deviceId.id) && Objects.equals(type, deviceId.type);
+    return Objects.equals(id.toUpperCase(), deviceId.id.toUpperCase()) && Objects.equals(type, deviceId.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type);
+    return Objects.hash(id.toUpperCase(), type);
   }
 
   @Override
