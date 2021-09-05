@@ -18,11 +18,9 @@ package com.github.davemeier82.homeautomation.core.event;
 
 import com.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 
-import java.time.ZonedDateTime;
-
-public interface WindowClosedEvent {
+public interface WindowStateChangedEvent {
 
   WindowSensor getWindow();
 
-  ZonedDateTime getEventTime();
+  DataWithTimestamp<Boolean> isOpen();
 }

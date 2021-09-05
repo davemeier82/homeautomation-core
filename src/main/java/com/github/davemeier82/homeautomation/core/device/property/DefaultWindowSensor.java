@@ -21,7 +21,6 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
 
-import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -59,11 +58,7 @@ public class DefaultWindowSensor implements WindowSensor {
     DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(open);
     DataWithTimestamp<Boolean> previousValue = isOpen.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(open)) {
-      if (open) {
-        eventPublisher.publishEvent(eventFactory.createWindowOpenedEvent(this, ZonedDateTime.now()));
-      } else {
-        eventPublisher.publishEvent(eventFactory.createWindowClosedEvent(this, ZonedDateTime.now()));
-      }
+      eventPublisher.publishEvent(eventFactory.createWindowStateChangedEvent(this, newValue));
     }
   }
 

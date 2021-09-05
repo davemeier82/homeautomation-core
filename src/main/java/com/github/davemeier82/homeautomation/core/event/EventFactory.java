@@ -30,9 +30,7 @@ public interface EventFactory {
 
   RelayStateChangedEvent createRelayStateChangedEvent(Relay relay, DataWithTimestamp<Boolean> isOn);
 
-  WindowOpenedEvent createWindowOpenedEvent(WindowSensor windowSensor, ZonedDateTime eventTime);
-
-  WindowClosedEvent createWindowClosedEvent(WindowSensor windowSensor, ZonedDateTime eventTime);
+  WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor, DataWithTimestamp<Boolean> isOpen);
 
   TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor, DataWithTimestamp<Float> temperatureInDegree);
 
