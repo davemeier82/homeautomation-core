@@ -17,8 +17,10 @@
 package com.github.davemeier82.homeautomation.core;
 
 import com.github.davemeier82.homeautomation.core.device.DeviceId;
+import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.time.Instant;
+import java.util.Optional;
 
 public interface DeviceStateRepository {
 
@@ -27,5 +29,7 @@ public interface DeviceStateRepository {
   void insert(DeviceId deviceId, String category, int value, Instant time);
 
   void insert(DeviceId deviceId, String category, boolean value, Instant time);
+
+  <T> Optional<DataWithTimestamp<T>> findLatestValue(DeviceId deviceId, String category);
 
 }
