@@ -16,6 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.device;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface DeviceFactory {
@@ -24,5 +25,5 @@ public interface DeviceFactory {
 
   Set<String> getSupportedDeviceTypes();
 
-  Device createDevice(String type, String id, String displayName);
+  Device createDevice(String type, String id, String displayName, Map<String, String> parameters);
 }

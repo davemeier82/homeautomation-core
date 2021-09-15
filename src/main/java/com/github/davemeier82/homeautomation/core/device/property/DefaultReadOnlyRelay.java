@@ -24,17 +24,17 @@ import com.github.davemeier82.homeautomation.core.event.EventPublisher;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultPowerSensor implements PowerSensor {
+public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Double>> watt = new AtomicReference<>();
+  protected final AtomicReference<DataWithTimestamp<Boolean>> isOn = new AtomicReference<>();
 
-  public DefaultPowerSensor(long id,
-                            Device device,
-                            EventPublisher eventPublisher,
-                            EventFactory eventFactory
+  public DefaultReadOnlyRelay(long id,
+                              Device device,
+                              EventPublisher eventPublisher,
+                              EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,20 +42,17 @@ public class DefaultPowerSensor implements PowerSensor {
     this.eventFactory = eventFactory;
   }
 
-  public void setWatt(double watt) {
-    setWatt(new DataWithTimestamp<>(watt));
-  }
-
-  public void setWatt(DataWithTimestamp<Double> newValue) {
-    DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
-      eventPublisher.publishEvent(eventFactory.createPowerChangedEvent(this, newValue));
+  public void setRelayStateTo(boolean on) {
+    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
+    DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(on)) {
+      eventPublisher.publishEvent(eventFactory.createRelayStateChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Double>> getWatt() {
-    return Optional.ofNullable(watt.get());
+  public Optional<DataWithTimestamp<Boolean>> isOn() {
+    return Optional.ofNullable(isOn.get());
   }
 
   @Override
@@ -66,5 +63,13 @@ public class DefaultPowerSensor implements PowerSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  EventPublisher getEventPublisher() {
+    return eventPublisher;
+  }
+
+  EventFactory getEventFactory() {
+    return eventFactory;
   }
 }

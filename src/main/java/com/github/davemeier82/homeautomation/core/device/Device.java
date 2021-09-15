@@ -19,6 +19,7 @@ package com.github.davemeier82.homeautomation.core.device;
 import com.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Device {
 
@@ -31,5 +32,9 @@ public interface Device {
   void setDisplayName(String displayName);
 
   List<? extends DeviceProperty> getDeviceProperties();
+
+  default Map<String, String> getParameters() {
+    return Map.of();
+  }
 
 }

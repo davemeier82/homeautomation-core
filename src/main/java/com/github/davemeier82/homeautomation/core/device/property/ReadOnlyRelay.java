@@ -16,10 +16,14 @@
 
 package com.github.davemeier82.homeautomation.core.device.property;
 
-public interface Relay extends ReadOnlyRelay {
+import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
-  void turnOn();
+import java.util.Optional;
 
-  void turnOff();
+public interface ReadOnlyRelay extends DeviceProperty {
 
+  /**
+   * @return Optional.empty() if state is unknown
+   */
+  Optional<DataWithTimestamp<Boolean>> isOn();
 }

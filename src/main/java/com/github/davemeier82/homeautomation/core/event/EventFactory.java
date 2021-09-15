@@ -28,7 +28,7 @@ public interface EventFactory {
 
   MqttClientConnectedEvent createMqttClientConnectedEvent(MqttClient client);
 
-  RelayStateChangedEvent createRelayStateChangedEvent(Relay relay, DataWithTimestamp<Boolean> isOn);
+  RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn);
 
   WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor, DataWithTimestamp<Boolean> isOpen);
 

@@ -17,60 +17,17 @@
 package com.github.davemeier82.homeautomation.core.device.property;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
-import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
 
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
+public abstract class AbstractRelay extends DefaultReadOnlyRelay implements Relay {
 
-public abstract class AbstractRelay implements Relay {
-  private final long id;
-  private final Device device;
-  private final EventPublisher eventPublisher;
-  private final EventFactory eventFactory;
-  protected final AtomicReference<DataWithTimestamp<Boolean>> isOn = new AtomicReference<>();
-
-  protected AbstractRelay(long id,
-                          Device device,
-                          EventPublisher eventPublisher,
-                          EventFactory eventFactory
+  public AbstractRelay(long id,
+                       Device device,
+                       EventPublisher eventPublisher,
+                       EventFactory eventFactory
   ) {
-    this.id = id;
-    this.device = device;
-    this.eventPublisher = eventPublisher;
-    this.eventFactory = eventFactory;
-  }
-
-  public void setRelayStateTo(boolean on) {
-    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
-    DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(on)) {
-      eventPublisher.publishEvent(eventFactory.createRelayStateChangedEvent(this, newValue));
-    }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Boolean>> isOn() {
-    return Optional.ofNullable(isOn.get());
-  }
-
-  @Override
-  public long getId() {
-    return id;
-  }
-
-  @Override
-  public Device getDevice() {
-    return device;
-  }
-
-  EventPublisher getEventPublisher() {
-    return eventPublisher;
-  }
-
-  EventFactory getEventFactory() {
-    return eventFactory;
+    super(id, device, eventPublisher, eventFactory);
   }
 
 }
