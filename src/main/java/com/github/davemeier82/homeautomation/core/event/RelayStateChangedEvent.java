@@ -16,11 +16,11 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.property.Relay;
+import com.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
 
 public interface RelayStateChangedEvent {
 
-  Relay getRelay();
+  ReadOnlyRelay getRelay();
 
   DataWithTimestamp<Boolean> isOn();
 }
