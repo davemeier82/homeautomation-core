@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.event;
+package com.github.davemeier82.homeautomation.core.event.defaults;
 
-import com.github.davemeier82.homeautomation.core.device.property.Roller;
+import com.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
+import com.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
-public interface RollerPositionChangedEvent extends DevicePropertyEvent {
+public class DefaultMqttClientConnectedEvent implements MqttClientConnectedEvent {
+
+  private final MqttClient mqttClient;
+
+  public DefaultMqttClientConnectedEvent(MqttClient mqttClient) {
+    this.mqttClient = mqttClient;
+  }
+
   @Override
-  Roller getDeviceProperty();
-
-  DataWithTimestamp<Integer> getPositionInPercent();
+  public MqttClient getClient() {
+    return mqttClient;
+  }
 }

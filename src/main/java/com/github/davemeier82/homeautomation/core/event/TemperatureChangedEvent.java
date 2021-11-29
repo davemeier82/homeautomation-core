@@ -18,8 +18,9 @@ package com.github.davemeier82.homeautomation.core.event;
 
 import com.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 
-public interface TemperatureChangedEvent {
-  TemperatureSensor getSensor();
+public interface TemperatureChangedEvent extends DevicePropertyEvent {
+  @Override
+  TemperatureSensor getDeviceProperty();
 
   DataWithTimestamp<Float> getTemperatureInDegree();
 }

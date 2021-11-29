@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultPowerSensor implements PowerSensor {
+public class DefaultTemperatureSensor implements TemperatureSensor {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Double>> watt = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Float>> temperature = new AtomicReference<>();
 
-  public DefaultPowerSensor(long id,
-                            Device device,
-                            EventPublisher eventPublisher,
-                            EventFactory eventFactory
+  public DefaultTemperatureSensor(long id,
+                                  Device device,
+                                  EventPublisher eventPublisher,
+                                  EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,20 +43,17 @@ public class DefaultPowerSensor implements PowerSensor {
     this.eventFactory = eventFactory;
   }
 
-  public void setWatt(double watt) {
-    setWatt(new DataWithTimestamp<>(watt));
-  }
-
-  public void setWatt(DataWithTimestamp<Double> newValue) {
-    DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
-      eventPublisher.publishEvent(eventFactory.createPowerChangedEvent(this, newValue));
+  public void setTemperatureInDegree(float temperature) {
+    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(temperature);
+    DataWithTimestamp<Float> previousValue = this.temperature.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(temperature)) {
+      eventPublisher.publishEvent(eventFactory.createTemperatureChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Double>> getWatt() {
-    return Optional.ofNullable(watt.get());
+  public Optional<DataWithTimestamp<Float>> getTemperatureInDegree() {
+    return Optional.ofNullable(temperature.get());
   }
 
   @Override

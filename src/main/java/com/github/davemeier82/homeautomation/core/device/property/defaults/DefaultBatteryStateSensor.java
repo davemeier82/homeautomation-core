@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultIlluminanceSensor implements IlluminanceSensor {
+public class DefaultBatteryStateSensor implements BatteryStateSensor {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Integer>> batteryLevel = new AtomicReference<>();
 
-  public DefaultIlluminanceSensor(long id,
-                                  Device device,
-                                  EventPublisher eventPublisher,
-                                  EventFactory eventFactory
+  public DefaultBatteryStateSensor(long id,
+                                   Device device,
+                                   EventPublisher eventPublisher,
+                                   EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,17 +43,17 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
     this.eventFactory = eventFactory;
   }
 
-  public void setIlluminanceInLux(int lux) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
-    DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(lux)) {
-      eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue));
+  public void setBatteryLevel(int batteryLevel) {
+    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(batteryLevel);
+    DataWithTimestamp<Integer> previousValue = this.batteryLevel.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(batteryLevel)) {
+      eventPublisher.publishEvent(eventFactory.createBatteryLevelChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Integer>> getLux() {
-    return Optional.ofNullable(lux.get());
+  public Optional<DataWithTimestamp<Integer>> batteryLevelInPercent() {
+    return Optional.ofNullable(batteryLevel.get());
   }
 
   @Override
@@ -64,5 +65,4 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   public Device getDevice() {
     return device;
   }
-
 }

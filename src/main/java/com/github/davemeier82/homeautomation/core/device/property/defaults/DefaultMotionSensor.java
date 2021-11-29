@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
+import com.github.davemeier82.homeautomation.core.device.property.MotionSensor;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;

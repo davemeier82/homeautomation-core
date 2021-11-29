@@ -18,9 +18,10 @@ package com.github.davemeier82.homeautomation.core.event;
 
 import com.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 
-public interface WindowStateChangedEvent {
+public interface WindowStateChangedEvent extends DevicePropertyEvent {
 
-  WindowSensor getWindow();
+  @Override
+  WindowSensor getDeviceProperty();
 
   DataWithTimestamp<Boolean> isOpen();
 }

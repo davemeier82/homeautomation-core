@@ -18,8 +18,9 @@ package com.github.davemeier82.homeautomation.core.event;
 
 import com.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
 
-public interface IlluminanceChangedEvent {
-  IlluminanceSensor getSensor();
+public interface IlluminanceChangedEvent extends DevicePropertyEvent {
+  @Override
+  IlluminanceSensor getDeviceProperty();
 
   DataWithTimestamp<Integer> getLux();
 }

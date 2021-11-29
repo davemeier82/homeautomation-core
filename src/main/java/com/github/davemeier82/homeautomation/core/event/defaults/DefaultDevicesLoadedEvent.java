@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.event;
+package com.github.davemeier82.homeautomation.core.event.defaults;
 
-import com.github.davemeier82.homeautomation.core.device.property.Roller;
+import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.event.DevicesLoadedEvent;
 
-public interface RollerPositionChangedEvent extends DevicePropertyEvent {
-  @Override
-  Roller getDeviceProperty();
+import java.util.List;
 
-  DataWithTimestamp<Integer> getPositionInPercent();
+public class DefaultDevicesLoadedEvent implements DevicesLoadedEvent {
+
+  private final List<Device> devices;
+
+  public DefaultDevicesLoadedEvent(List<Device> devices) {
+    this.devices = devices;
+  }
+
+  public List<Device> getDevices() {
+    return devices;
+  }
 }

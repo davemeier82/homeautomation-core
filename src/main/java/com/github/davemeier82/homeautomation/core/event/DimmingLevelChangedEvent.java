@@ -18,8 +18,9 @@ package com.github.davemeier82.homeautomation.core.event;
 
 import com.github.davemeier82.homeautomation.core.device.property.Dimmer;
 
-public interface DimmingLevelChangedEvent {
-  Dimmer getDimmer();
+public interface DimmingLevelChangedEvent extends DevicePropertyEvent {
+  @Override
+  Dimmer getDeviceProperty();
 
   DataWithTimestamp<Integer> getDimmingLevelInPercent();
 }

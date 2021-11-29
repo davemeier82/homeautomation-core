@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.event;
+package com.github.davemeier82.homeautomation.core.event.factory;
 
-import com.github.davemeier82.homeautomation.core.device.property.Roller;
+import com.github.davemeier82.homeautomation.core.event.WindowStateChangedEvent;
+import org.junit.jupiter.api.Test;
 
-public interface RollerPositionChangedEvent extends DevicePropertyEvent {
-  @Override
-  Roller getDeviceProperty();
+import java.util.Optional;
 
-  DataWithTimestamp<Integer> getPositionInPercent();
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DefaultEventFactoryTest {
+
+  private final EventFactory eventFactory = new DefaultEventFactory();
+
+  @Test
+  void fromEventName() {
+    assertThat(eventFactory.fromEventName("WindowStateChangedEvent")).isEqualTo(Optional.of(WindowStateChangedEvent.class));
+  }
 }

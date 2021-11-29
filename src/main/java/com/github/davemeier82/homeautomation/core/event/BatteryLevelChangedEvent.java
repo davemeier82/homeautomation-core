@@ -18,8 +18,9 @@ package com.github.davemeier82.homeautomation.core.event;
 
 import com.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
 
-public interface BatteryLevelChangedEvent {
-  BatteryStateSensor getSensor();
+public interface BatteryLevelChangedEvent extends DevicePropertyEvent {
+  @Override
+  BatteryStateSensor getDeviceProperty();
 
   DataWithTimestamp<Integer> getBatteryLevelInPercent();
 }

@@ -20,9 +20,10 @@ import com.github.davemeier82.homeautomation.core.device.property.MotionSensor;
 
 import java.time.ZonedDateTime;
 
-public interface MotionDetectedEvent {
+public interface MotionDetectedEvent extends DevicePropertyEvent {
 
-  MotionSensor getSensor();
+  @Override
+  MotionSensor getDeviceProperty();
 
   ZonedDateTime getEventTime();
 }

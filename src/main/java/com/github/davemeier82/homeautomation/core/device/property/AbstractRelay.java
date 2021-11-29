@@ -17,8 +17,9 @@
 package com.github.davemeier82.homeautomation.core.device.property;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
+import com.github.davemeier82.homeautomation.core.device.property.defaults.DefaultReadOnlyRelay;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 public abstract class AbstractRelay extends DefaultReadOnlyRelay implements Relay {
 

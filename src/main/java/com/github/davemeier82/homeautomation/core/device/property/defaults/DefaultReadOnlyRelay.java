@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultTemperatureSensor implements TemperatureSensor {
+public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> temperature = new AtomicReference<>();
+  protected final AtomicReference<DataWithTimestamp<Boolean>> isOn = new AtomicReference<>();
 
-  public DefaultTemperatureSensor(long id,
-                                  Device device,
-                                  EventPublisher eventPublisher,
-                                  EventFactory eventFactory
+  public DefaultReadOnlyRelay(long id,
+                              Device device,
+                              EventPublisher eventPublisher,
+                              EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,17 +43,17 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
     this.eventFactory = eventFactory;
   }
 
-  public void setTemperatureInDegree(float temperature) {
-    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(temperature);
-    DataWithTimestamp<Float> previousValue = this.temperature.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(temperature)) {
-      eventPublisher.publishEvent(eventFactory.createTemperatureChangedEvent(this, newValue));
+  public void setRelayStateTo(boolean on) {
+    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
+    DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(on)) {
+      eventPublisher.publishEvent(eventFactory.createRelayStateChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Float>> getTemperatureInDegree() {
-    return Optional.ofNullable(temperature.get());
+  public Optional<DataWithTimestamp<Boolean>> isOn() {
+    return Optional.ofNullable(isOn.get());
   }
 
   @Override
@@ -63,5 +64,13 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  public EventPublisher getEventPublisher() {
+    return eventPublisher;
+  }
+
+  public EventFactory getEventFactory() {
+    return eventFactory;
   }
 }

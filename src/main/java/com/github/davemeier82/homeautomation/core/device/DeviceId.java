@@ -16,12 +16,7 @@
 
 package com.github.davemeier82.homeautomation.core.device;
 
-import java.util.Objects;
-
-public class DeviceId {
-
-  private final String id;
-  private final String type;
+public record DeviceId(String id, String type) {
 
   public DeviceId(String id, String type) {
     this.id = id;
@@ -30,31 +25,6 @@ public class DeviceId {
 
   public static DeviceId deviceIdFromDevice(Device device) {
     return new DeviceId(device.getId(), device.getType());
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    DeviceId deviceId = (DeviceId) o;
-    return Objects.equals(id.toUpperCase(), deviceId.id.toUpperCase()) && Objects.equals(type, deviceId.type);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id.toUpperCase(), type);
   }
 
   @Override

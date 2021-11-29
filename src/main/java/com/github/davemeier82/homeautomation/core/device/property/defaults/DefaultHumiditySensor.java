@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultBatteryStateSensor implements BatteryStateSensor {
+public class DefaultHumiditySensor implements HumiditySensor {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> batteryLevel = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Float>> humidity = new AtomicReference<>();
 
-  public DefaultBatteryStateSensor(long id,
-                                   Device device,
-                                   EventPublisher eventPublisher,
-                                   EventFactory eventFactory
+  public DefaultHumiditySensor(long id,
+                               Device device,
+                               EventPublisher eventPublisher,
+                               EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,17 +43,17 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
     this.eventFactory = eventFactory;
   }
 
-  public void setBatteryLevel(int batteryLevel) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(batteryLevel);
-    DataWithTimestamp<Integer> previousValue = this.batteryLevel.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(batteryLevel)) {
-      eventPublisher.publishEvent(eventFactory.createBatteryLevelChangedEvent(this, newValue));
+  public void setRelativeHumidityInPercent(float humidity) {
+    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
+    DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(humidity)) {
+      eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Integer>> batteryLevelInPercent() {
-    return Optional.ofNullable(batteryLevel.get());
+  public Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent() {
+    return Optional.ofNullable(humidity.get());
   }
 
   @Override
@@ -64,4 +65,5 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   public Device getDevice() {
     return device;
   }
+
 }

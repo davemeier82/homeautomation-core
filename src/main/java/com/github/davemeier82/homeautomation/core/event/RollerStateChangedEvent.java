@@ -19,9 +19,10 @@ package com.github.davemeier82.homeautomation.core.event;
 import com.github.davemeier82.homeautomation.core.device.property.Roller;
 import com.github.davemeier82.homeautomation.core.device.property.RollerState;
 
-public interface RollerStateChangedEvent {
+public interface RollerStateChangedEvent extends DevicePropertyEvent {
 
-  Roller getRoller();
+  @Override
+  Roller getDeviceProperty();
 
   DataWithTimestamp<RollerState> getState();
 }

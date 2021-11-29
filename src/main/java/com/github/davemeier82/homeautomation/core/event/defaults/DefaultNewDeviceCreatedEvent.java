@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.event;
+package com.github.davemeier82.homeautomation.core.event.defaults;
 
-import com.github.davemeier82.homeautomation.core.device.property.Roller;
+import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.event.NewDeviceCreatedEvent;
 
-public interface RollerPositionChangedEvent extends DevicePropertyEvent {
+public class DefaultNewDeviceCreatedEvent implements NewDeviceCreatedEvent {
+
+  private final Device device;
+
+  public DefaultNewDeviceCreatedEvent(Device device) {
+    this.device = device;
+  }
+
   @Override
-  Roller getDeviceProperty();
-
-  DataWithTimestamp<Integer> getPositionInPercent();
+  public Device getDevice() {
+    return device;
+  }
 }

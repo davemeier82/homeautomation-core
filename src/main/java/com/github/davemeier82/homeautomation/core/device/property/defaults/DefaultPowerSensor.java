@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.PowerSensor;
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultReadOnlyRelay implements ReadOnlyRelay {
+public class DefaultPowerSensor implements PowerSensor {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  protected final AtomicReference<DataWithTimestamp<Boolean>> isOn = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Double>> watt = new AtomicReference<>();
 
-  public DefaultReadOnlyRelay(long id,
-                              Device device,
-                              EventPublisher eventPublisher,
-                              EventFactory eventFactory
+  public DefaultPowerSensor(long id,
+                            Device device,
+                            EventPublisher eventPublisher,
+                            EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,17 +43,20 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
     this.eventFactory = eventFactory;
   }
 
-  public void setRelayStateTo(boolean on) {
-    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
-    DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(on)) {
-      eventPublisher.publishEvent(eventFactory.createRelayStateChangedEvent(this, newValue));
+  public void setWatt(double watt) {
+    setWatt(new DataWithTimestamp<>(watt));
+  }
+
+  public void setWatt(DataWithTimestamp<Double> newValue) {
+    DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
+      eventPublisher.publishEvent(eventFactory.createPowerChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Boolean>> isOn() {
-    return Optional.ofNullable(isOn.get());
+  public Optional<DataWithTimestamp<Double>> getWatt() {
+    return Optional.ofNullable(watt.get());
   }
 
   @Override
@@ -63,13 +67,5 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   @Override
   public Device getDevice() {
     return device;
-  }
-
-  EventPublisher getEventPublisher() {
-    return eventPublisher;
-  }
-
-  EventFactory getEventFactory() {
-    return eventFactory;
   }
 }

@@ -16,11 +16,21 @@
 
 package com.github.davemeier82.homeautomation.core.event;
 
-import com.github.davemeier82.homeautomation.core.device.property.Roller;
+import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
 
-public interface RollerPositionChangedEvent extends DevicePropertyEvent {
-  @Override
-  Roller getDeviceProperty();
+public abstract class DevicePropertyEventBase<T extends DeviceProperty> {
+  private final T deviceProperty;
 
-  DataWithTimestamp<Integer> getPositionInPercent();
+  public DevicePropertyEventBase(T sensor) {
+    deviceProperty = sensor;
+  }
+
+  public Device getDevice() {
+    return getDeviceProperty().getDevice();
+  }
+
+  public T getDeviceProperty() {
+    return deviceProperty;
+  }
 }

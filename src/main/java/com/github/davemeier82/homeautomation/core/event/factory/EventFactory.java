@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.event;
+package com.github.davemeier82.homeautomation.core.event.factory;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
 import com.github.davemeier82.homeautomation.core.device.property.*;
+import com.github.davemeier82.homeautomation.core.event.*;
 import com.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 
 public interface EventFactory {
+
+  Optional<Class<?>> fromEventName(String eventName);
 
   MotionDetectedEvent createMotionDetectedEvent(MotionSensor sensor, ZonedDateTime eventTime);
 
@@ -40,7 +45,7 @@ public interface EventFactory {
 
   DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer, DataWithTimestamp<Integer> brightnessInPercent);
 
-  DevicesLoadedEvent createDevicesLoadedEvent(Object source);
+  DevicesLoadedEvent createDevicesLoadedEvent(List<Device> devices);
 
   NewDeviceCreatedEvent createNewDeviceCreatedEvent(Device device);
 

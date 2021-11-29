@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.davemeier82.homeautomation.core.device.property;
+package com.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
+import com.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
 import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import com.github.davemeier82.homeautomation.core.event.EventFactory;
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
+import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class DefaultHumiditySensor implements HumiditySensor {
+public class DefaultIlluminanceSensor implements IlluminanceSensor {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> humidity = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
 
-  public DefaultHumiditySensor(long id,
-                               Device device,
-                               EventPublisher eventPublisher,
-                               EventFactory eventFactory
+  public DefaultIlluminanceSensor(long id,
+                                  Device device,
+                                  EventPublisher eventPublisher,
+                                  EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -42,17 +43,17 @@ public class DefaultHumiditySensor implements HumiditySensor {
     this.eventFactory = eventFactory;
   }
 
-  public void setRelativeHumidityInPercent(float humidity) {
-    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
-    DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(humidity)) {
-      eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue));
+  public void setIlluminanceInLux(int lux) {
+    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
+    DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(lux)) {
+      eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent() {
-    return Optional.ofNullable(humidity.get());
+  public Optional<DataWithTimestamp<Integer>> getLux() {
+    return Optional.ofNullable(lux.get());
   }
 
   @Override
