@@ -59,7 +59,7 @@ public class DefaultWindowSensor implements WindowSensor {
     DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(open);
     DataWithTimestamp<Boolean> previousValue = isOpen.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(open)) {
-      eventPublisher.publishEvent(eventFactory.createWindowStateChangedEvent(this, newValue));
+      eventPublisher.publishEvent(eventFactory.createWindowStateChangedEvent(this, newValue, previousValue));
     }
   }
 

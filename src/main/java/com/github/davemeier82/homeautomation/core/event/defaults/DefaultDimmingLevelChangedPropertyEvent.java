@@ -24,15 +24,25 @@ import com.github.davemeier82.homeautomation.core.event.DimmingLevelChangedEvent
 public class DefaultDimmingLevelChangedPropertyEvent extends DevicePropertyEventBase<Dimmer> implements DimmingLevelChangedEvent {
 
   private final DataWithTimestamp<Integer> dimmingLevelInPercent;
+  private final DataWithTimestamp<Integer> previousValue;
 
-  public DefaultDimmingLevelChangedPropertyEvent(Dimmer source, DataWithTimestamp<Integer> dimmingLevelInPercent) {
+  public DefaultDimmingLevelChangedPropertyEvent(Dimmer source,
+                                                 DataWithTimestamp<Integer> dimmingLevelInPercent,
+                                                 DataWithTimestamp<Integer> previousValue
+  ) {
     super(source);
     this.dimmingLevelInPercent = dimmingLevelInPercent;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Integer> getDimmingLevelInPercent() {
     return dimmingLevelInPercent;
+  }
+
+  @Override
+  public DataWithTimestamp<Integer> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -43,5 +53,10 @@ public class DefaultDimmingLevelChangedPropertyEvent extends DevicePropertyEvent
   @Override
   public Object[] getMessageArgs() {
     return new Integer[]{dimmingLevelInPercent.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

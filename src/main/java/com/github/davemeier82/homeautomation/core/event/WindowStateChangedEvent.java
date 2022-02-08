@@ -24,4 +24,6 @@ public interface WindowStateChangedEvent extends DevicePropertyEvent {
   WindowSensor getDeviceProperty();
 
   DataWithTimestamp<Boolean> isOpen();
+
+  DataWithTimestamp<Boolean> getPreviousValue();
 }

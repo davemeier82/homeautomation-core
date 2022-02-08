@@ -23,4 +23,6 @@ public interface HumidityChangedEvent extends DevicePropertyEvent {
   HumiditySensor getDeviceProperty();
 
   DataWithTimestamp<Float> getRelativeHumidityInPercent();
+
+  DataWithTimestamp<Float> getPreviousValue();
 }

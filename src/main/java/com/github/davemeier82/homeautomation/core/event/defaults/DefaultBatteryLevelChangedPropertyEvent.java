@@ -23,15 +23,25 @@ import com.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 
 public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEventBase<BatteryStateSensor> implements BatteryLevelChangedEvent {
   private final DataWithTimestamp<Integer> batteryLevelInPercent;
+  private final DataWithTimestamp<Integer> previousValue;
 
-  public DefaultBatteryLevelChangedPropertyEvent(BatteryStateSensor source, DataWithTimestamp<Integer> batteryLevelInPercent) {
+  public DefaultBatteryLevelChangedPropertyEvent(BatteryStateSensor source,
+                                                 DataWithTimestamp<Integer> batteryLevelInPercent,
+                                                 DataWithTimestamp<Integer> previousValue
+  ) {
     super(source);
     this.batteryLevelInPercent = batteryLevelInPercent;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Integer> getBatteryLevelInPercent() {
     return batteryLevelInPercent;
+  }
+
+  @Override
+  public DataWithTimestamp<Integer> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -42,5 +52,10 @@ public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEvent
   @Override
   public Object[] getMessageArgs() {
     return new Integer[]{batteryLevelInPercent.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

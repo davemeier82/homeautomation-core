@@ -25,4 +25,6 @@ public interface RollerStateChangedEvent extends DevicePropertyEvent {
   Roller getDeviceProperty();
 
   DataWithTimestamp<RollerState> getState();
+
+  DataWithTimestamp<RollerState> getPreviousState();
 }

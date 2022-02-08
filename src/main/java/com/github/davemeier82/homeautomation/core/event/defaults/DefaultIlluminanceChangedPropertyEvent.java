@@ -23,10 +23,15 @@ import com.github.davemeier82.homeautomation.core.event.IlluminanceChangedEvent;
 
 public class DefaultIlluminanceChangedPropertyEvent extends DevicePropertyEventBase<IlluminanceSensor> implements IlluminanceChangedEvent {
   private final DataWithTimestamp<Integer> lux;
+  private final DataWithTimestamp<Integer> previousValue;
 
-  public DefaultIlluminanceChangedPropertyEvent(IlluminanceSensor source, DataWithTimestamp<Integer> lux) {
+  public DefaultIlluminanceChangedPropertyEvent(IlluminanceSensor source,
+                                                DataWithTimestamp<Integer> lux,
+                                                DataWithTimestamp<Integer> previousValue
+  ) {
     super(source);
     this.lux = lux;
+    this.previousValue = previousValue;
   }
 
   @Override
@@ -34,6 +39,10 @@ public class DefaultIlluminanceChangedPropertyEvent extends DevicePropertyEventB
     return lux;
   }
 
+  @Override
+  public DataWithTimestamp<Integer> getPreviousValue() {
+    return previousValue;
+  }
 
   @Override
   public String getMessageKey() {
@@ -43,5 +52,10 @@ public class DefaultIlluminanceChangedPropertyEvent extends DevicePropertyEventB
   @Override
   public Object[] getMessageArgs() {
     return new Integer[]{lux.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

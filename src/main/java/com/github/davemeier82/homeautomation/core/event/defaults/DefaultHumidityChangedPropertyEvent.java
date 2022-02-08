@@ -24,15 +24,25 @@ import com.github.davemeier82.homeautomation.core.event.HumidityChangedEvent;
 public class DefaultHumidityChangedPropertyEvent extends DevicePropertyEventBase<HumiditySensor> implements HumidityChangedEvent {
 
   private final DataWithTimestamp<Float> relativeHumidityInPercent;
+  private final DataWithTimestamp<Float> previousValue;
 
-  public DefaultHumidityChangedPropertyEvent(HumiditySensor source, DataWithTimestamp<Float> relativeHumidityInPercent) {
+  public DefaultHumidityChangedPropertyEvent(HumiditySensor source,
+                                             DataWithTimestamp<Float> relativeHumidityInPercent,
+                                             DataWithTimestamp<Float> previousValue
+  ) {
     super(source);
     this.relativeHumidityInPercent = relativeHumidityInPercent;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Float> getRelativeHumidityInPercent() {
     return relativeHumidityInPercent;
+  }
+
+  @Override
+  public DataWithTimestamp<Float> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -43,5 +53,10 @@ public class DefaultHumidityChangedPropertyEvent extends DevicePropertyEventBase
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{relativeHumidityInPercent.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

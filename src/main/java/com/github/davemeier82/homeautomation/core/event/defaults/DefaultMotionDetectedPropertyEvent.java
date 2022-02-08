@@ -45,4 +45,9 @@ public class DefaultMotionDetectedPropertyEvent extends DevicePropertyEventBase<
   public Object[] getMessageArgs() {
     return new String[]{getDevice().getDisplayName()};
   }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return false;
+  }
 }

@@ -24,15 +24,25 @@ import com.github.davemeier82.homeautomation.core.event.PowerChangedEvent;
 public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<PowerSensor> implements PowerChangedEvent {
 
   private final DataWithTimestamp<Double> watt;
+  private final DataWithTimestamp<Double> previousValue;
 
-  public DefaultPowerChangedPropertyEvent(PowerSensor source, DataWithTimestamp<Double> watt) {
+  public DefaultPowerChangedPropertyEvent(PowerSensor source,
+                                          DataWithTimestamp<Double> watt,
+                                          DataWithTimestamp<Double> previousValue
+  ) {
     super(source);
     this.watt = watt;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Double> getWatt() {
     return watt;
+  }
+
+  @Override
+  public DataWithTimestamp<Double> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -43,5 +53,10 @@ public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<Po
   @Override
   public Object[] getMessageArgs() {
     return new Double[]{watt.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

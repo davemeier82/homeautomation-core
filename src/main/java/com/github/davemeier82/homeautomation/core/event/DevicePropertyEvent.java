@@ -25,4 +25,6 @@ public interface DevicePropertyEvent {
   String getMessageKey();
 
   Object[] getMessageArgs();
+
+  boolean wasPreviousValueNull();
 }

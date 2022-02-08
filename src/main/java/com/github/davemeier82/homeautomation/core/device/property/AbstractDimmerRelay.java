@@ -49,7 +49,7 @@ public abstract class AbstractDimmerRelay implements Dimmer {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(levelInPercent);
     DataWithTimestamp<Integer> previousValue = brightness.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(levelInPercent)) {
-      relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelChangedEvent(this, newValue));
+      relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelChangedEvent(this, newValue, previousValue));
     }
   }
 

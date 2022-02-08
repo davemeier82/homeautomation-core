@@ -24,15 +24,25 @@ import com.github.davemeier82.homeautomation.core.event.TemperatureChangedEvent;
 public class DefaultTemperatureChangedPropertyEvent extends DevicePropertyEventBase<TemperatureSensor> implements TemperatureChangedEvent {
 
   private final DataWithTimestamp<Float> temperatureInDegree;
+  private final DataWithTimestamp<Float> previousValue;
 
-  public DefaultTemperatureChangedPropertyEvent(TemperatureSensor source, DataWithTimestamp<Float> temperatureInDegree) {
+  public DefaultTemperatureChangedPropertyEvent(TemperatureSensor source,
+                                                DataWithTimestamp<Float> temperatureInDegree,
+                                                DataWithTimestamp<Float> previousValue
+  ) {
     super(source);
     this.temperatureInDegree = temperatureInDegree;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Float> getTemperatureInDegree() {
     return temperatureInDegree;
+  }
+
+  @Override
+  public DataWithTimestamp<Float> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -43,5 +53,10 @@ public class DefaultTemperatureChangedPropertyEvent extends DevicePropertyEventB
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{temperatureInDegree.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

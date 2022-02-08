@@ -24,15 +24,25 @@ import com.github.davemeier82.homeautomation.core.event.RollerPositionChangedEve
 public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEventBase<Roller> implements RollerPositionChangedEvent {
 
   private final DataWithTimestamp<Integer> positionInPercent;
+  private final DataWithTimestamp<Integer> previousValue;
 
-  public DefaultRollerPositionChangedPropertyEvent(Roller roller, DataWithTimestamp<Integer> positionInPercent) {
+  public DefaultRollerPositionChangedPropertyEvent(Roller roller,
+                                                   DataWithTimestamp<Integer> positionInPercent,
+                                                   DataWithTimestamp<Integer> previousValue
+  ) {
     super(roller);
     this.positionInPercent = positionInPercent;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Integer> getPositionInPercent() {
     return positionInPercent;
+  }
+
+  @Override
+  public DataWithTimestamp<Integer> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -43,5 +53,10 @@ public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEve
   @Override
   public Object[] getMessageArgs() {
     return new Object[]{getDevice().getDisplayName(), positionInPercent.getValue()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

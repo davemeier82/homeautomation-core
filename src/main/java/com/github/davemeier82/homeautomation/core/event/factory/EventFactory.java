@@ -33,27 +33,51 @@ public interface EventFactory {
 
   MqttClientConnectedEvent createMqttClientConnectedEvent(MqttClient client);
 
-  RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn);
+  RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue);
 
-  WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor, DataWithTimestamp<Boolean> isOpen);
+  WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor,
+                                                        DataWithTimestamp<Boolean> isOpen,
+                                                        DataWithTimestamp<Boolean> previousValue
+  );
 
-  TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor, DataWithTimestamp<Float> temperatureInDegree);
+  TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor,
+                                                        DataWithTimestamp<Float> temperatureInDegree,
+                                                        DataWithTimestamp<Float> previousValue
+  );
 
-  HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor, DataWithTimestamp<Float> relativeHumidityInPercent);
+  HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor,
+                                                  DataWithTimestamp<Float> relativeHumidityInPercent,
+                                                  DataWithTimestamp<Float> previousValue
+  );
 
-  BatteryLevelChangedEvent createBatteryLevelChangedEvent(BatteryStateSensor batteryStateSensor, DataWithTimestamp<Integer> batteryLevelInPercent);
+  BatteryLevelChangedEvent createBatteryLevelChangedEvent(BatteryStateSensor batteryStateSensor,
+                                                          DataWithTimestamp<Integer> batteryLevelInPercent,
+                                                          DataWithTimestamp<Integer> previousValue
+  );
 
-  DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer, DataWithTimestamp<Integer> brightnessInPercent);
+  DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer,
+                                                          DataWithTimestamp<Integer> brightnessInPercent,
+                                                          DataWithTimestamp<Integer> previousValue
+  );
 
   DevicesLoadedEvent createDevicesLoadedEvent(List<Device> devices);
 
   NewDeviceCreatedEvent createNewDeviceCreatedEvent(Device device);
 
-  RollerStateChangedEvent createRollerStateChangedEvent(Roller roller, DataWithTimestamp<RollerState> state);
+  RollerStateChangedEvent createRollerStateChangedEvent(Roller roller,
+                                                        DataWithTimestamp<RollerState> state,
+                                                        DataWithTimestamp<RollerState> previousValue
+  );
 
-  RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller, DataWithTimestamp<Integer> positionInPercent);
+  RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller,
+                                                              DataWithTimestamp<Integer> positionInPercent,
+                                                              DataWithTimestamp<Integer> previousValue
+  );
 
-  IlluminanceChangedEvent createIlluminanceChangedEvent(IlluminanceSensor sensor, DataWithTimestamp<Integer> lux);
+  IlluminanceChangedEvent createIlluminanceChangedEvent(IlluminanceSensor sensor,
+                                                        DataWithTimestamp<Integer> lux,
+                                                        DataWithTimestamp<Integer> previousValue
+  );
 
-  PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt);
+  PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue);
 }

@@ -24,4 +24,6 @@ public interface RelayStateChangedEvent extends DevicePropertyEvent {
   ReadOnlyRelay getDeviceProperty();
 
   DataWithTimestamp<Boolean> isOn();
+
+  DataWithTimestamp<Boolean> getPreviousValue();
 }

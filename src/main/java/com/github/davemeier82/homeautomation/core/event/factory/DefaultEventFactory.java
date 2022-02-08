@@ -50,35 +50,51 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
-  public RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn) {
-    return new DefaultRelayStateChangedPropertyEvent(relay, isOn);
+  public RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay,
+                                                             DataWithTimestamp<Boolean> isOn,
+                                                             DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultRelayStateChangedPropertyEvent(relay, isOn, previousValue);
   }
 
   @Override
-  public WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor, DataWithTimestamp<Boolean> isOpen) {
-    return new DefaultWindowStateChangedPropertyEvent(windowSensor, isOpen);
+  public WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor,
+                                                               DataWithTimestamp<Boolean> isOpen,
+                                                               DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultWindowStateChangedPropertyEvent(windowSensor, isOpen, previousValue);
   }
 
   @Override
-  public TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor, DataWithTimestamp<Float> temperatureInDegree) {
-    return new DefaultTemperatureChangedPropertyEvent(temperatureSensor, temperatureInDegree);
+  public TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor,
+                                                               DataWithTimestamp<Float> temperatureInDegree,
+                                                               DataWithTimestamp<Float> previousValue
+  ) {
+    return new DefaultTemperatureChangedPropertyEvent(temperatureSensor, temperatureInDegree, previousValue);
   }
 
   @Override
-  public HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor, DataWithTimestamp<Float> relativeHumidityInPercent) {
-    return new DefaultHumidityChangedPropertyEvent(humiditySensor, relativeHumidityInPercent);
+  public HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor,
+                                                         DataWithTimestamp<Float> relativeHumidityInPercent,
+                                                         DataWithTimestamp<Float> previousValue
+  ) {
+    return new DefaultHumidityChangedPropertyEvent(humiditySensor, relativeHumidityInPercent, previousValue);
   }
 
   @Override
   public BatteryLevelChangedEvent createBatteryLevelChangedEvent(BatteryStateSensor batteryStateSensor,
-                                                                 DataWithTimestamp<Integer> batteryLevelInPercent
+                                                                 DataWithTimestamp<Integer> batteryLevelInPercent,
+                                                                 DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultBatteryLevelChangedPropertyEvent(batteryStateSensor, batteryLevelInPercent);
+    return new DefaultBatteryLevelChangedPropertyEvent(batteryStateSensor, batteryLevelInPercent, previousValue);
   }
 
   @Override
-  public DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer, DataWithTimestamp<Integer> levelInPercent) {
-    return new DefaultDimmingLevelChangedPropertyEvent(dimmer, levelInPercent);
+  public DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer,
+                                                                 DataWithTimestamp<Integer> levelInPercent,
+                                                                 DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultDimmingLevelChangedPropertyEvent(dimmer, levelInPercent, previousValue);
   }
 
   @Override
@@ -92,22 +108,31 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
-  public RollerStateChangedEvent createRollerStateChangedEvent(Roller roller, DataWithTimestamp<RollerState> state) {
-    return new DefaultRollerStateChangedPropertyEvent(roller, state);
+  public RollerStateChangedEvent createRollerStateChangedEvent(Roller roller,
+                                                               DataWithTimestamp<RollerState> state,
+                                                               DataWithTimestamp<RollerState> previousValue
+  ) {
+    return new DefaultRollerStateChangedPropertyEvent(roller, state, previousValue);
   }
 
   @Override
-  public RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller, DataWithTimestamp<Integer> positionInPercent) {
-    return new DefaultRollerPositionChangedPropertyEvent(roller, positionInPercent);
+  public RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller,
+                                                                     DataWithTimestamp<Integer> positionInPercent,
+                                                                     DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultRollerPositionChangedPropertyEvent(roller, positionInPercent, previousValue);
   }
 
   @Override
-  public IlluminanceChangedEvent createIlluminanceChangedEvent(IlluminanceSensor sensor, DataWithTimestamp<Integer> lux) {
-    return new DefaultIlluminanceChangedPropertyEvent(sensor, lux);
+  public IlluminanceChangedEvent createIlluminanceChangedEvent(IlluminanceSensor sensor,
+                                                               DataWithTimestamp<Integer> lux,
+                                                               DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultIlluminanceChangedPropertyEvent(sensor, lux, previousValue);
   }
 
   @Override
-  public PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt) {
-    return new DefaultPowerChangedPropertyEvent(sensor, watt);
+  public PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue) {
+    return new DefaultPowerChangedPropertyEvent(sensor, watt, previousValue);
   }
 }

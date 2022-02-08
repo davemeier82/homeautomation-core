@@ -23,4 +23,6 @@ public interface IlluminanceChangedEvent extends DevicePropertyEvent {
   IlluminanceSensor getDeviceProperty();
 
   DataWithTimestamp<Integer> getLux();
+
+  DataWithTimestamp<Integer> getPreviousValue();
 }

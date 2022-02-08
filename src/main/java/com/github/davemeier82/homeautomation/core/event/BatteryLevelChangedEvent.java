@@ -23,4 +23,6 @@ public interface BatteryLevelChangedEvent extends DevicePropertyEvent {
   BatteryStateSensor getDeviceProperty();
 
   DataWithTimestamp<Integer> getBatteryLevelInPercent();
+
+  DataWithTimestamp<Integer> getPreviousValue();
 }

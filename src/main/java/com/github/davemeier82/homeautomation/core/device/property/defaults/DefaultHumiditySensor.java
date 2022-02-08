@@ -47,7 +47,7 @@ public class DefaultHumiditySensor implements HumiditySensor {
     DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
     DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(humidity)) {
-      eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue));
+      eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue, previousValue));
     }
   }
 

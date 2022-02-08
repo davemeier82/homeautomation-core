@@ -23,4 +23,6 @@ public interface PowerChangedEvent extends DevicePropertyEvent {
   PowerSensor getDeviceProperty();
 
   DataWithTimestamp<Double> getWatt();
+
+  DataWithTimestamp<Double> getPreviousValue();
 }

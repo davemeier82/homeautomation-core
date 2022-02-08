@@ -23,4 +23,6 @@ public interface TemperatureChangedEvent extends DevicePropertyEvent {
   TemperatureSensor getDeviceProperty();
 
   DataWithTimestamp<Float> getTemperatureInDegree();
+
+  DataWithTimestamp<Float> getPreviousValue();
 }

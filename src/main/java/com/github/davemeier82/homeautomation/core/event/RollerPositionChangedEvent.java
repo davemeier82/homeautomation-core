@@ -23,4 +23,6 @@ public interface RollerPositionChangedEvent extends DevicePropertyEvent {
   Roller getDeviceProperty();
 
   DataWithTimestamp<Integer> getPositionInPercent();
+
+  DataWithTimestamp<Integer> getPreviousValue();
 }

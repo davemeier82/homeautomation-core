@@ -24,15 +24,25 @@ import com.github.davemeier82.homeautomation.core.event.WindowStateChangedEvent;
 public class DefaultWindowStateChangedPropertyEvent extends DevicePropertyEventBase<WindowSensor> implements WindowStateChangedEvent {
 
   private final DataWithTimestamp<Boolean> isOpen;
+  private final DataWithTimestamp<Boolean> previousValue;
 
-  public DefaultWindowStateChangedPropertyEvent(WindowSensor source, DataWithTimestamp<Boolean> isOpen) {
+  public DefaultWindowStateChangedPropertyEvent(WindowSensor source,
+                                                DataWithTimestamp<Boolean> isOpen,
+                                                DataWithTimestamp<Boolean> previousValue
+  ) {
     super(source);
     this.isOpen = isOpen;
+    this.previousValue = previousValue;
   }
 
   @Override
   public DataWithTimestamp<Boolean> isOpen() {
     return isOpen;
+  }
+
+  @Override
+  public DataWithTimestamp<Boolean> getPreviousValue() {
+    return previousValue;
   }
 
   @Override
@@ -43,5 +53,10 @@ public class DefaultWindowStateChangedPropertyEvent extends DevicePropertyEventB
   @Override
   public Object[] getMessageArgs() {
     return new String[]{getDevice().getDisplayName()};
+  }
+
+  @Override
+  public boolean wasPreviousValueNull() {
+    return getPreviousValue() == null;
   }
 }

@@ -47,7 +47,7 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
     DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(lux)) {
-      eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue));
+      eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue, previousValue));
     }
   }
 

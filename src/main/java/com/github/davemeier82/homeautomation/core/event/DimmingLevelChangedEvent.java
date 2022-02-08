@@ -23,4 +23,6 @@ public interface DimmingLevelChangedEvent extends DevicePropertyEvent {
   Dimmer getDeviceProperty();
 
   DataWithTimestamp<Integer> getDimmingLevelInPercent();
+
+  DataWithTimestamp<Integer> getPreviousValue();
 }
