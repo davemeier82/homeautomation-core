@@ -25,5 +25,5 @@ public interface DeviceFactory {
 
   Set<String> getSupportedDeviceTypes();
 
-  Device createDevice(String type, String id, String displayName, Map<String, String> parameters);
+  Device createDevice(String type, String id, String displayName, Map<String, String> parameters, Map<String, String> customIdentifiers);
 }

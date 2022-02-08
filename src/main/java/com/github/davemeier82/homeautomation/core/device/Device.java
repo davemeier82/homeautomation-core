@@ -37,4 +37,8 @@ public interface Device {
     return Map.of();
   }
 
+  Map<String, String> getCustomIdentifiers();
+
+  void setCustomIdentifiers(Map<String, String> identifiers);
+
 }
