@@ -1,0 +1,80 @@
+/*
+ * Copyright 2021-2021 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package io.github.davemeier82.homeautomation.core.device.property.defaults;
+
+import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
+import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+import io.github.davemeier82.homeautomation.core.event.EventPublisher;
+import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
+
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+
+/**
+ * Default implementation of a HumiditySensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
+public class DefaultHumiditySensor implements HumiditySensor {
+  private final long id;
+  private final Device device;
+  private final EventPublisher eventPublisher;
+  private final EventFactory eventFactory;
+  private final AtomicReference<DataWithTimestamp<Float>> humidity = new AtomicReference<>();
+
+  public DefaultHumiditySensor(long id,
+                               Device device,
+                               EventPublisher eventPublisher,
+                               EventFactory eventFactory
+  ) {
+    this.id = id;
+    this.device = device;
+    this.eventPublisher = eventPublisher;
+    this.eventFactory = eventFactory;
+  }
+
+  /**
+   * Sets relative humidity with the current timestamp
+   *
+   * @param humidity the humidity in percent (0-100)
+   */
+  public void setRelativeHumidityInPercent(float humidity) {
+    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
+    DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(humidity)) {
+      eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue, previousValue));
+    }
+  }
+
+  @Override
+  public Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent() {
+    return Optional.ofNullable(humidity.get());
+  }
+
+  @Override
+  public long getId() {
+    return id;
+  }
+
+  @Override
+  public Device getDevice() {
+    return device;
+  }
+
+}
