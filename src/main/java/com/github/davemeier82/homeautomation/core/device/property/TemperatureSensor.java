@@ -20,9 +20,17 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Sensor that reports the temperature.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface TemperatureSensor extends DeviceProperty {
   /**
-   * @return Optional.empty() if angle is unknown
+   * Returns the temperature in degrees celsius at the time of the measurement.
+   *
+   * @return Optional.empty() if the temperature is unknown
    */
   Optional<DataWithTimestamp<Float>> getTemperatureInDegree();
 }

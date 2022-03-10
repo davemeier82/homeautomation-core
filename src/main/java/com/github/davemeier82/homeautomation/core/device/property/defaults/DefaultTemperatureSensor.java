@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a TemperatureSensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultTemperatureSensor implements TemperatureSensor {
   private final long id;
   private final Device device;
@@ -43,6 +49,11 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
     this.eventFactory = eventFactory;
   }
 
+  /**
+   * Sets the temperature with the current timestamp
+   *
+   * @param temperature the temperature in degree celsius
+   */
   public void setTemperatureInDegree(float temperature) {
     DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(temperature);
     DataWithTimestamp<Float> previousValue = this.temperature.getAndSet(newValue);

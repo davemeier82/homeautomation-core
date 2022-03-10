@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a HumiditySensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultHumiditySensor implements HumiditySensor {
   private final long id;
   private final Device device;
@@ -43,6 +49,11 @@ public class DefaultHumiditySensor implements HumiditySensor {
     this.eventFactory = eventFactory;
   }
 
+  /**
+   * Sets relative humidity with the current timestamp
+   *
+   * @param humidity the humidity in percent (0-100)
+   */
   public void setRelativeHumidityInPercent(float humidity) {
     DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
     DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);

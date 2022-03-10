@@ -20,9 +20,17 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Sensor that reports the illuminance.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface IlluminanceSensor extends DeviceProperty {
 
   /**
+   * Returns the illuminance in lux and the time of the measurement.
+   *
    * @return Optional.empty() if illuminance is unknown
    */
   Optional<DataWithTimestamp<Integer>> getLux();

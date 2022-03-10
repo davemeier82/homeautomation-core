@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a PowerSensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultPowerSensor implements PowerSensor {
   private final long id;
   private final Device device;
@@ -43,10 +49,20 @@ public class DefaultPowerSensor implements PowerSensor {
     this.eventFactory = eventFactory;
   }
 
+  /**
+   * Sets the power consumption with the current timestamp
+   *
+   * @param watt the power consumption in watt
+   */
   public void setWatt(double watt) {
     setWatt(new DataWithTimestamp<>(watt));
   }
 
+  /**
+   * Sets the power consumption
+   *
+   * @param newValue the power consumption in watt with the timestamp
+   */
   public void setWatt(DataWithTimestamp<Double> newValue) {
     DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {

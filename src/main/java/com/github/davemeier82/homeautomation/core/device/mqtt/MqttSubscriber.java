@@ -19,7 +19,19 @@ package com.github.davemeier82.homeautomation.core.device.mqtt;
 import java.nio.ByteBuffer;
 import java.util.Optional;
 
+/**
+ * A MQTT device that can process messages.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MqttSubscriber extends MqttDevice {
 
+  /**
+   * This method get called from a MqttClient when a message has been received
+   *
+   * @param topic   the topic of the message
+   * @param payload the payload of the message
+   */
   void processMessage(String topic, Optional<ByteBuffer> payload);
 }

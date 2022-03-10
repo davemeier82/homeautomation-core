@@ -20,9 +20,17 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Relay that only reports the state but cannot be switched by this framework.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface ReadOnlyRelay extends DeviceProperty {
 
   /**
+   * Returns true if the relay is switched on and the time of the state change.
+   *
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<Boolean>> isOn();

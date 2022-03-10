@@ -19,9 +19,17 @@ package com.github.davemeier82.homeautomation.core.device.property;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
+/**
+ * A Sensor that reports detected motion.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MotionSensor extends DeviceProperty {
 
   /**
+   * Returns the time of the motion detection.
+   *
    * @return Optional.empty() if angle is unknown
    */
   Optional<ZonedDateTime> getLastMotionDetected();

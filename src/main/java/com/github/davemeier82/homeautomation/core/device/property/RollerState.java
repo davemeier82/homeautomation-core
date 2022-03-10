@@ -16,6 +16,12 @@
 
 package com.github.davemeier82.homeautomation.core.device.property;
 
+/**
+ * Roller states
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public enum RollerState {
   OPENING, CLOSING, IDLE
 }

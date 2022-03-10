@@ -20,9 +20,17 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Sensor that reports the battery state (state of charge).
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface BatteryStateSensor extends DeviceProperty {
 
   /**
+   * Returns the battery level in percent (0 = empty, 100 = fully charged) and the time of the measurement.
+   *
    * @return Optional.empty() if illuminance is unknown
    */
   Optional<DataWithTimestamp<Integer>> batteryLevelInPercent();

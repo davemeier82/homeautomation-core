@@ -20,16 +20,29 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Sensor that reports if a door/window is open, closed or tilted.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface WindowSensor extends DeviceProperty {
   /**
+   * Returns true if the window is open at the time of the measurement.
+   *
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<Boolean>> isOpen();
 
   /**
+   * Returns the tilt angle in degree at the time of the measurement.
+   *
    * @return Optional.empty() if angle is unknown
    */
   Optional<DataWithTimestamp<Integer>> getTiltAngleInDegree();
 
+  /**
+   * @return true if this sensor supports tilting
+   */
   boolean isTiltingSupported();
 }

@@ -21,6 +21,12 @@ import com.github.davemeier82.homeautomation.core.device.property.DeviceProperty
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A device. Devices contain DeviceProperties.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface Device {
 
   String getType();

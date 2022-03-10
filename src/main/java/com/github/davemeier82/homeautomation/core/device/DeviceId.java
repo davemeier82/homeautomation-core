@@ -16,6 +16,9 @@
 
 package com.github.davemeier82.homeautomation.core.device;
 
+/**
+ * A Device can uniquely be identified by a type and an id.
+ */
 public record DeviceId(String id, String type) {
 
   public DeviceId(String id, String type) {
@@ -23,6 +26,12 @@ public record DeviceId(String id, String type) {
     this.type = type.toUpperCase();
   }
 
+  /**
+   * Creates a DeviceId from a Device
+   *
+   * @param device the device
+   * @return the id
+   */
   public static DeviceId deviceIdFromDevice(Device device) {
     return new DeviceId(device.getId(), device.getType());
   }

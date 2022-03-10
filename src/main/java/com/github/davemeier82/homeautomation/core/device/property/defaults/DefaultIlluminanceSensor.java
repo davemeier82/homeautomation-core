@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a IlluminanceSensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultIlluminanceSensor implements IlluminanceSensor {
   private final long id;
   private final Device device;
@@ -43,6 +49,11 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
     this.eventFactory = eventFactory;
   }
 
+  /**
+   * Sets illumination with the current timestamp
+   *
+   * @param lux the illumination in lux
+   */
   public void setIlluminanceInLux(int lux) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
     DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);

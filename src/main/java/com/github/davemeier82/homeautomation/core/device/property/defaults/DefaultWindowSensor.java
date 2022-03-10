@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a WindowSensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultWindowSensor implements WindowSensor {
   private final long id;
   private final Device device;
@@ -55,6 +61,11 @@ public class DefaultWindowSensor implements WindowSensor {
     return device;
   }
 
+  /**
+   * Sets the state of the door/window with the current timestamp
+   *
+   * @param open true if the window/door is open
+   */
   public void setIsOpen(boolean open) {
     DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(open);
     DataWithTimestamp<Boolean> previousValue = isOpen.getAndSet(newValue);
@@ -63,6 +74,11 @@ public class DefaultWindowSensor implements WindowSensor {
     }
   }
 
+  /**
+   * Sets the tilt angle of the door/window with the current timestamp
+   *
+   * @param angleInDegree the tilt angle of the window/door
+   */
   public void setTiltAngleInDegree(int angleInDegree) {
     if (angleInDegree != -1) {
       tiltAngleInDegree.set(new DataWithTimestamp<>(angleInDegree));

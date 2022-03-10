@@ -21,6 +21,12 @@ import com.github.davemeier82.homeautomation.core.device.property.defaults.Defau
 import com.github.davemeier82.homeautomation.core.event.EventPublisher;
 import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
+/**
+ * Abstract implementation of a Relay.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public abstract class AbstractRelay extends DefaultReadOnlyRelay implements Relay {
 
   public AbstractRelay(long id,

@@ -22,6 +22,12 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Abstract implementation of a Dimmer
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public abstract class AbstractDimmerRelay implements Dimmer {
 
   protected final AbstractRelay relay;
@@ -41,10 +47,20 @@ public abstract class AbstractDimmerRelay implements Dimmer {
     return relay.getDevice();
   }
 
+  /**
+   * Changes the relay state
+   *
+   * @param on true to switch the relay on
+   */
   public void setRelayStateTo(boolean on) {
     relay.setRelayStateTo(on);
   }
 
+  /**
+   * Changes the dimming level
+   *
+   * @param levelInPercent dimming level in percent (0-100)
+   */
   public void setDimmingLevelInPercent(int levelInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(levelInPercent);
     DataWithTimestamp<Integer> previousValue = brightness.getAndSet(newValue);

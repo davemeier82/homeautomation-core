@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a BatteryStateSensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultBatteryStateSensor implements BatteryStateSensor {
   private final long id;
   private final Device device;
@@ -43,6 +49,11 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
     this.eventFactory = eventFactory;
   }
 
+  /**
+   * Sets the battery level with the current timestamp.
+   *
+   * @param batteryLevel the level in percent (0-100)
+   */
   public void setBatteryLevel(int batteryLevel) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(batteryLevel);
     DataWithTimestamp<Integer> previousValue = this.batteryLevel.getAndSet(newValue);

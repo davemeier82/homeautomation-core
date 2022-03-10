@@ -18,7 +18,16 @@ package com.github.davemeier82.homeautomation.core.device.mqtt;
 
 import com.github.davemeier82.homeautomation.core.device.Device;
 
+/**
+ * A MQTT device.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MqttDevice extends Device {
 
+  /**
+   * @return the MQTT topic of this device
+   */
   String getTopic();
 }

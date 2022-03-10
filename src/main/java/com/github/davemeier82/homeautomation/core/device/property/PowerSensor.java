@@ -20,8 +20,16 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Sensor that reports power consumption.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface PowerSensor extends DeviceProperty {
   /**
+   * Returns the power consumption in watt and the time of the measurement.
+   *
    * @return Optional.empty() if angle is unknown
    */
   Optional<DataWithTimestamp<Double>> getWatt();

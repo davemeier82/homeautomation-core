@@ -25,6 +25,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a ReadOnlyRelay.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   private final long id;
   private final Device device;
@@ -43,6 +49,11 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
     this.eventFactory = eventFactory;
   }
 
+  /**
+   * Sets the relay state with the current timestamp
+   *
+   * @param on true if the relay is switched on
+   */
   public void setRelayStateTo(boolean on) {
     DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
     DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
@@ -66,10 +77,16 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
     return device;
   }
 
+  /**
+   * @return the event publisher
+   */
   public EventPublisher getEventPublisher() {
     return eventPublisher;
   }
 
+  /**
+   * @return the event eventFactory
+   */
   public EventFactory getEventFactory() {
     return eventFactory;
   }

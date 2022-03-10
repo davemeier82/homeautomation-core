@@ -21,7 +21,17 @@ import com.github.davemeier82.homeautomation.core.device.DeviceId;
 
 import java.util.Optional;
 
+/**
+ * Factory to create MQTT devices.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MqttDeviceFactory extends DeviceFactory {
+
+  /**
+   * @return the root MQTT topic of devices created by this factory
+   */
   String getRootTopic();
 
   /**
@@ -31,8 +41,8 @@ public interface MqttDeviceFactory extends DeviceFactory {
   Optional<DeviceId> getDeviceId(String topic);
 
   /**
-   * @param @param topic the topic to create the device from
-   * @return Optional.empty() if no device for this topic can get created
+   * @param deviceId the id of the device
+   * @return the MQTT device or Optional.empty() if no device for this topic can get created
    */
   Optional<MqttSubscriber> createMqttSubscriber(DeviceId deviceId);
 }

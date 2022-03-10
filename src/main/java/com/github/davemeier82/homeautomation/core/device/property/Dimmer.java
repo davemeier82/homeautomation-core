@@ -20,11 +20,24 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A "Relay" that is dimmable.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface Dimmer extends Relay {
 
+  /**
+   * Changes the dimming level
+   *
+   * @param percent dimming level in percent (0-100)
+   */
   void setDimmingLevel(int percent);
 
   /**
+   * Returns the dimming level in percent (0 = off, 100 = max) and the time of the measurement.
+   *
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<Integer>> getDimmingLevelInPercent();

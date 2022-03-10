@@ -20,8 +20,17 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Sensor that reports the relative humidity.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface HumiditySensor extends DeviceProperty {
+
   /**
+   * Returns the relative humidity in percent (0 = dry, 100 = humid) and the time of the measurement.
+   *
    * @return Optional.empty() if angle is unknown
    */
   Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent();

@@ -16,10 +16,22 @@
 
 package com.github.davemeier82.homeautomation.core.device.property;
 
+/**
+ * A Relay.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface Relay extends ReadOnlyRelay {
 
+  /**
+   * switches the relay on.
+   */
   void turnOn();
 
+  /**
+   * switches the relay off.
+   */
   void turnOff();
 
 }

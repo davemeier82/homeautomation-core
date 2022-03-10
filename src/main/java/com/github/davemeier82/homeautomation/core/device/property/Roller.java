@@ -20,20 +20,38 @@ import com.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
 
+/**
+ * A Roller (i.e. Blinds, Garage Door)
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface Roller extends DeviceProperty {
 
+  /**
+   * starts opening of the roller
+   */
   void open();
 
+  /**
+   * starts closing of the roller
+   */
   void close();
 
+  /**
+   * stops the roller movement
+   */
   void stop();
 
   /**
-   * @param percent 100% completely open, 0% closed
+   * Moves the roller to the desired position.
+   *
+   * @param percent 100 completely open, 0 closed
    */
   void setPosition(int percent);
 
   /**
+   * Returns the position of the roller at the time of the report.
    * 100% completely open, 0% closed
    *
    * @return Optional.empty() if state is unknown
@@ -41,6 +59,8 @@ public interface Roller extends DeviceProperty {
   Optional<DataWithTimestamp<Integer>> getPositionInPercent();
 
   /**
+   * Returns the roller state at the time of the report.
+   *
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<RollerState>> getState();

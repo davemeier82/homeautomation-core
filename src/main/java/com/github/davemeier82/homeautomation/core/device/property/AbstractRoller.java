@@ -24,6 +24,12 @@ import com.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Abstract implementation of a Roller.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public abstract class AbstractRoller implements Roller {
 
   private final long id;
@@ -44,7 +50,12 @@ public abstract class AbstractRoller implements Roller {
     this.eventFactory = eventFactory;
   }
 
-  public void setRelayStateTo(RollerState rollerState) {
+  /**
+   * Changes the roller state
+   *
+   * @param rollerState the roler state
+   */
+  public void setRollerState(RollerState rollerState) {
     DataWithTimestamp<RollerState> newValue = new DataWithTimestamp<>(rollerState);
     DataWithTimestamp<RollerState> previousValue = state.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(rollerState)) {
@@ -52,6 +63,11 @@ public abstract class AbstractRoller implements Roller {
     }
   }
 
+  /**
+   * Changes the roller position
+   *
+   * @param positionInPercent the roller position in percent (0-100)
+   */
   public void setPositionInPercent(int positionInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(positionInPercent);
     DataWithTimestamp<Integer> previousValue = position.getAndSet(newValue);

@@ -25,6 +25,12 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Default implementation of a MotionSensor.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultMotionSensor implements MotionSensor {
 
   private final long id;
@@ -54,6 +60,11 @@ public class DefaultMotionSensor implements MotionSensor {
     return device;
   }
 
+  /**
+   * Sets timestamp of the detected motion
+   *
+   * @param zonedDateTime the time when the motion happened
+   */
   public void setLastMotionDetected(ZonedDateTime zonedDateTime) {
     lastMotionDetected.set(zonedDateTime);
     eventPublisher.publishEvent(eventFactory.createMotionDetectedEvent(this, zonedDateTime));
