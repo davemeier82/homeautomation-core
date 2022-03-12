@@ -21,16 +21,31 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.PowerChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link PowerChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<PowerSensor> implements PowerChangedEvent {
 
   private final DataWithTimestamp<Double> watt;
   private final DataWithTimestamp<Double> previousValue;
 
-  public DefaultPowerChangedPropertyEvent(PowerSensor source,
+  /**
+   * Constructor
+   *
+   * @param sensor        the sensor
+   * @param watt          the new value
+   * @param previousValue the old value
+   */
+  public DefaultPowerChangedPropertyEvent(PowerSensor sensor,
                                           DataWithTimestamp<Double> watt,
                                           DataWithTimestamp<Double> previousValue
   ) {
-    super(source);
+    super(sensor);
     this.watt = watt;
     this.previousValue = previousValue;
   }
@@ -41,8 +56,8 @@ public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<Po
   }
 
   @Override
-  public DataWithTimestamp<Double> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -55,8 +70,4 @@ public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<Po
     return new Double[]{watt.getValue()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

@@ -22,29 +22,53 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A device. Devices contain DeviceProperties.
+ * A device. Devices contain several {@link DeviceProperty}.
  *
  * @author David Meier
  * @since 0.1.0
  */
 public interface Device {
 
+  /**
+   * @return the type of the device (is unique in combination with {@link Device#getId()}
+   */
   String getType();
 
+  /**
+   * @return the id of the device (is unique in combination with {@link Device#getType()}
+   */
   String getId();
 
+  /**
+   * @return the human-readable name
+   */
   String getDisplayName();
 
+  /**
+   * @param displayName the human-readable name
+   */
   void setDisplayName(String displayName);
 
+  /**
+   * @return list of device properties
+   */
   List<? extends DeviceProperty> getDeviceProperties();
 
+  /**
+   * @return the parameters used to create this device
+   */
   default Map<String, String> getParameters() {
     return Map.of();
   }
 
+  /**
+   * @return custom identifiers
+   */
   Map<String, String> getCustomIdentifiers();
 
+  /**
+   * @param identifiers custom identifier
+   */
   void setCustomIdentifiers(Map<String, String> identifiers);
 
 }

@@ -16,6 +16,12 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
+/**
+ * Event that gets emitted when all devices are loaded
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface DevicesLoadedEvent {
 
 }

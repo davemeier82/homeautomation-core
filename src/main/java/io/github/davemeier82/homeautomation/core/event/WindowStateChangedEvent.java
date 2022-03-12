@@ -18,12 +18,20 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 
+/**
+ * Event that gets emitted when the state of the window changes (open/closed).
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface WindowStateChangedEvent extends DevicePropertyEvent {
 
   @Override
   WindowSensor getDeviceProperty();
 
+  /**
+   * @return true if the window got opened and the time of the state change
+   */
   DataWithTimestamp<Boolean> isOpen();
 
-  DataWithTimestamp<Boolean> getPreviousValue();
 }

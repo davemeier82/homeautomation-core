@@ -21,15 +21,30 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.IlluminanceChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link IlluminanceChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultIlluminanceChangedPropertyEvent extends DevicePropertyEventBase<IlluminanceSensor> implements IlluminanceChangedEvent {
   private final DataWithTimestamp<Integer> lux;
   private final DataWithTimestamp<Integer> previousValue;
 
-  public DefaultIlluminanceChangedPropertyEvent(IlluminanceSensor source,
+  /**
+   * Constructor
+   *
+   * @param sensor        the sensor
+   * @param lux           the new value
+   * @param previousValue the old value
+   */
+  public DefaultIlluminanceChangedPropertyEvent(IlluminanceSensor sensor,
                                                 DataWithTimestamp<Integer> lux,
                                                 DataWithTimestamp<Integer> previousValue
   ) {
-    super(source);
+    super(sensor);
     this.lux = lux;
     this.previousValue = previousValue;
   }
@@ -40,8 +55,8 @@ public class DefaultIlluminanceChangedPropertyEvent extends DevicePropertyEventB
   }
 
   @Override
-  public DataWithTimestamp<Integer> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -54,8 +69,4 @@ public class DefaultIlluminanceChangedPropertyEvent extends DevicePropertyEventB
     return new Integer[]{lux.getValue()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

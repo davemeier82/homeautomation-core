@@ -18,11 +18,20 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 
+/**
+ * Event that gets emitted when the temperature of a {@link TemperatureSensor} changes.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface TemperatureChangedEvent extends DevicePropertyEvent {
+
   @Override
   TemperatureSensor getDeviceProperty();
 
+  /**
+   * @return the new temperature in degree celsius and the time of the measurement
+   */
   DataWithTimestamp<Float> getTemperatureInDegree();
 
-  DataWithTimestamp<Float> getPreviousValue();
 }

@@ -20,17 +20,50 @@ import java.nio.ByteBuffer;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+/**
+ * Client that connects to a MQTT broker to send and receive messages.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MqttClient {
 
+  /**
+   * Connect to the broker
+   */
   void connect();
 
+  /**
+   * @return true if the client is connected
+   */
   boolean isConnected();
 
+  /**
+   * Publish a message on a topic
+   *
+   * @param topic   the MQTT topic
+   * @param payload the message payload
+   */
   void publish(String topic, byte[] payload);
 
+  /**
+   * Publish a string message on a topic
+   *
+   * @param topic   the MQTT topic
+   * @param payload the message payload
+   */
   void publish(String topic, String payload);
 
+  /**
+   * Subscribe to a MQTT topic to receive messages.
+   *
+   * @param mqttTopic the topic to subscribe to
+   * @param consumer  a consumer that processes the incoming messages
+   */
   void subscribe(String mqttTopic, BiConsumer<String, Optional<ByteBuffer>> consumer);
 
+  /**
+   * Disconnect from the broker
+   */
   void disconnect();
 }

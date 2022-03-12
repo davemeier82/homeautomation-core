@@ -21,7 +21,7 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import java.util.Optional;
 
 /**
- * A "Relay" that is dimmable.
+ * A {@link Relay} that is dimmable.
  *
  * @author David Meier
  * @since 0.1.0

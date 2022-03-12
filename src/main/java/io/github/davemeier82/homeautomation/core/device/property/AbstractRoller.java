@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Abstract implementation of a Roller.
+ * Abstract implementation of a {@link Roller}.
  *
  * @author David Meier
  * @since 0.1.0
@@ -39,6 +39,14 @@ public abstract class AbstractRoller implements Roller {
   private final AtomicReference<DataWithTimestamp<RollerState>> state = new AtomicReference<>();
   private final AtomicReference<DataWithTimestamp<Integer>> position = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher event publisher
+   * @param eventFactory   event factory
+   */
   protected AbstractRoller(long id,
                            Device device,
                            EventPublisher eventPublisher,

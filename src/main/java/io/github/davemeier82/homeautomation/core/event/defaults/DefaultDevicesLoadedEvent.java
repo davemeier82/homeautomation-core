@@ -21,14 +21,28 @@ import io.github.davemeier82.homeautomation.core.event.DevicesLoadedEvent;
 
 import java.util.List;
 
+/**
+ * Default implementation of a {@link DevicesLoadedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultDevicesLoadedEvent implements DevicesLoadedEvent {
 
   private final List<Device> devices;
 
+  /**
+   * Constructor
+   *
+   * @param devices the loaded devices
+   */
   public DefaultDevicesLoadedEvent(List<Device> devices) {
     this.devices = devices;
   }
 
+  /**
+   * @return the loaded devices
+   */
   public List<Device> getDevices() {
     return devices;
   }

@@ -18,7 +18,16 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
+/**
+ * Event emitted when the {@link MqttClient} successfully connected to the broker.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MqttClientConnectedEvent {
 
+  /**
+   * @return the client which this event belongs to
+   */
   MqttClient getClient();
 }

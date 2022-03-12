@@ -38,6 +38,14 @@ public class DefaultHumiditySensor implements HumiditySensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Float>> humidity = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultHumiditySensor(long id,
                                Device device,
                                EventPublisher eventPublisher,

@@ -18,10 +18,10 @@ package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
 import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
+import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
-import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -37,8 +37,16 @@ public class DefaultMotionSensor implements MotionSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<ZonedDateTime> lastMotionDetected = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Boolean>> motionDetected = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultMotionSensor(long id,
                              Device device,
                              EventPublisher eventPublisher,
@@ -63,15 +71,17 @@ public class DefaultMotionSensor implements MotionSensor {
   /**
    * Sets timestamp of the detected motion
    *
-   * @param zonedDateTime the time when the motion happened
+   * @param newValue the new motion state with the timestamp
    */
-  public void setLastMotionDetected(ZonedDateTime zonedDateTime) {
-    lastMotionDetected.set(zonedDateTime);
-    eventPublisher.publishEvent(eventFactory.createMotionDetectedEvent(this, zonedDateTime));
+  public void setMotionDetected(DataWithTimestamp<Boolean> newValue) {
+    DataWithTimestamp<Boolean> previousValue = motionDetected.getAndSet(newValue);
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
+      eventPublisher.publishEvent(eventFactory.createMotionDetectedEvent(this, newValue, previousValue));
+    }
   }
 
   @Override
-  public Optional<ZonedDateTime> getLastMotionDetected() {
-    return Optional.ofNullable(lastMotionDetected.get());
+  public Optional<DataWithTimestamp<Boolean>> getMotionDetected() {
+    return Optional.ofNullable(motionDetected.get());
   }
 }

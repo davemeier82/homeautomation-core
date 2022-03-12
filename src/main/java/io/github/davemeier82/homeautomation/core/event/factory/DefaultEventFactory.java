@@ -22,13 +22,18 @@ import io.github.davemeier82.homeautomation.core.event.*;
 import io.github.davemeier82.homeautomation.core.event.defaults.*;
 import io.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Default implementation of a {@link EventFactory}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultEventFactory implements EventFactory {
 
-  public static final String DEFAULT_EVENT_PACKAGE = "io.github.davemeier82.homeautomation.core.event.";
+  private static final String DEFAULT_EVENT_PACKAGE = "io.github.davemeier82.homeautomation.core.event.";
 
   @Override
   public Optional<Class<?>> fromEventName(String eventName) {
@@ -40,8 +45,11 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
-  public MotionDetectedEvent createMotionDetectedEvent(MotionSensor sensor, ZonedDateTime eventTime) {
-    return new DefaultMotionDetectedPropertyEvent(sensor, eventTime);
+  public MotionDetectedEvent createMotionDetectedEvent(MotionSensor sensor,
+                                                       DataWithTimestamp<Boolean> motionDetected,
+                                                       DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultMotionDetectedPropertyEvent(sensor, motionDetected, previousValue);
   }
 
   @Override

@@ -18,13 +18,43 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
 
+import java.util.Optional;
+
+/**
+ * An event that gets emitted when a value of a {@link DeviceProperty} changes.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface DevicePropertyEvent {
 
+  /**
+   * @return the device property to which this event belongs to
+   */
   DeviceProperty getDeviceProperty();
 
+  /**
+   * Message key used for a translatable human-readable message (i.e. push notifications).
+   * Can contain dynamic values when adding index in curly brackets: {0}. See {@link DevicePropertyEvent#getMessageArgs()}
+   *
+   * @return key for message translation
+   */
   String getMessageKey();
 
+  /**
+   * @return optional arguments for the @{link {@link DevicePropertyEvent#getMessageKey()}
+   */
   Object[] getMessageArgs();
 
-  boolean wasPreviousValueNull();
+  /**
+   * @return the value of the sensor before this event, if available
+   */
+  Optional<DataWithTimestamp<?>> getPreviousValue();
+
+  /**
+   * @return true if the previous value is set
+   */
+  default boolean hasPreviousValue() {
+    return getPreviousValue().isPresent();
+  }
 }

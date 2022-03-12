@@ -23,16 +23,25 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Abstract implementation of a Dimmer
+ * Abstract implementation of a {@link Dimmer}
  *
  * @author David Meier
  * @since 0.1.0
  */
 public abstract class AbstractDimmerRelay implements Dimmer {
 
+  /**
+   * The relay
+   */
   protected final AbstractRelay relay;
-  protected final AtomicReference<DataWithTimestamp<Integer>> brightness = new AtomicReference<>();
+  /**
+   * The current dimming level
+   */
+  protected final AtomicReference<DataWithTimestamp<Integer>> dimmingLevel = new AtomicReference<>();
 
+  /**
+   * @param relay the relay
+   */
   protected AbstractDimmerRelay(AbstractRelay relay) {
     this.relay = relay;
   }
@@ -63,7 +72,7 @@ public abstract class AbstractDimmerRelay implements Dimmer {
    */
   public void setDimmingLevelInPercent(int levelInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(levelInPercent);
-    DataWithTimestamp<Integer> previousValue = brightness.getAndSet(newValue);
+    DataWithTimestamp<Integer> previousValue = dimmingLevel.getAndSet(newValue);
     if (previousValue == null || !previousValue.getValue().equals(levelInPercent)) {
       relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelChangedEvent(this, newValue, previousValue));
     }
@@ -71,7 +80,7 @@ public abstract class AbstractDimmerRelay implements Dimmer {
 
   @Override
   public Optional<DataWithTimestamp<Integer>> getDimmingLevelInPercent() {
-    return Optional.ofNullable(brightness.get());
+    return Optional.ofNullable(dimmingLevel.get());
   }
 
   @Override

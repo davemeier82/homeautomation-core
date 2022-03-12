@@ -18,11 +18,20 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.Dimmer;
 
+/**
+ * Event that gets emitted when the dimming level of a {@link Dimmer} changed.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface DimmingLevelChangedEvent extends DevicePropertyEvent {
+
   @Override
   Dimmer getDeviceProperty();
 
+  /**
+   * @return the new dimming level and the time of the measurement
+   */
   DataWithTimestamp<Integer> getDimmingLevelInPercent();
 
-  DataWithTimestamp<Integer> getPreviousValue();
 }

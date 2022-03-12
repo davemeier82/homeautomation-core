@@ -16,7 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.device.property;
 
-import java.time.ZonedDateTime;
+import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+
 import java.util.Optional;
 
 /**
@@ -28,10 +29,10 @@ import java.util.Optional;
 public interface MotionSensor extends DeviceProperty {
 
   /**
-   * Returns the time of the motion detection.
+   * Returns true if motion was detected and the time of the measurement.
    *
-   * @return Optional.empty() if angle is unknown
+   * @return Optional.empty() if motion state is unknown
    */
-  Optional<ZonedDateTime> getLastMotionDetected();
+  Optional<DataWithTimestamp<Boolean>> getMotionDetected();
 
 }

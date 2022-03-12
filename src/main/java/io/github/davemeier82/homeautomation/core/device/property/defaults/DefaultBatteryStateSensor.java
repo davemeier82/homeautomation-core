@@ -38,6 +38,14 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Integer>> batteryLevel = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultBatteryStateSensor(long id,
                                    Device device,
                                    EventPublisher eventPublisher,

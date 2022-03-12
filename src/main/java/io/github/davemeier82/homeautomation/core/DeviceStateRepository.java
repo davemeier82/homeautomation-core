@@ -22,14 +22,52 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import java.time.Instant;
 import java.util.Optional;
 
+/**
+ * A repository that can save the values of a device (i.e. a time series database).
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface DeviceStateRepository {
 
+  /**
+   * Insert a double value.
+   *
+   * @param deviceId the device id
+   * @param category the category to with the value belongs to (i.e. illuminance)
+   * @param value    the value
+   * @param time     the timestamp
+   */
   void insert(DeviceId deviceId, String category, double value, Instant time);
 
+  /**
+   * Insert a int value.
+   *
+   * @param deviceId the device id
+   * @param category the category to with the value belongs to (i.e. illuminance)
+   * @param value    the value
+   * @param time     the timestamp
+   */
   void insert(DeviceId deviceId, String category, int value, Instant time);
 
+  /**
+   * Insert a boolean value.
+   *
+   * @param deviceId the device id
+   * @param category the category to with the value belongs to (i.e. illuminance)
+   * @param value    the value
+   * @param time     the timestamp
+   */
   void insert(DeviceId deviceId, String category, boolean value, Instant time);
 
+  /**
+   * Get the latest value of a device and category
+   *
+   * @param deviceId the device id
+   * @param category the category
+   * @param <T>      the expected value type
+   * @return the latest value stored in the repository if any
+   */
   <T> Optional<DataWithTimestamp<T>> findLatestValue(DeviceId deviceId, String category);
 
 }

@@ -38,6 +38,14 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Float>> temperature = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultTemperatureSensor(long id,
                                   Device device,
                                   EventPublisher eventPublisher,

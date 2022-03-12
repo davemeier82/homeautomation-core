@@ -39,7 +39,14 @@ public class DefaultWindowSensor implements WindowSensor {
   private final AtomicReference<DataWithTimestamp<Boolean>> isOpen = new AtomicReference<>();
   private final AtomicReference<DataWithTimestamp<Integer>> tiltAngleInDegree = new AtomicReference<>();
 
-
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultWindowSensor(long id,
                              Device device,
                              EventPublisher eventPublisher,

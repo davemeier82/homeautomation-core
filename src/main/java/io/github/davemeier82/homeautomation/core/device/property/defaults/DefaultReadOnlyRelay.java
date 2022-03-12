@@ -36,8 +36,19 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
+  /**
+   * The relay state and the time of the state change.
+   */
   protected final AtomicReference<DataWithTimestamp<Boolean>> isOn = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultReadOnlyRelay(long id,
                               Device device,
                               EventPublisher eventPublisher,

@@ -21,15 +21,30 @@ import io.github.davemeier82.homeautomation.core.event.BatteryLevelChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link BatteryLevelChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEventBase<BatteryStateSensor> implements BatteryLevelChangedEvent {
   private final DataWithTimestamp<Integer> batteryLevelInPercent;
   private final DataWithTimestamp<Integer> previousValue;
 
-  public DefaultBatteryLevelChangedPropertyEvent(BatteryStateSensor source,
+  /**
+   * Constructor
+   *
+   * @param sensor                the sensor to with the event belongs to
+   * @param batteryLevelInPercent the new value
+   * @param previousValue         the previous value
+   */
+  public DefaultBatteryLevelChangedPropertyEvent(BatteryStateSensor sensor,
                                                  DataWithTimestamp<Integer> batteryLevelInPercent,
                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    super(source);
+    super(sensor);
     this.batteryLevelInPercent = batteryLevelInPercent;
     this.previousValue = previousValue;
   }
@@ -40,8 +55,8 @@ public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEvent
   }
 
   @Override
-  public DataWithTimestamp<Integer> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -54,8 +69,4 @@ public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEvent
     return new Integer[]{batteryLevelInPercent.getValue()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

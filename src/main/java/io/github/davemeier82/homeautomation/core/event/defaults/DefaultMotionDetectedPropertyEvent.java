@@ -17,23 +17,43 @@
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
+import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.MotionDetectedEvent;
 
-import java.time.ZonedDateTime;
+import java.util.Optional;
 
+/**
+ * Default implementation of a {@link MotionDetectedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultMotionDetectedPropertyEvent extends DevicePropertyEventBase<MotionSensor> implements MotionDetectedEvent {
 
-  private final ZonedDateTime eventTime;
 
-  public DefaultMotionDetectedPropertyEvent(MotionSensor sensor, ZonedDateTime eventTime) {
+  private final DataWithTimestamp<Boolean> motionDetected;
+  private final DataWithTimestamp<Boolean> previousValue;
+
+  /**
+   * Constructor
+   *
+   * @param sensor         the sensor
+   * @param motionDetected the new value
+   * @param previousValue  the old value
+   */
+  public DefaultMotionDetectedPropertyEvent(MotionSensor sensor,
+                                            DataWithTimestamp<Boolean> motionDetected,
+                                            DataWithTimestamp<Boolean> previousValue
+  ) {
     super(sensor);
-    this.eventTime = eventTime;
+    this.motionDetected = motionDetected;
+    this.previousValue = previousValue;
   }
 
   @Override
-  public ZonedDateTime getEventTime() {
-    return eventTime;
+  public DataWithTimestamp<Boolean> motionDetected() {
+    return motionDetected;
   }
 
   @Override
@@ -47,7 +67,8 @@ public class DefaultMotionDetectedPropertyEvent extends DevicePropertyEventBase<
   }
 
   @Override
-  public boolean wasPreviousValueNull() {
-    return false;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
+
 }

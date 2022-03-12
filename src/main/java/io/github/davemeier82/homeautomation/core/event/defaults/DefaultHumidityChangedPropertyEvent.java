@@ -21,16 +21,31 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.HumidityChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link HumidityChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultHumidityChangedPropertyEvent extends DevicePropertyEventBase<HumiditySensor> implements HumidityChangedEvent {
 
   private final DataWithTimestamp<Float> relativeHumidityInPercent;
   private final DataWithTimestamp<Float> previousValue;
 
-  public DefaultHumidityChangedPropertyEvent(HumiditySensor source,
+  /**
+   * Constructor
+   *
+   * @param sensor                    the sensor
+   * @param relativeHumidityInPercent the new value
+   * @param previousValue             the old value
+   */
+  public DefaultHumidityChangedPropertyEvent(HumiditySensor sensor,
                                              DataWithTimestamp<Float> relativeHumidityInPercent,
                                              DataWithTimestamp<Float> previousValue
   ) {
-    super(source);
+    super(sensor);
     this.relativeHumidityInPercent = relativeHumidityInPercent;
     this.previousValue = previousValue;
   }
@@ -41,8 +56,8 @@ public class DefaultHumidityChangedPropertyEvent extends DevicePropertyEventBase
   }
 
   @Override
-  public DataWithTimestamp<Float> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -55,8 +70,4 @@ public class DefaultHumidityChangedPropertyEvent extends DevicePropertyEventBase
     return new Float[]{relativeHumidityInPercent.getValue()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

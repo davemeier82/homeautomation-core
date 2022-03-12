@@ -16,7 +16,19 @@
 
 package io.github.davemeier82.homeautomation.core;
 
+/**
+ * Service to send push notifications.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface PushNotificationService {
 
+  /**
+   * Sends a push notification
+   *
+   * @param title   the title of the message
+   * @param message the message payload
+   */
   void sendTextMessage(String title, String message);
 }

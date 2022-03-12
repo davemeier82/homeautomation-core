@@ -38,6 +38,14 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultIlluminanceSensor(long id,
                                   Device device,
                                   EventPublisher eventPublisher,

@@ -19,7 +19,7 @@ package io.github.davemeier82.homeautomation.core.device.mqtt;
 import java.util.Map;
 
 /**
- * Abstract implementation of a MqttSubscriber.
+ * Abstract implementation of a {@link MqttSubscriber}.
  *
  * @author David Meier
  * @since 0.1.0
@@ -29,7 +29,13 @@ public abstract class DefaultMqttSubscriber implements MqttSubscriber {
   private String displayName;
   private Map<String, String> customIdentifiers;
 
-  public DefaultMqttSubscriber(String displayName, Map<String, String> customIdentifiers) {
+  /**
+   * Constructor
+   *
+   * @param displayName       the display name
+   * @param customIdentifiers optional custom identifier
+   */
+  protected DefaultMqttSubscriber(String displayName, Map<String, String> customIdentifiers) {
     this.displayName = displayName;
     this.customIdentifiers = customIdentifiers;
   }

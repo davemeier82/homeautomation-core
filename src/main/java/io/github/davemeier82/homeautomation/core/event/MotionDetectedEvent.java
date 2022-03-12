@@ -18,12 +18,21 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
 
-import java.time.ZonedDateTime;
-
+/**
+ * Event emitted when the motion state of a {@link MotionSensor} changes.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public interface MotionDetectedEvent extends DevicePropertyEvent {
 
   @Override
   MotionSensor getDeviceProperty();
 
-  ZonedDateTime getEventTime();
+  /**
+   * Caution: Not all MotionSensors send an event when motion ends
+   *
+   * @return true if motion was detected and the time of the measurement
+   */
+  DataWithTimestamp<Boolean> motionDetected();
 }

@@ -38,6 +38,14 @@ public class DefaultPowerSensor implements PowerSensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Double>> watt = new AtomicReference<>();
 
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
   public DefaultPowerSensor(long id,
                             Device device,
                             EventPublisher eventPublisher,

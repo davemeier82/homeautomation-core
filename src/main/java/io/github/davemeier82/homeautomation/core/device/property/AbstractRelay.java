@@ -22,17 +22,25 @@ import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 /**
- * Abstract implementation of a Relay.
+ * Abstract implementation of a {@link Relay}.
  *
  * @author David Meier
  * @since 0.1.0
  */
 public abstract class AbstractRelay extends DefaultReadOnlyRelay implements Relay {
 
-  public AbstractRelay(long id,
-                       Device device,
-                       EventPublisher eventPublisher,
-                       EventFactory eventFactory
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param eventPublisher event publisher
+   * @param eventFactory   event factory
+   */
+  protected AbstractRelay(long id,
+                          Device device,
+                          EventPublisher eventPublisher,
+                          EventFactory eventFactory
   ) {
     super(id, device, eventPublisher, eventFactory);
   }

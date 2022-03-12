@@ -21,16 +21,31 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.WindowStateChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link WindowStateChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultWindowStateChangedPropertyEvent extends DevicePropertyEventBase<WindowSensor> implements WindowStateChangedEvent {
 
   private final DataWithTimestamp<Boolean> isOpen;
   private final DataWithTimestamp<Boolean> previousValue;
 
-  public DefaultWindowStateChangedPropertyEvent(WindowSensor source,
+  /**
+   * Constructor
+   *
+   * @param sensor        the sensor
+   * @param isOpen        the new value
+   * @param previousValue the old value
+   */
+  public DefaultWindowStateChangedPropertyEvent(WindowSensor sensor,
                                                 DataWithTimestamp<Boolean> isOpen,
                                                 DataWithTimestamp<Boolean> previousValue
   ) {
-    super(source);
+    super(sensor);
     this.isOpen = isOpen;
     this.previousValue = previousValue;
   }
@@ -41,8 +56,8 @@ public class DefaultWindowStateChangedPropertyEvent extends DevicePropertyEventB
   }
 
   @Override
-  public DataWithTimestamp<Boolean> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -55,8 +70,4 @@ public class DefaultWindowStateChangedPropertyEvent extends DevicePropertyEventB
     return new String[]{getDevice().getDisplayName()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

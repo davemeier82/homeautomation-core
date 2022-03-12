@@ -21,11 +21,26 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.RollerPositionChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link RollerPositionChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEventBase<Roller> implements RollerPositionChangedEvent {
 
   private final DataWithTimestamp<Integer> positionInPercent;
   private final DataWithTimestamp<Integer> previousValue;
 
+  /**
+   * Constructor
+   *
+   * @param roller            the roller
+   * @param positionInPercent the new value
+   * @param previousValue     the old value
+   */
   public DefaultRollerPositionChangedPropertyEvent(Roller roller,
                                                    DataWithTimestamp<Integer> positionInPercent,
                                                    DataWithTimestamp<Integer> previousValue
@@ -41,8 +56,8 @@ public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEve
   }
 
   @Override
-  public DataWithTimestamp<Integer> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -55,8 +70,4 @@ public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEve
     return new Object[]{getDevice().getDisplayName(), positionInPercent.getValue()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

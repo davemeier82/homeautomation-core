@@ -22,11 +22,26 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.RollerStateChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link RollerStateChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultRollerStateChangedPropertyEvent extends DevicePropertyEventBase<Roller> implements RollerStateChangedEvent {
 
   private final DataWithTimestamp<RollerState> state;
   private final DataWithTimestamp<RollerState> previousState;
 
+  /**
+   * Constructor
+   *
+   * @param roller        the roller
+   * @param state         the new state
+   * @param previousState the old state
+   */
   public DefaultRollerStateChangedPropertyEvent(Roller roller,
                                                 DataWithTimestamp<RollerState> state,
                                                 DataWithTimestamp<RollerState> previousState
@@ -42,8 +57,8 @@ public class DefaultRollerStateChangedPropertyEvent extends DevicePropertyEventB
   }
 
   @Override
-  public DataWithTimestamp<RollerState> getPreviousState() {
-    return previousState;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousState);
   }
 
   @Override
@@ -67,8 +82,4 @@ public class DefaultRollerStateChangedPropertyEvent extends DevicePropertyEventB
     return new String[]{getDevice().getDisplayName()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousState() == null;
-  }
 }

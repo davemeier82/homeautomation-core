@@ -21,16 +21,31 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.TemperatureChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link TemperatureChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultTemperatureChangedPropertyEvent extends DevicePropertyEventBase<TemperatureSensor> implements TemperatureChangedEvent {
 
   private final DataWithTimestamp<Float> temperatureInDegree;
   private final DataWithTimestamp<Float> previousValue;
 
-  public DefaultTemperatureChangedPropertyEvent(TemperatureSensor source,
+  /**
+   * Constructor
+   *
+   * @param sensor              the sensor
+   * @param temperatureInDegree the new value
+   * @param previousValue       the old value
+   */
+  public DefaultTemperatureChangedPropertyEvent(TemperatureSensor sensor,
                                                 DataWithTimestamp<Float> temperatureInDegree,
                                                 DataWithTimestamp<Float> previousValue
   ) {
-    super(source);
+    super(sensor);
     this.temperatureInDegree = temperatureInDegree;
     this.previousValue = previousValue;
   }
@@ -41,8 +56,8 @@ public class DefaultTemperatureChangedPropertyEvent extends DevicePropertyEventB
   }
 
   @Override
-  public DataWithTimestamp<Float> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -55,8 +70,4 @@ public class DefaultTemperatureChangedPropertyEvent extends DevicePropertyEventB
     return new Float[]{temperatureInDegree.getValue()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }

@@ -21,11 +21,26 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
 import io.github.davemeier82.homeautomation.core.event.RelayStateChangedEvent;
 
+import java.util.Optional;
+
+/**
+ * Default implementation of a {@link RelayStateChangedEvent}.
+ *
+ * @author David Meier
+ * @since 0.1.0
+ */
 public class DefaultRelayStateChangedPropertyEvent extends DevicePropertyEventBase<ReadOnlyRelay> implements RelayStateChangedEvent {
 
   private final DataWithTimestamp<Boolean> isOn;
   private final DataWithTimestamp<Boolean> previousValue;
 
+  /**
+   * Constructor
+   *
+   * @param relay         the relay
+   * @param isOn          the new value
+   * @param previousValue the old value
+   */
   public DefaultRelayStateChangedPropertyEvent(ReadOnlyRelay relay,
                                                DataWithTimestamp<Boolean> isOn,
                                                DataWithTimestamp<Boolean> previousValue
@@ -41,8 +56,8 @@ public class DefaultRelayStateChangedPropertyEvent extends DevicePropertyEventBa
   }
 
   @Override
-  public DataWithTimestamp<Boolean> getPreviousValue() {
-    return previousValue;
+  public Optional<DataWithTimestamp<?>> getPreviousValue() {
+    return Optional.ofNullable(previousValue);
   }
 
   @Override
@@ -55,8 +70,4 @@ public class DefaultRelayStateChangedPropertyEvent extends DevicePropertyEventBa
     return new String[]{getDevice().getDisplayName()};
   }
 
-  @Override
-  public boolean wasPreviousValueNull() {
-    return getPreviousValue() == null;
-  }
 }
