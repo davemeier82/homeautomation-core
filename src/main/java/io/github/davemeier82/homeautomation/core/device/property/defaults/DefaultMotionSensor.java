@@ -75,9 +75,7 @@ public class DefaultMotionSensor implements MotionSensor {
    */
   public void setMotionDetected(DataWithTimestamp<Boolean> newValue) {
     DataWithTimestamp<Boolean> previousValue = motionDetected.getAndSet(newValue);
-    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
-      eventPublisher.publishEvent(eventFactory.createMotionDetectedEvent(this, newValue, previousValue));
-    }
+    eventPublisher.publishEvent(eventFactory.createMotionDetectedEvent(this, newValue, previousValue));
   }
 
   @Override
