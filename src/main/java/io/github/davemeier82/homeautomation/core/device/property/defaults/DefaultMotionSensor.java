@@ -22,6 +22,7 @@ import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -38,6 +39,7 @@ public class DefaultMotionSensor implements MotionSensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Boolean>> motionDetected = new AtomicReference<>();
+  private final AtomicReference<ZonedDateTime> lastMotionDetected = new AtomicReference<>();
 
   /**
    * Constructor
@@ -75,6 +77,9 @@ public class DefaultMotionSensor implements MotionSensor {
    */
   public void setMotionDetected(DataWithTimestamp<Boolean> newValue) {
     DataWithTimestamp<Boolean> previousValue = motionDetected.getAndSet(newValue);
+    if (newValue.getValue()) {
+      lastMotionDetected.set(newValue.getDateTime());
+    }
     eventPublisher.publishEvent(eventFactory.createMotionDetectedEvent(this, newValue, previousValue));
   }
 
@@ -82,4 +87,11 @@ public class DefaultMotionSensor implements MotionSensor {
   public Optional<DataWithTimestamp<Boolean>> getMotionDetected() {
     return Optional.ofNullable(motionDetected.get());
   }
+
+  @Override
+  public Optional<ZonedDateTime> getLastMotionDetected() {
+    return Optional.ofNullable(lastMotionDetected.get());
+  }
+
+
 }

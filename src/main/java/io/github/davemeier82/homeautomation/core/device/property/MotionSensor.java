@@ -18,6 +18,7 @@ package io.github.davemeier82.homeautomation.core.device.property;
 
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 /**
@@ -34,5 +35,12 @@ public interface MotionSensor extends DeviceProperty {
    * @return Optional.empty() if motion state is unknown
    */
   Optional<DataWithTimestamp<Boolean>> getMotionDetected();
+
+  /**
+   * Return the timestamp of the last time when a motion was detected.
+   *
+   * @return Optional.empty() if no motion was detected so far
+   */
+  Optional<ZonedDateTime> getLastMotionDetected();
 
 }
