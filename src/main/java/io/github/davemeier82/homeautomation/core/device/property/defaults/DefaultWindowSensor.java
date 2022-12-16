@@ -34,6 +34,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class DefaultWindowSensor implements WindowSensor {
   private final long id;
   private final Device device;
+
+  private final boolean tiltingSupported;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Boolean>> isOpen = new AtomicReference<>();
@@ -42,18 +44,21 @@ public class DefaultWindowSensor implements WindowSensor {
   /**
    * Constructor
    *
-   * @param id             the device property id
-   * @param device         the device
-   * @param eventPublisher the event publisher
-   * @param eventFactory   the event factory
+   * @param id               the device property id
+   * @param device           the device
+   * @param tiltingSupported true if tilting is supported
+   * @param eventPublisher   the event publisher
+   * @param eventFactory     the event factory
    */
   public DefaultWindowSensor(long id,
                              Device device,
+                             boolean tiltingSupported,
                              EventPublisher eventPublisher,
                              EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
+    this.tiltingSupported = tiltingSupported;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
   }
@@ -104,6 +109,6 @@ public class DefaultWindowSensor implements WindowSensor {
 
   @Override
   public boolean isTiltingSupported() {
-    return true;
+    return tiltingSupported;
   }
 }
