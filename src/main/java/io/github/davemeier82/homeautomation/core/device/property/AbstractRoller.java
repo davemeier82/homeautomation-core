@@ -66,6 +66,7 @@ public abstract class AbstractRoller implements Roller {
   public void setRollerState(RollerState rollerState) {
     DataWithTimestamp<RollerState> newValue = new DataWithTimestamp<>(rollerState);
     DataWithTimestamp<RollerState> previousValue = state.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createRollerStateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(rollerState)) {
       eventPublisher.publishEvent(eventFactory.createRollerStateChangedEvent(this, newValue, previousValue));
     }
@@ -79,6 +80,7 @@ public abstract class AbstractRoller implements Roller {
   public void setPositionInPercent(int positionInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(positionInPercent);
     DataWithTimestamp<Integer> previousValue = position.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createRollerPositionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(positionInPercent)) {
       eventPublisher.publishEvent(eventFactory.createRollerPositionChangedEvent(this, newValue, previousValue));
     }

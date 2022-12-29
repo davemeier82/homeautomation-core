@@ -16,23 +16,22 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
+import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 
 /**
- * Event emitted when the motion state of a {@link MotionSensor} changes.
+ * Event that gets emitted when the state of the window got updated (open/closed).
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface MotionDetectedEvent extends DevicePropertyEvent {
+public interface WindowStateUpdatedEvent extends DevicePropertyEvent {
 
   @Override
-  MotionSensor getDeviceProperty();
+  WindowSensor getDeviceProperty();
 
   /**
-   * Caution: Not all MotionSensors send an event when motion ends
-   *
-   * @return true if motion was detected and the time of the measurement
+   * @return true if the window is open and the time of the state change
    */
-  DataWithTimestamp<Boolean> motionDetected();
+  DataWithTimestamp<Boolean> isOpen();
+
 }

@@ -16,21 +16,22 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * Event that gets emitted when the state (on/off) of a {@link ReadOnlyRelay} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface RelayStateUpdatedEvent extends DevicePropertyEvent {
+
   @Override
-  PowerSensor getDeviceProperty();
+  ReadOnlyRelay getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * @return true if the relay is on and the time of the state change
    */
-  DataWithTimestamp<Double> getWatt();
+  DataWithTimestamp<Boolean> isOn();
 
 }

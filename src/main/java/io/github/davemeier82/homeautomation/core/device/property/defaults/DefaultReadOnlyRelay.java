@@ -68,6 +68,7 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   public void setRelayStateTo(boolean on) {
     DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
     DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createRelayStateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(on)) {
       eventPublisher.publishEvent(eventFactory.createRelayStateChangedEvent(this, newValue, previousValue));
     }

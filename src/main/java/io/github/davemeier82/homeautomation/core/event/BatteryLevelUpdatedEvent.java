@@ -16,21 +16,22 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * This event gets emitted when the battery level of a {@link BatteryStateSensor} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface BatteryLevelUpdatedEvent extends DevicePropertyEvent {
+
   @Override
-  PowerSensor getDeviceProperty();
+  BatteryStateSensor getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * @return the battery level and the measurement timestamp
    */
-  DataWithTimestamp<Double> getWatt();
+  DataWithTimestamp<Integer> getBatteryLevelInPercent();
 
 }

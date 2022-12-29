@@ -16,59 +16,58 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
+import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
-import io.github.davemeier82.homeautomation.core.event.MotionDetectedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindowStateUpdatedEvent;
 
 import java.util.Optional;
 
 /**
- * Default implementation of a {@link MotionDetectedEvent}.
+ * Default implementation of a {@link WindowStateUpdatedEvent}.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultMotionDetectedPropertyEvent extends DevicePropertyEventBase<MotionSensor> implements MotionDetectedEvent {
+public class DefaultWindowStateUpdatedPropertyEvent extends DevicePropertyEventBase<WindowSensor> implements WindowStateUpdatedEvent {
 
-
-  private final DataWithTimestamp<Boolean> motionDetected;
+  private final DataWithTimestamp<Boolean> isOpen;
   private final DataWithTimestamp<Boolean> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor         the sensor
-   * @param motionDetected the new value
-   * @param previousValue  the old value
+   * @param sensor        the sensor
+   * @param isOpen        the new value
+   * @param previousValue the old value
    */
-  public DefaultMotionDetectedPropertyEvent(MotionSensor sensor,
-                                            DataWithTimestamp<Boolean> motionDetected,
-                                            DataWithTimestamp<Boolean> previousValue
+  public DefaultWindowStateUpdatedPropertyEvent(WindowSensor sensor,
+                                                DataWithTimestamp<Boolean> isOpen,
+                                                DataWithTimestamp<Boolean> previousValue
   ) {
     super(sensor);
-    this.motionDetected = motionDetected;
+    this.isOpen = isOpen;
     this.previousValue = previousValue;
   }
 
   @Override
-  public DataWithTimestamp<Boolean> motionDetected() {
-    return motionDetected;
-  }
-
-  @Override
-  public String getMessageKey() {
-    return "motionDetectedAt";
-  }
-
-  @Override
-  public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+  public DataWithTimestamp<Boolean> isOpen() {
+    return isOpen;
   }
 
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousValue);
+  }
+
+  @Override
+  public String getMessageKey() {
+    return isOpen.getValue() ? "windowOpened" : "windowClosed";
+  }
+
+  @Override
+  public Object[] getMessageArgs() {
+    return new String[]{getDevice().getDisplayName()};
   }
 
 }

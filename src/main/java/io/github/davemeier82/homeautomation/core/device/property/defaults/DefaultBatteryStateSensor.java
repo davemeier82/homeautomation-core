@@ -65,6 +65,7 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   public void setBatteryLevel(int batteryLevel) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(batteryLevel);
     DataWithTimestamp<Integer> previousValue = this.batteryLevel.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createBatteryLevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(batteryLevel)) {
       eventPublisher.publishEvent(eventFactory.createBatteryLevelChangedEvent(this, newValue, previousValue));
     }

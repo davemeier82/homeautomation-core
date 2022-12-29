@@ -39,16 +39,29 @@ public interface EventFactory {
   Optional<Class<?>> fromEventName(String eventName);
 
   /**
-   * Creates a {@link MotionDetectedEvent}.
+   * Creates a {@link MotionChangedEvent}.
    *
    * @param sensor         the sensor that emits the event
    * @param motionDetected the new value
    * @param previousValue  the old value
    * @return the event
    */
-  MotionDetectedEvent createMotionDetectedEvent(MotionSensor sensor,
-                                                DataWithTimestamp<Boolean> motionDetected,
-                                                DataWithTimestamp<Boolean> previousValue
+  MotionChangedEvent createMotionChangedEvent(MotionSensor sensor,
+                                              DataWithTimestamp<Boolean> motionDetected,
+                                              DataWithTimestamp<Boolean> previousValue
+  );
+
+  /**
+   * Creates a {@link MotionUpdatedEvent}.
+   *
+   * @param sensor         the sensor that emits the event
+   * @param motionDetected the new value
+   * @param previousValue  the old value
+   * @return the event
+   */
+  MotionUpdatedEvent createMotionUpdatedEvent(MotionSensor sensor,
+                                              DataWithTimestamp<Boolean> motionDetected,
+                                              DataWithTimestamp<Boolean> previousValue
   );
 
   /**
@@ -70,6 +83,16 @@ public interface EventFactory {
   RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue);
 
   /**
+   * Creates a {@link RelayStateUpdatedEvent}.
+   *
+   * @param relay         the relay that emits the event
+   * @param isOn          the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  RelayStateUpdatedEvent createRelayStateUpdatedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue);
+
+  /**
    * Creates a {@link WindowStateChangedEvent}.
    *
    * @param windowSensor  the window sensor that emits the event
@@ -78,6 +101,19 @@ public interface EventFactory {
    * @return the event
    */
   WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor,
+                                                        DataWithTimestamp<Boolean> isOpen,
+                                                        DataWithTimestamp<Boolean> previousValue
+  );
+
+  /**
+   * Creates a {@link WindowStateUpdatedEvent}.
+   *
+   * @param windowSensor  the window sensor that emits the event
+   * @param isOpen        the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  WindowStateUpdatedEvent createWindowStateUpdatedEvent(WindowSensor windowSensor,
                                                         DataWithTimestamp<Boolean> isOpen,
                                                         DataWithTimestamp<Boolean> previousValue
   );
@@ -96,6 +132,19 @@ public interface EventFactory {
   );
 
   /**
+   * Creates a {@link TemperatureUpdatedEvent}.
+   *
+   * @param temperatureSensor   the temperature sensor that emits the event
+   * @param temperatureInDegree the new value
+   * @param previousValue       the old value
+   * @return the event
+   */
+  TemperatureUpdatedEvent createTemperatureUpdatedEvent(TemperatureSensor temperatureSensor,
+                                                        DataWithTimestamp<Float> temperatureInDegree,
+                                                        DataWithTimestamp<Float> previousValue
+  );
+
+  /**
    * Creates a {@link HumidityChangedEvent}.
    *
    * @param humiditySensor            the humidity sensor that emits the event
@@ -104,6 +153,19 @@ public interface EventFactory {
    * @return the event
    */
   HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor,
+                                                  DataWithTimestamp<Float> relativeHumidityInPercent,
+                                                  DataWithTimestamp<Float> previousValue
+  );
+
+  /**
+   * Creates a {@link HumidityUpdatedEvent}.
+   *
+   * @param humiditySensor            the humidity sensor that emits the event
+   * @param relativeHumidityInPercent the new value
+   * @param previousValue             the old value
+   * @return the event
+   */
+  HumidityUpdatedEvent createHumidityUpdatedEvent(HumiditySensor humiditySensor,
                                                   DataWithTimestamp<Float> relativeHumidityInPercent,
                                                   DataWithTimestamp<Float> previousValue
   );
@@ -122,6 +184,19 @@ public interface EventFactory {
   );
 
   /**
+   * Creates a {@link BatteryLevelUpdatedEvent}.
+   *
+   * @param batteryStateSensor    the battery state sensor that emits the event
+   * @param batteryLevelInPercent the new value
+   * @param previousValue         the old value
+   * @return the event
+   */
+  BatteryLevelUpdatedEvent createBatteryLevelUpdatedEvent(BatteryStateSensor batteryStateSensor,
+                                                          DataWithTimestamp<Integer> batteryLevelInPercent,
+                                                          DataWithTimestamp<Integer> previousValue
+  );
+
+  /**
    * Creates a {@link DimmingLevelChangedEvent}.
    *
    * @param dimmer              the dimmer that emits the event
@@ -130,6 +205,19 @@ public interface EventFactory {
    * @return the event
    */
   DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer,
+                                                          DataWithTimestamp<Integer> brightnessInPercent,
+                                                          DataWithTimestamp<Integer> previousValue
+  );
+
+  /**
+   * Creates a {@link DimmingLevelUpdatedEvent}.
+   *
+   * @param dimmer              the dimmer that emits the event
+   * @param brightnessInPercent the new value
+   * @param previousValue       the old value
+   * @return the event
+   */
+  DimmingLevelUpdatedEvent createDimmingLevelUpdatedEvent(Dimmer dimmer,
                                                           DataWithTimestamp<Integer> brightnessInPercent,
                                                           DataWithTimestamp<Integer> previousValue
   );
@@ -164,6 +252,19 @@ public interface EventFactory {
   );
 
   /**
+   * Creates a {@link RollerStateUpdatedEvent}.
+   *
+   * @param roller        the roller that emits the event
+   * @param state         the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  RollerStateUpdatedEvent createRollerStateUpdatedEvent(Roller roller,
+                                                        DataWithTimestamp<RollerState> state,
+                                                        DataWithTimestamp<RollerState> previousValue
+  );
+
+  /**
    * Creates a {@link RollerPositionChangedEvent}.
    *
    * @param roller            the roller that emits the event
@@ -172,6 +273,19 @@ public interface EventFactory {
    * @return the event
    */
   RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller,
+                                                              DataWithTimestamp<Integer> positionInPercent,
+                                                              DataWithTimestamp<Integer> previousValue
+  );
+
+  /**
+   * Creates a {@link RollerPositionUpdatedEvent}.
+   *
+   * @param roller            the roller that emits the event
+   * @param positionInPercent the new value
+   * @param previousValue     the old value
+   * @return the event
+   */
+  RollerPositionUpdatedEvent createRollerPositionUpdatedEvent(Roller roller,
                                                               DataWithTimestamp<Integer> positionInPercent,
                                                               DataWithTimestamp<Integer> previousValue
   );
@@ -190,6 +304,19 @@ public interface EventFactory {
   );
 
   /**
+   * Creates a {@link IlluminanceUpdatedEvent}.
+   *
+   * @param sensor        the illuminance sensor that emits the event
+   * @param lux           the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  IlluminanceUpdatedEvent createIlluminanceUpdatedEvent(IlluminanceSensor sensor,
+                                                        DataWithTimestamp<Integer> lux,
+                                                        DataWithTimestamp<Integer> previousValue
+  );
+
+  /**
    * Creates a {@link PowerChangedEvent}.
    *
    * @param sensor        the power sensor that emits the event
@@ -198,4 +325,14 @@ public interface EventFactory {
    * @return the event
    */
   PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue);
+
+  /**
+   * Creates a {@link PowerUpdatedEvent}.
+   *
+   * @param sensor        the power sensor that emits the event
+   * @param watt          the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  PowerUpdatedEvent createPowerUpdatedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue);
 }

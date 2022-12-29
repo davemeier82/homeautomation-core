@@ -16,21 +16,23 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.Roller;
+import io.github.davemeier82.homeautomation.core.device.property.RollerState;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * Event that gets emitted when the state of the {@link Roller} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface RollerStateUpdatedEvent extends DevicePropertyEvent {
+
   @Override
-  PowerSensor getDeviceProperty();
+  Roller getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * @return the state and the time of the stage change
    */
-  DataWithTimestamp<Double> getWatt();
+  DataWithTimestamp<RollerState> getState();
 
 }

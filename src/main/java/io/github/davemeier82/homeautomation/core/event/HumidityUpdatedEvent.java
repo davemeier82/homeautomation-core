@@ -16,21 +16,22 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * Event that gets emitted when the relative humidity of a {@link HumiditySensor} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface HumidityUpdatedEvent extends DevicePropertyEvent {
+
   @Override
-  PowerSensor getDeviceProperty();
+  HumiditySensor getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * @return the relative humidity and the time of the measurement
    */
-  DataWithTimestamp<Double> getWatt();
+  DataWithTimestamp<Float> getRelativeHumidityInPercent();
 
 }

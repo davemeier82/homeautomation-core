@@ -45,11 +45,19 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
-  public MotionDetectedEvent createMotionDetectedEvent(MotionSensor sensor,
-                                                       DataWithTimestamp<Boolean> motionDetected,
-                                                       DataWithTimestamp<Boolean> previousValue
+  public MotionChangedEvent createMotionChangedEvent(MotionSensor sensor,
+                                                     DataWithTimestamp<Boolean> motionDetected,
+                                                     DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultMotionDetectedPropertyEvent(sensor, motionDetected, previousValue);
+    return new DefaultMotionChangedPropertyEvent(sensor, motionDetected, previousValue);
+  }
+
+  @Override
+  public MotionUpdatedEvent createMotionUpdatedEvent(MotionSensor sensor,
+                                                     DataWithTimestamp<Boolean> motionDetected,
+                                                     DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultMotionUpdatedPropertyEvent(sensor, motionDetected, previousValue);
   }
 
   @Override
@@ -66,11 +74,27 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public RelayStateUpdatedEvent createRelayStateUpdatedEvent(ReadOnlyRelay relay,
+                                                             DataWithTimestamp<Boolean> isOn,
+                                                             DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultRelayStateUpdatedPropertyEvent(relay, isOn, previousValue);
+  }
+
+  @Override
   public WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor,
                                                                DataWithTimestamp<Boolean> isOpen,
                                                                DataWithTimestamp<Boolean> previousValue
   ) {
     return new DefaultWindowStateChangedPropertyEvent(windowSensor, isOpen, previousValue);
+  }
+
+  @Override
+  public WindowStateUpdatedEvent createWindowStateUpdatedEvent(WindowSensor windowSensor,
+                                                               DataWithTimestamp<Boolean> isOpen,
+                                                               DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultWindowStateUpdatedPropertyEvent(windowSensor, isOpen, previousValue);
   }
 
   @Override
@@ -82,11 +106,27 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public TemperatureUpdatedEvent createTemperatureUpdatedEvent(TemperatureSensor temperatureSensor,
+                                                               DataWithTimestamp<Float> temperatureInDegree,
+                                                               DataWithTimestamp<Float> previousValue
+  ) {
+    return new DefaultTemperatureUpdatedPropertyEvent(temperatureSensor, temperatureInDegree, previousValue);
+  }
+
+  @Override
   public HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor,
                                                          DataWithTimestamp<Float> relativeHumidityInPercent,
                                                          DataWithTimestamp<Float> previousValue
   ) {
     return new DefaultHumidityChangedPropertyEvent(humiditySensor, relativeHumidityInPercent, previousValue);
+  }
+
+  @Override
+  public HumidityUpdatedEvent createHumidityUpdatedEvent(HumiditySensor humiditySensor,
+                                                         DataWithTimestamp<Float> relativeHumidityInPercent,
+                                                         DataWithTimestamp<Float> previousValue
+  ) {
+    return new DefaultHumidityUpdatedPropertyEvent(humiditySensor, relativeHumidityInPercent, previousValue);
   }
 
   @Override
@@ -98,11 +138,27 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public BatteryLevelUpdatedEvent createBatteryLevelUpdatedEvent(BatteryStateSensor batteryStateSensor,
+                                                                 DataWithTimestamp<Integer> batteryLevelInPercent,
+                                                                 DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultBatteryLevelUpdatedPropertyEvent(batteryStateSensor, batteryLevelInPercent, previousValue);
+  }
+
+  @Override
   public DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer,
                                                                  DataWithTimestamp<Integer> levelInPercent,
                                                                  DataWithTimestamp<Integer> previousValue
   ) {
     return new DefaultDimmingLevelChangedPropertyEvent(dimmer, levelInPercent, previousValue);
+  }
+
+  @Override
+  public DimmingLevelUpdatedEvent createDimmingLevelUpdatedEvent(Dimmer dimmer,
+                                                                 DataWithTimestamp<Integer> brightnessInPercent,
+                                                                 DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultDimmingLevelUpdatedPropertyEvent(dimmer, brightnessInPercent, previousValue);
   }
 
   @Override
@@ -124,11 +180,27 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public RollerStateUpdatedEvent createRollerStateUpdatedEvent(Roller roller,
+                                                               DataWithTimestamp<RollerState> state,
+                                                               DataWithTimestamp<RollerState> previousValue
+  ) {
+    return new DefaultRollerStateUpdatedPropertyEvent(roller, state, previousValue);
+  }
+
+  @Override
   public RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller,
                                                                      DataWithTimestamp<Integer> positionInPercent,
                                                                      DataWithTimestamp<Integer> previousValue
   ) {
     return new DefaultRollerPositionChangedPropertyEvent(roller, positionInPercent, previousValue);
+  }
+
+  @Override
+  public RollerPositionUpdatedEvent createRollerPositionUpdatedEvent(Roller roller,
+                                                                     DataWithTimestamp<Integer> positionInPercent,
+                                                                     DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultRollerPositionUpdatedPropertyEvent(roller, positionInPercent, previousValue);
   }
 
   @Override
@@ -140,7 +212,20 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public IlluminanceUpdatedEvent createIlluminanceUpdatedEvent(IlluminanceSensor sensor,
+                                                               DataWithTimestamp<Integer> lux,
+                                                               DataWithTimestamp<Integer> previousValue
+  ) {
+    return new DefaultIlluminanceUpdatedPropertyEvent(sensor, lux, previousValue);
+  }
+
+  @Override
   public PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue) {
     return new DefaultPowerChangedPropertyEvent(sensor, watt, previousValue);
+  }
+
+  @Override
+  public PowerUpdatedEvent createPowerUpdatedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue) {
+    return new DefaultPowerUpdatedPropertyEvent(sensor, watt, previousValue);
   }
 }

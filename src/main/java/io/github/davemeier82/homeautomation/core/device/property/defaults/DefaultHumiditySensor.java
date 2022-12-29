@@ -65,6 +65,7 @@ public class DefaultHumiditySensor implements HumiditySensor {
   public void setRelativeHumidityInPercent(float humidity) {
     DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
     DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createHumidityUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(humidity)) {
       eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue, previousValue));
     }

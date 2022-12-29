@@ -73,6 +73,7 @@ public class DefaultPowerSensor implements PowerSensor {
    */
   public void setWatt(DataWithTimestamp<Double> newValue) {
     DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createPowerUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createPowerChangedEvent(this, newValue, previousValue));
     }

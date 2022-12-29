@@ -65,6 +65,7 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   public void setTemperatureInDegree(float temperature) {
     DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(temperature);
     DataWithTimestamp<Float> previousValue = this.temperature.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createTemperatureUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(temperature)) {
       eventPublisher.publishEvent(eventFactory.createTemperatureChangedEvent(this, newValue, previousValue));
     }

@@ -16,21 +16,22 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * Event that gets emitted when the temperature of a {@link TemperatureSensor} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface TemperatureUpdatedEvent extends DevicePropertyEvent {
+
   @Override
-  PowerSensor getDeviceProperty();
+  TemperatureSensor getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * @return the temperature in degree celsius and the time of the measurement
    */
-  DataWithTimestamp<Double> getWatt();
+  DataWithTimestamp<Float> getTemperatureInDegree();
 
 }

@@ -16,21 +16,23 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * Event emitted when the motion state of a {@link MotionSensor} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface MotionUpdatedEvent extends DevicePropertyEvent {
+
   @Override
-  PowerSensor getDeviceProperty();
+  MotionSensor getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * Caution: Not all MotionSensors send an event when motion ends
+   *
+   * @return true if motion was detected and the time of the measurement
    */
-  DataWithTimestamp<Double> getWatt();
-
+  DataWithTimestamp<Boolean> motionDetected();
 }

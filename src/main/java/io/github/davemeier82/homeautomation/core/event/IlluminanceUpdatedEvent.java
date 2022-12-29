@@ -16,21 +16,21 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
 
 /**
- * Event that gets emitted when the power consumption of a {@link PowerSensor} changes.
+ * Event that gets emitted when the illumination of a {@link IlluminanceSensor} got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface PowerChangedEvent extends DevicePropertyEvent {
+public interface IlluminanceUpdatedEvent extends DevicePropertyEvent {
   @Override
-  PowerSensor getDeviceProperty();
+  IlluminanceSensor getDeviceProperty();
 
   /**
-   * @return the power consumption in watt and the time of the measurement
+   * @return the illumination in lux and the time of the measurement
    */
-  DataWithTimestamp<Double> getWatt();
+  DataWithTimestamp<Integer> getLux();
 
 }
