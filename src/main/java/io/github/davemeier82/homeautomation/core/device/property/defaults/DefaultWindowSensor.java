@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Default implementation of a WindowSensor.
+ * Default implementation of a {@link WindowSensor}.
  *
  * @author David Meier
  * @since 0.1.0

@@ -61,7 +61,7 @@ public class DefaultBatteryLevelUpdatedPropertyEvent extends DevicePropertyEvent
 
   @Override
   public String getMessageKey() {
-    return "batteryLevelChangedTo";
+    return "batteryLevelIs";
   }
 
   @Override

@@ -62,7 +62,7 @@ public class DefaultRelayStateUpdatedPropertyEvent extends DevicePropertyEventBa
 
   @Override
   public String getMessageKey() {
-    return isOn.getValue() ? "relaySwitchedOn" : "relaySwitchedOff";
+    return isOn.getValue() ? "relayIsOn" : "relayIsOff";
   }
 
   @Override

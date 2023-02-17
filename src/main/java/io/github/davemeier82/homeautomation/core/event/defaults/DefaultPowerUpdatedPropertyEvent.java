@@ -62,7 +62,7 @@ public class DefaultPowerUpdatedPropertyEvent extends DevicePropertyEventBase<Po
 
   @Override
   public String getMessageKey() {
-    return "powerChangedTo";
+    return "powerIs";
   }
 
   @Override

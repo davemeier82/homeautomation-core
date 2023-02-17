@@ -16,43 +16,43 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Roller;
-import io.github.davemeier82.homeautomation.core.device.property.RollerState;
+import io.github.davemeier82.homeautomation.core.device.property.Alarm;
+import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
+import io.github.davemeier82.homeautomation.core.event.AlarmStateUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
-import io.github.davemeier82.homeautomation.core.event.RollerStateChangedEvent;
 
 import java.util.Optional;
 
 /**
- * Default implementation of a {@link RollerStateChangedEvent}.
+ * Default implementation of a {@link AlarmStateUpdatedEvent}.
  *
  * @author David Meier
- * @since 0.1.0
+ * @since 0.3.0
  */
-public class DefaultRollerStateChangedPropertyEvent extends DevicePropertyEventBase<Roller> implements RollerStateChangedEvent {
+public class DefaultAlarmStateUpdatedPropertyEvent extends DevicePropertyEventBase<Alarm> implements AlarmStateUpdatedEvent {
 
-  private final DataWithTimestamp<RollerState> state;
-  private final DataWithTimestamp<RollerState> previousState;
+  private final DataWithTimestamp<AlarmState> state;
+  private final DataWithTimestamp<AlarmState> previousState;
 
   /**
    * Constructor
    *
-   * @param roller        the roller
+   * @param alarm         the alarm
    * @param state         the new state
    * @param previousState the old state
    */
-  public DefaultRollerStateChangedPropertyEvent(Roller roller,
-                                                DataWithTimestamp<RollerState> state,
-                                                DataWithTimestamp<RollerState> previousState
+  public DefaultAlarmStateUpdatedPropertyEvent(Alarm alarm,
+                                               DataWithTimestamp<AlarmState> state,
+                                               DataWithTimestamp<AlarmState> previousState
   ) {
-    super(roller);
+    super(alarm);
     this.state = state;
     this.previousState = previousState;
   }
 
   @Override
-  public DataWithTimestamp<RollerState> getState() {
+  public DataWithTimestamp<AlarmState> getState() {
     return state;
   }
 
@@ -64,14 +64,17 @@ public class DefaultRollerStateChangedPropertyEvent extends DevicePropertyEventB
   @Override
   public String getMessageKey() {
     switch (state.getValue()) {
-      case OPENING -> {
-        return "rollerStartedOpening";
+      case OFF -> {
+        return "alarmIsOff";
       }
-      case CLOSING -> {
-        return "rollerStartedClosing";
+      case BURGLAR -> {
+        return "burglarAlarmIsActive";
       }
-      case IDLE -> {
-        return "rollerStopped";
+      case FIRE -> {
+        return "fireAlarmIsActive";
+      }
+      case PRE_ALARM -> {
+        return "preAlarmIsActive";
       }
     }
     return null;

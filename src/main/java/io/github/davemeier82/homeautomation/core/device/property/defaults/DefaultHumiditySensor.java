@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Default implementation of a HumiditySensor.
+ * Default implementation of a {@link HumiditySensor}.
  *
  * @author David Meier
  * @since 0.1.0

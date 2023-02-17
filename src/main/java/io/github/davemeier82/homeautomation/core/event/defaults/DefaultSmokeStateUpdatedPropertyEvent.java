@@ -16,42 +16,43 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
+import io.github.davemeier82.homeautomation.core.device.property.SmokeSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
-import io.github.davemeier82.homeautomation.core.event.IlluminanceUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.SmokeStateUpdatedEvent;
 
 import java.util.Optional;
 
 /**
- * Default implementation of a {@link IlluminanceUpdatedEvent}.
+ * Default implementation of a {@link SmokeStateUpdatedEvent}.
  *
  * @author David Meier
- * @since 0.1.0
+ * @since 0.3.0
  */
-public class DefaultIlluminanceUpdatedPropertyEvent extends DevicePropertyEventBase<IlluminanceSensor> implements IlluminanceUpdatedEvent {
-  private final DataWithTimestamp<Integer> lux;
-  private final DataWithTimestamp<Integer> previousValue;
+public class DefaultSmokeStateUpdatedPropertyEvent extends DevicePropertyEventBase<SmokeSensor> implements SmokeStateUpdatedEvent {
+
+  private final DataWithTimestamp<Boolean> isActive;
+  private final DataWithTimestamp<Boolean> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param lux           the new value
+   * @param smokeSensor   the alarm
+   * @param isActive      the new value
    * @param previousValue the old value
    */
-  public DefaultIlluminanceUpdatedPropertyEvent(IlluminanceSensor sensor,
-                                                DataWithTimestamp<Integer> lux,
-                                                DataWithTimestamp<Integer> previousValue
+  public DefaultSmokeStateUpdatedPropertyEvent(SmokeSensor smokeSensor,
+                                               DataWithTimestamp<Boolean> isActive,
+                                               DataWithTimestamp<Boolean> previousValue
   ) {
-    super(sensor);
-    this.lux = lux;
+    super(smokeSensor);
+    this.isActive = isActive;
     this.previousValue = previousValue;
   }
 
   @Override
-  public DataWithTimestamp<Integer> getLux() {
-    return lux;
+  public DataWithTimestamp<Boolean> isActive() {
+    return isActive;
   }
 
   @Override
@@ -61,12 +62,12 @@ public class DefaultIlluminanceUpdatedPropertyEvent extends DevicePropertyEventB
 
   @Override
   public String getMessageKey() {
-    return "illuminanceIs";
+    return isActive.getValue() ? "DetectsSmoke" : "DetectsNoSmoke";
   }
 
   @Override
   public Object[] getMessageArgs() {
-    return new Integer[]{lux.getValue()};
+    return new String[]{getDevice().getDisplayName()};
   }
 
 }

@@ -71,7 +71,7 @@ public class DefaultRollerStateUpdatedPropertyEvent extends DevicePropertyEventB
         return "rollerIsClosing";
       }
       case IDLE -> {
-        return "rollerStopped";
+        return "rollerIsIdle";
       }
     }
     return null;

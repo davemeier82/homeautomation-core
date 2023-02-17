@@ -60,7 +60,7 @@ public class DefaultDimmingLevelUpdatedPropertyEvent extends DevicePropertyEvent
 
   @Override
   public String getMessageKey() {
-    return "dimmingLevelChangedTo";
+    return "dimmingLevelIs";
   }
 
   @Override

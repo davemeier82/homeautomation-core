@@ -17,7 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
+import io.github.davemeier82.homeautomation.core.device.property.SmokeSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
@@ -26,17 +26,18 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Default implementation of a {@link IlluminanceSensor}.
+ * Default implementation of a {@link SmokeSensor}.
  *
  * @author David Meier
- * @since 0.1.0
+ * @since 0.3.0
  */
-public class DefaultIlluminanceSensor implements IlluminanceSensor {
+public class DefaultSmokeSensor implements SmokeSensor {
   private final long id;
   private final Device device;
+
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Boolean>> isSmokeDetected = new AtomicReference<>();
 
   /**
    * Constructor
@@ -46,34 +47,15 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultIlluminanceSensor(long id,
-                                  Device device,
-                                  EventPublisher eventPublisher,
-                                  EventFactory eventFactory
+  public DefaultSmokeSensor(long id,
+                            Device device,
+                            EventPublisher eventPublisher,
+                            EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
-  }
-
-  /**
-   * Sets illumination with the current timestamp
-   *
-   * @param lux the illumination in lux
-   */
-  public void setIlluminanceInLux(int lux) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
-    DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
-    eventPublisher.publishEvent(eventFactory.createIlluminanceUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(lux)) {
-      eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue, previousValue));
-    }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Integer>> getLux() {
-    return Optional.ofNullable(lux.get());
   }
 
   @Override
@@ -84,6 +66,25 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  /**
+   * Sets the state of the smoke sensor with the current timestamp
+   *
+   * @param hasSmoke true if the sensor detected smoke
+   */
+  public void setSmokeDetected(boolean hasSmoke) {
+    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(hasSmoke);
+    DataWithTimestamp<Boolean> previousValue = isSmokeDetected.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createSmokeStateUpdatedEvent(this, newValue, previousValue));
+    if (previousValue == null || !previousValue.getValue().equals(hasSmoke)) {
+      eventPublisher.publishEvent(eventFactory.createSmokeStateChangedEvent(this, newValue, previousValue));
+    }
+  }
+
+  @Override
+  public Optional<DataWithTimestamp<Boolean>> isSmokeDetected() {
+    return Optional.ofNullable(isSmokeDetected.get());
   }
 
 }

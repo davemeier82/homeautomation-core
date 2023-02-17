@@ -62,7 +62,7 @@ public class DefaultRollerPositionUpdatedPropertyEvent extends DevicePropertyEve
 
   @Override
   public String getMessageKey() {
-    return "rollerPositionChangedTo";
+    return "rollerPositionIs";
   }
 
   @Override

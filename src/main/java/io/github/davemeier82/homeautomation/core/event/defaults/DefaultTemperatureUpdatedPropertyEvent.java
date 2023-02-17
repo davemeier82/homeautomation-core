@@ -62,7 +62,7 @@ public class DefaultTemperatureUpdatedPropertyEvent extends DevicePropertyEventB
 
   @Override
   public String getMessageKey() {
-    return "temperatureChangedTo";
+    return "temperatureIs";
   }
 
   @Override

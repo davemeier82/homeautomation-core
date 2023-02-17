@@ -17,7 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
+import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
@@ -26,17 +26,17 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Default implementation of a {@link IlluminanceSensor}.
+ * Default implementation of a {@link Co2Sensor}.
  *
  * @author David Meier
- * @since 0.1.0
+ * @since 0.3.0
  */
-public class DefaultIlluminanceSensor implements IlluminanceSensor {
+public class DefaultCo2Sensor implements Co2Sensor {
   private final long id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
+  private final AtomicReference<DataWithTimestamp<Integer>> ppm = new AtomicReference<>();
 
   /**
    * Constructor
@@ -46,10 +46,10 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultIlluminanceSensor(long id,
-                                  Device device,
-                                  EventPublisher eventPublisher,
-                                  EventFactory eventFactory
+  public DefaultCo2Sensor(long id,
+                          Device device,
+                          EventPublisher eventPublisher,
+                          EventFactory eventFactory
   ) {
     this.id = id;
     this.device = device;
@@ -58,22 +58,22 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   }
 
   /**
-   * Sets illumination with the current timestamp
+   * Sets co2 level with the current timestamp
    *
-   * @param lux the illumination in lux
+   * @param ppm the co2 level in ppm
    */
-  public void setIlluminanceInLux(int lux) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
-    DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
-    eventPublisher.publishEvent(eventFactory.createIlluminanceUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(lux)) {
-      eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue, previousValue));
+  public void setCo2LevelInPpm(int ppm) {
+    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(ppm);
+    DataWithTimestamp<Integer> previousValue = this.ppm.getAndSet(newValue);
+    eventPublisher.publishEvent(eventFactory.createCo2LevelUpdatedEvent(this, newValue, previousValue));
+    if (previousValue == null || !previousValue.getValue().equals(ppm)) {
+      eventPublisher.publishEvent(eventFactory.createCo2LevelChangedEvent(this, newValue, previousValue));
     }
   }
 
   @Override
-  public Optional<DataWithTimestamp<Integer>> getLux() {
-    return Optional.ofNullable(lux.get());
+  public Optional<DataWithTimestamp<Integer>> getPpm() {
+    return Optional.ofNullable(ppm.get());
   }
 
   @Override

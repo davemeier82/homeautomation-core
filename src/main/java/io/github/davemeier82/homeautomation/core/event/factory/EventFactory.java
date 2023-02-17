@@ -119,6 +119,32 @@ public interface EventFactory {
   );
 
   /**
+   * Creates a {@link SmokeStateChangedEvent}.
+   *
+   * @param smokeSensor   the alarm that emits the event
+   * @param isOpen        the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  SmokeStateChangedEvent createSmokeStateChangedEvent(SmokeSensor smokeSensor,
+                                                      DataWithTimestamp<Boolean> isOpen,
+                                                      DataWithTimestamp<Boolean> previousValue
+  );
+
+  /**
+   * Creates a {@link SmokeStateUpdatedEvent}.
+   *
+   * @param smokeSensor   the alarm that emits the event
+   * @param isOpen        the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  SmokeStateUpdatedEvent createSmokeStateUpdatedEvent(SmokeSensor smokeSensor,
+                                                      DataWithTimestamp<Boolean> isOpen,
+                                                      DataWithTimestamp<Boolean> previousValue
+  );
+
+  /**
    * Creates a {@link TemperatureChangedEvent}.
    *
    * @param temperatureSensor   the temperature sensor that emits the event
@@ -265,6 +291,32 @@ public interface EventFactory {
   );
 
   /**
+   * Creates a {@link AlarmStateChangedEvent}.
+   *
+   * @param alarm         the alarm that emits the event
+   * @param state         the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  AlarmStateChangedEvent createAlarmStateChangedEvent(Alarm alarm,
+                                                      DataWithTimestamp<AlarmState> state,
+                                                      DataWithTimestamp<AlarmState> previousValue
+  );
+
+  /**
+   * Creates a {@link AlarmStateUpdatedEvent}.
+   *
+   * @param alarm         the alarm that emits the event
+   * @param state         the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  AlarmStateUpdatedEvent createAlarmStateUpdatedEvent(Alarm alarm,
+                                                      DataWithTimestamp<AlarmState> state,
+                                                      DataWithTimestamp<AlarmState> previousValue
+  );
+
+  /**
    * Creates a {@link RollerPositionChangedEvent}.
    *
    * @param roller            the roller that emits the event
@@ -314,6 +366,32 @@ public interface EventFactory {
   IlluminanceUpdatedEvent createIlluminanceUpdatedEvent(IlluminanceSensor sensor,
                                                         DataWithTimestamp<Integer> lux,
                                                         DataWithTimestamp<Integer> previousValue
+  );
+
+  /**
+   * Creates a {@link Co2LevelUpdatedEvent}.
+   *
+   * @param sensor        the co2 sensor that emits the event
+   * @param ppm           the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  Co2LevelUpdatedEvent createCo2LevelUpdatedEvent(Co2Sensor sensor,
+                                                  DataWithTimestamp<Integer> ppm,
+                                                  DataWithTimestamp<Integer> previousValue
+  );
+
+  /**
+   * Creates a {@link Co2LevelChangedEvent}.
+   *
+   * @param sensor        the co2 sensor that emits the event
+   * @param ppm           the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  Co2LevelChangedEvent createCo2LevelChangedEvent(Co2Sensor sensor,
+                                                  DataWithTimestamp<Integer> ppm,
+                                                  DataWithTimestamp<Integer> previousValue
   );
 
   /**

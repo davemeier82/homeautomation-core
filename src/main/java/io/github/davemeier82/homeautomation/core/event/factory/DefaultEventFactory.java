@@ -98,6 +98,22 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public SmokeStateChangedEvent createSmokeStateChangedEvent(SmokeSensor smokeSensor,
+                                                             DataWithTimestamp<Boolean> isActive,
+                                                             DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultSmokeStateChangedPropertyEvent(smokeSensor, isActive, previousValue);
+  }
+
+  @Override
+  public SmokeStateUpdatedEvent createSmokeStateUpdatedEvent(SmokeSensor smokeSensor,
+                                                             DataWithTimestamp<Boolean> isActive,
+                                                             DataWithTimestamp<Boolean> previousValue
+  ) {
+    return new DefaultSmokeStateUpdatedPropertyEvent(smokeSensor, isActive, previousValue);
+  }
+
+  @Override
   public TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor,
                                                                DataWithTimestamp<Float> temperatureInDegree,
                                                                DataWithTimestamp<Float> previousValue
@@ -188,6 +204,22 @@ public class DefaultEventFactory implements EventFactory {
   }
 
   @Override
+  public AlarmStateChangedEvent createAlarmStateChangedEvent(Alarm alarm,
+                                                             DataWithTimestamp<AlarmState> state,
+                                                             DataWithTimestamp<AlarmState> previousValue
+  ) {
+    return new DefaultAlarmStateChangedPropertyEvent(alarm, state, previousValue);
+  }
+
+  @Override
+  public AlarmStateUpdatedEvent createAlarmStateUpdatedEvent(Alarm alarm,
+                                                             DataWithTimestamp<AlarmState> state,
+                                                             DataWithTimestamp<AlarmState> previousValue
+  ) {
+    return new DefaultAlarmStateUpdatedPropertyEvent(alarm, state, previousValue);
+  }
+
+  @Override
   public RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller,
                                                                      DataWithTimestamp<Integer> positionInPercent,
                                                                      DataWithTimestamp<Integer> previousValue
@@ -217,6 +249,16 @@ public class DefaultEventFactory implements EventFactory {
                                                                DataWithTimestamp<Integer> previousValue
   ) {
     return new DefaultIlluminanceUpdatedPropertyEvent(sensor, lux, previousValue);
+  }
+
+  @Override
+  public Co2LevelUpdatedEvent createCo2LevelUpdatedEvent(Co2Sensor sensor, DataWithTimestamp<Integer> ppm, DataWithTimestamp<Integer> previousValue) {
+    return new DefaultICo2LevelUpdatedPropertyEvent(sensor, ppm, previousValue);
+  }
+
+  @Override
+  public Co2LevelChangedEvent createCo2LevelChangedEvent(Co2Sensor sensor, DataWithTimestamp<Integer> ppm, DataWithTimestamp<Integer> previousValue) {
+    return new DefaultICo2LevelChangedPropertyEvent(sensor, ppm, previousValue);
   }
 
   @Override

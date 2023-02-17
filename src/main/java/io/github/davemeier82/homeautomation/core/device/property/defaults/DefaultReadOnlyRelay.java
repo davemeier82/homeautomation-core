@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Default implementation of a ReadOnlyRelay.
+ * Default implementation of a {@link ReadOnlyRelay}.
  *
  * @author David Meier
  * @since 0.1.0

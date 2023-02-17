@@ -58,7 +58,7 @@ public class DefaultMotionChangedPropertyEvent extends DevicePropertyEventBase<M
 
   @Override
   public String getMessageKey() {
-    return "motionDetectedAt";
+    return "motionChangedAt";
   }
 
   @Override

@@ -16,42 +16,42 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
+import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
+import io.github.davemeier82.homeautomation.core.event.Co2LevelChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
-import io.github.davemeier82.homeautomation.core.event.IlluminanceUpdatedEvent;
 
 import java.util.Optional;
 
 /**
- * Default implementation of a {@link IlluminanceUpdatedEvent}.
+ * Default implementation of a {@link Co2LevelChangedEvent}.
  *
  * @author David Meier
- * @since 0.1.0
+ * @since 0.3.0
  */
-public class DefaultIlluminanceUpdatedPropertyEvent extends DevicePropertyEventBase<IlluminanceSensor> implements IlluminanceUpdatedEvent {
-  private final DataWithTimestamp<Integer> lux;
+public class DefaultICo2LevelChangedPropertyEvent extends DevicePropertyEventBase<Co2Sensor> implements Co2LevelChangedEvent {
+  private final DataWithTimestamp<Integer> ppm;
   private final DataWithTimestamp<Integer> previousValue;
 
   /**
    * Constructor
    *
    * @param sensor        the sensor
-   * @param lux           the new value
+   * @param ppm           the new value
    * @param previousValue the old value
    */
-  public DefaultIlluminanceUpdatedPropertyEvent(IlluminanceSensor sensor,
-                                                DataWithTimestamp<Integer> lux,
-                                                DataWithTimestamp<Integer> previousValue
+  public DefaultICo2LevelChangedPropertyEvent(Co2Sensor sensor,
+                                              DataWithTimestamp<Integer> ppm,
+                                              DataWithTimestamp<Integer> previousValue
   ) {
     super(sensor);
-    this.lux = lux;
+    this.ppm = ppm;
     this.previousValue = previousValue;
   }
 
   @Override
-  public DataWithTimestamp<Integer> getLux() {
-    return lux;
+  public DataWithTimestamp<Integer> getPpm() {
+    return ppm;
   }
 
   @Override
@@ -61,12 +61,12 @@ public class DefaultIlluminanceUpdatedPropertyEvent extends DevicePropertyEventB
 
   @Override
   public String getMessageKey() {
-    return "illuminanceIs";
+    return "co2LevelChangedTo";
   }
 
   @Override
   public Object[] getMessageArgs() {
-    return new Integer[]{lux.getValue()};
+    return new Integer[]{ppm.getValue()};
   }
 
 }

@@ -62,7 +62,7 @@ public class DefaultHumidityUpdatedPropertyEvent extends DevicePropertyEventBase
 
   @Override
   public String getMessageKey() {
-    return "humidityChangedTo";
+    return "humidityIs";
   }
 
   @Override

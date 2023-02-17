@@ -62,7 +62,7 @@ public class DefaultWindowStateUpdatedPropertyEvent extends DevicePropertyEventB
 
   @Override
   public String getMessageKey() {
-    return isOpen.getValue() ? "windowOpened" : "windowClosed";
+    return isOpen.getValue() ? "windowIsOpen" : "windowIsClosed";
   }
 
   @Override
