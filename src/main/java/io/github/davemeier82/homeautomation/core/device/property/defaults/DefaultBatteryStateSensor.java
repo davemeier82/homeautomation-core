@@ -37,6 +37,7 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Integer>> batteryLevel = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -51,10 +52,29 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
                                    EventPublisher eventPublisher,
                                    EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param device         the device
+   * @param label          the label
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultBatteryStateSensor(long id,
+                                   String label,
+                                   Device device,
+                                   EventPublisher eventPublisher,
+                                   EventFactory eventFactory
+  ) {
     this.id = id;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
+    this.label = label;
   }
 
   /**
@@ -63,10 +83,20 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
    * @param batteryLevel the level in percent (0-100)
    */
   public void setBatteryLevel(int batteryLevel) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(batteryLevel);
+    setBatteryLevel(new DataWithTimestamp<>(batteryLevel));
+  }
+
+  /**
+   * Sets the battery level
+   * @param newValue
+   */
+  public void setBatteryLevel(DataWithTimestamp<Integer> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Integer> previousValue = this.batteryLevel.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createBatteryLevelUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(batteryLevel)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createBatteryLevelChangedEvent(this, newValue, previousValue));
     }
   }
@@ -84,5 +114,13 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return BatteryStateSensor.super.getLabel();
   }
 }

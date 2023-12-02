@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -37,6 +38,7 @@ public class DefaultHumiditySensor implements HumiditySensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Float>> humidity = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -51,7 +53,26 @@ public class DefaultHumiditySensor implements HumiditySensor {
                                EventPublisher eventPublisher,
                                EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultHumiditySensor(long id,
+                               String label,
+                               Device device,
+                               EventPublisher eventPublisher,
+                               EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -63,10 +84,20 @@ public class DefaultHumiditySensor implements HumiditySensor {
    * @param humidity the humidity in percent (0-100)
    */
   public void setRelativeHumidityInPercent(float humidity) {
-    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(humidity);
+    setRelativeHumidityInPercent(new DataWithTimestamp<>(humidity));
+  }
+
+  /**
+   * Sets relative humidity
+   * @param newValue
+   */
+  public void setRelativeHumidityInPercent(DataWithTimestamp<Float> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createHumidityUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(humidity)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue, previousValue));
     }
   }
@@ -84,6 +115,14 @@ public class DefaultHumiditySensor implements HumiditySensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return HumiditySensor.super.getLabel();
   }
 
 }

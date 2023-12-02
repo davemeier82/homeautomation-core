@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -37,6 +38,7 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Float>> temperature = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -51,7 +53,26 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
                                   EventPublisher eventPublisher,
                                   EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultTemperatureSensor(long id,
+                                  String label,
+                                  Device device,
+                                  EventPublisher eventPublisher,
+                                  EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -63,10 +84,20 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
    * @param temperature the temperature in degree celsius
    */
   public void setTemperatureInDegree(float temperature) {
-    DataWithTimestamp<Float> newValue = new DataWithTimestamp<>(temperature);
+    setTemperatureInDegree(new DataWithTimestamp<>(temperature));
+  }
+
+  /**
+   * Sets the temperature
+   * @param newValue
+   */
+  public void setTemperatureInDegree(DataWithTimestamp<Float> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Float> previousValue = this.temperature.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createTemperatureUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(temperature)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createTemperatureChangedEvent(this, newValue, previousValue));
     }
   }
@@ -84,5 +115,13 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return TemperatureSensor.super.getLabel();
   }
 }

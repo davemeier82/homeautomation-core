@@ -270,4 +270,114 @@ public class DefaultEventFactory implements EventFactory {
   public PowerUpdatedEvent createPowerUpdatedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue) {
     return new DefaultPowerUpdatedPropertyEvent(sensor, watt, previousValue);
   }
+
+  @Override
+  public CloudBaseChangedEvent createCloudBaseChangedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue) {
+    return new DefaultCloudBaseChangedPropertyEvent(sensor, meter, previousValue) ;
+  }
+
+  @Override
+  public CloudBaseUpdatedEvent createCloudBaseUpdatedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue) {
+    return new DefaultCloudBaseUpdatedPropertyEvent(sensor, meter, previousValue);
+  }
+
+  @Override
+  public PressureChangedEvent createPressureChangedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue) {
+    return new DefaultPressureChangedPropertyEvent(sensor, mbar, previousValue);
+  }
+
+  @Override
+  public PressureUpdatedEvent createPressureUpdatedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue) {
+    return new DefaultPressureUpdatedPropertyEvent(sensor, mbar, previousValue);
+  }
+
+  @Override
+  public UvIndexChangedEvent createUvIndexChangedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue) {
+    return new DefaultUvIndexChangedPropertyEvent(sensor, uvIndex, previousValue);
+  }
+
+  @Override
+  public UvIndexUpdatedEvent createUvIndexUpdatedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue) {
+    return new DefaultUvIndexUpdatedPropertyEvent(sensor, uvIndex, previousValue);
+  }
+
+  @Override
+  public RainRateChangedEvent createRainRateChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue) {
+    return new DefaultRainRateChangedPropertyEvent(sensor, millimeterPerHour, previousValue);
+  }
+
+  @Override
+  public RainRateUpdatedEvent createRainRateUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue) {
+    return new DefaultRainRateUpdatedPropertyEvent(sensor, millimeterPerHour, previousValue);
+  }
+
+  @Override
+  public RainIntervalAmountChangedEvent createRainIntervalAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
+    return new DefaultRainIntervalAmountChangedPropertyEvent(sensor, millimeter, previousValue);
+  }
+
+  @Override
+  public RainIntervalAmountUpdatedEvent createRainIntervalAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
+    return new DefaultRainIntervalAmountUpdatedPropertyEvent(sensor, millimeter, previousValue);
+  }
+
+  @Override
+  public RainTodayAmountChangedEvent createRainTodayAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
+    return new DefaultRainTodayAmountChangedPropertyEvent(sensor, millimeter, previousValue);
+  }
+
+  @Override
+  public RainTodayAmountUpdatedEvent createRainTodayAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
+    return new DefaultRainTodayAmountUpdatedPropertyEvent(sensor, millimeter, previousValue);
+  }
+
+  @Override
+  public WindSpeedChangedEvent createWindSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindSpeedChangedPropertyEvent(sensor, kmh, previousValue);
+  }
+
+  @Override
+  public WindSpeedUpdatedEvent createWindSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindSpeedUpdatedPropertyEvent(sensor, kmh, previousValue);
+  }
+
+  @Override
+  public WindGustSpeedChangedEvent createWindGustSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindGustSpeedChangedPropertyEvent(sensor, kmh, previousValue);
+  }
+
+  @Override
+  public WindGustSpeedUpdatedEvent createWindGustSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindGustSpeedUpdatedPropertyEvent(sensor, kmh, previousValue);
+  }
+
+  @Override
+  public WindDirectionChangedEvent createWindDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindDirectionChangedPropertyEvent(sensor, degree, previousValue);
+  }
+
+  @Override
+  public WindDirectionUpdatedEvent createWindDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindDirectionUpdatedPropertyEvent(sensor, degree, previousValue);
+  }
+
+  @Override
+  public WindGustDirectionChangedEvent createWindGustDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindGustDirectionChangedPropertyEvent(sensor, degree, previousValue);
+  }
+
+  @Override
+  public WindGustDirectionUpdatedEvent createWindGustDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
+    return new DefaultWindGustDirectionUpdatedPropertyEvent(sensor, degree, previousValue);
+  }
+
+  @Override
+  public WindRunChangedEvent createWindRunChangedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue) {
+    return new DefaultWindRunChangedPropertyEvent(sensor, km, previousValue);
+  }
+
+  @Override
+  public WindRunUpdatedEvent createWindRunUpdatedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue) {
+    return new DefaultWindRunUpdatedPropertyEvent(sensor, km, previousValue);
+  }
 }

@@ -35,4 +35,12 @@ public interface DeviceProperty {
    * @return the device it belongs to
    */
   Device getDevice();
+
+  /**
+   * @return the label of sensor
+   * @since 0.4.0
+   */
+  default String getLabel() {
+    return getClass().getSimpleName();
+  }
 }

@@ -17,6 +17,8 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
+import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
 import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -40,6 +42,7 @@ public class DefaultWindowSensor implements WindowSensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Boolean>> isOpen = new AtomicReference<>();
   private final AtomicReference<DataWithTimestamp<Integer>> tiltAngleInDegree = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -56,7 +59,28 @@ public class DefaultWindowSensor implements WindowSensor {
                              EventPublisher eventPublisher,
                              EventFactory eventFactory
   ) {
+    this(id, null, device, tiltingSupported, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id               the device property id
+   * @param label            the label
+   * @param device           the device
+   * @param tiltingSupported true if tilting is supported
+   * @param eventPublisher   the event publisher
+   * @param eventFactory     the event factory
+   */
+  public DefaultWindowSensor(long id,
+                             String label,
+                             Device device,
+                             boolean tiltingSupported,
+                             EventPublisher eventPublisher,
+                             EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.tiltingSupported = tiltingSupported;
     this.eventPublisher = eventPublisher;
@@ -79,10 +103,16 @@ public class DefaultWindowSensor implements WindowSensor {
    * @param open true if the window/door is open
    */
   public void setIsOpen(boolean open) {
-    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(open);
+    setIsOpen(new DataWithTimestamp<>(open));
+  }
+
+  public void setIsOpen(DataWithTimestamp<Boolean> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Boolean> previousValue = isOpen.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createWindowStateUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(open)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindowStateChangedEvent(this, newValue, previousValue));
     }
   }
@@ -111,5 +141,13 @@ public class DefaultWindowSensor implements WindowSensor {
   @Override
   public boolean isTiltingSupported() {
     return tiltingSupported;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return WindowSensor.super.getLabel();
   }
 }

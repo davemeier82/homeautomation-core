@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -37,6 +38,7 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -51,7 +53,26 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
                                   EventPublisher eventPublisher,
                                   EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultIlluminanceSensor(long id,
+                                  String label,
+                                  Device device,
+                                  EventPublisher eventPublisher,
+                                  EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -63,10 +84,15 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
    * @param lux the illumination in lux
    */
   public void setIlluminanceInLux(int lux) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(lux);
+    setIlluminanceInLux(new DataWithTimestamp<>(lux));
+  }
+  public void setIlluminanceInLux(DataWithTimestamp<Integer> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createIlluminanceUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(lux)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue, previousValue));
     }
   }
@@ -84,6 +110,14 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return IlluminanceSensor.super.getLabel();
   }
 
 }

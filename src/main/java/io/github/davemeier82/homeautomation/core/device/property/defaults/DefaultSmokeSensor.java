@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.SmokeSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -38,6 +39,7 @@ public class DefaultSmokeSensor implements SmokeSensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Boolean>> isSmokeDetected = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -52,7 +54,26 @@ public class DefaultSmokeSensor implements SmokeSensor {
                             EventPublisher eventPublisher,
                             EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultSmokeSensor(long id,
+                            String label,
+                            Device device,
+                            EventPublisher eventPublisher,
+                            EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -74,10 +95,20 @@ public class DefaultSmokeSensor implements SmokeSensor {
    * @param hasSmoke true if the sensor detected smoke
    */
   public void setSmokeDetected(boolean hasSmoke) {
-    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(hasSmoke);
+    setSmokeDetected(new DataWithTimestamp<>(hasSmoke));
+  }
+
+  /**
+   * Sets the state of the smoke sensor
+   * @param newValue
+   */
+  public void setSmokeDetected(DataWithTimestamp<Boolean> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Boolean> previousValue = isSmokeDetected.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createSmokeStateUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(hasSmoke)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createSmokeStateChangedEvent(this, newValue, previousValue));
     }
   }
@@ -85,6 +116,15 @@ public class DefaultSmokeSensor implements SmokeSensor {
   @Override
   public Optional<DataWithTimestamp<Boolean>> isSmokeDetected() {
     return Optional.ofNullable(isSmokeDetected.get());
+  }
+
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return SmokeSensor.super.getLabel();
   }
 
 }

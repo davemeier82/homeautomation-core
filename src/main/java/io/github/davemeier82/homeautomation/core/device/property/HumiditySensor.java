@@ -31,7 +31,7 @@ public interface HumiditySensor extends DeviceProperty {
   /**
    * Returns the relative humidity in percent (0 = dry, 100 = humid) and the time of the measurement.
    *
-   * @return Optional.empty() if angle is unknown
+   * @return Optional.empty() if humidity is unknown
    */
   Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent();
 }

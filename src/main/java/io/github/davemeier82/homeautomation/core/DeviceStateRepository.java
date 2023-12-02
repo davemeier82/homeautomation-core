@@ -35,30 +35,33 @@ public interface DeviceStateRepository {
    *
    * @param deviceId the device id
    * @param category the category to with the value belongs to (i.e. illuminance)
+   * @param label    the label of the device property
    * @param value    the value
    * @param time     the timestamp
    */
-  void insert(DeviceId deviceId, String category, double value, Instant time);
+  void insert(DeviceId deviceId, String category, String label, double value, Instant time);
 
   /**
    * Insert a int value.
    *
    * @param deviceId the device id
    * @param category the category to with the value belongs to (i.e. illuminance)
+   * @param label    the label of the device property
    * @param value    the value
    * @param time     the timestamp
    */
-  void insert(DeviceId deviceId, String category, int value, Instant time);
+  void insert(DeviceId deviceId, String category, String label, int value, Instant time);
 
   /**
    * Insert a boolean value.
    *
    * @param deviceId the device id
    * @param category the category to with the value belongs to (i.e. illuminance)
+   * @param label    the label of the device property
    * @param value    the value
    * @param time     the timestamp
    */
-  void insert(DeviceId deviceId, String category, boolean value, Instant time);
+  void insert(DeviceId deviceId, String category, String label, boolean value, Instant time);
 
   /**
    * Get the latest value of a device and category

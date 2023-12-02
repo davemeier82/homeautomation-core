@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -36,6 +37,7 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
+  private String label;
   /**
    * The relay state and the time of the state change.
    */
@@ -66,10 +68,20 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
    * @param on true if the relay is switched on
    */
   public void setRelayStateTo(boolean on) {
-    DataWithTimestamp<Boolean> newValue = new DataWithTimestamp<>(on);
+    setRelayStateTo(new DataWithTimestamp<>(on));
+  }
+
+  /**
+   * Sets the relay state
+   * @param newValue
+   */
+  public void setRelayStateTo(DataWithTimestamp<Boolean> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Boolean> previousValue = isOn.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createRelayStateUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(on)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRelayStateChangedEvent(this, newValue, previousValue));
     }
   }
@@ -101,5 +113,13 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
    */
   public EventFactory getEventFactory() {
     return eventFactory;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return ReadOnlyRelay.super.getLabel();
   }
 }

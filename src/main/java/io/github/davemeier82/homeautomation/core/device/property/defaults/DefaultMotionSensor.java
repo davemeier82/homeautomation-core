@@ -40,6 +40,7 @@ public class DefaultMotionSensor implements MotionSensor {
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Boolean>> motionDetected = new AtomicReference<>();
   private final AtomicReference<ZonedDateTime> lastMotionDetected = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -54,7 +55,26 @@ public class DefaultMotionSensor implements MotionSensor {
                              EventPublisher eventPublisher,
                              EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultMotionSensor(long id,
+                             String label,
+                             Device device,
+                             EventPublisher eventPublisher,
+                             EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -76,6 +96,9 @@ public class DefaultMotionSensor implements MotionSensor {
    * @param newValue the new motion state with the timestamp
    */
   public void setMotionDetected(DataWithTimestamp<Boolean> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Boolean> previousValue = motionDetected.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createMotionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
@@ -94,5 +117,12 @@ public class DefaultMotionSensor implements MotionSensor {
     return Optional.ofNullable(lastMotionDetected.get());
   }
 
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return MotionSensor.super.getLabel();
+  }
 
 }

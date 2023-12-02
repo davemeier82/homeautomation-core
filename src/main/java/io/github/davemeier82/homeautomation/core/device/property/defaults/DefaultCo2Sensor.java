@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -37,6 +38,7 @@ public class DefaultCo2Sensor implements Co2Sensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Integer>> ppm = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -51,7 +53,26 @@ public class DefaultCo2Sensor implements Co2Sensor {
                           EventPublisher eventPublisher,
                           EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultCo2Sensor(long id,
+                          String label,
+                          Device device,
+                          EventPublisher eventPublisher,
+                          EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -63,10 +84,15 @@ public class DefaultCo2Sensor implements Co2Sensor {
    * @param ppm the co2 level in ppm
    */
   public void setCo2LevelInPpm(int ppm) {
-    DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(ppm);
+    setCo2LevelInPpm( new DataWithTimestamp<>(ppm));
+  }
+  public void setCo2LevelInPpm(DataWithTimestamp<Integer> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Integer> previousValue = this.ppm.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createCo2LevelUpdatedEvent(this, newValue, previousValue));
-    if (previousValue == null || !previousValue.getValue().equals(ppm)) {
+    if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createCo2LevelChangedEvent(this, newValue, previousValue));
     }
   }
@@ -84,6 +110,14 @@ public class DefaultCo2Sensor implements Co2Sensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return Co2Sensor.super.getLabel();
   }
 
 }

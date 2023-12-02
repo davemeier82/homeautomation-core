@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -37,6 +38,7 @@ public class DefaultPowerSensor implements PowerSensor {
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
   private final AtomicReference<DataWithTimestamp<Double>> watt = new AtomicReference<>();
+  private final String label;
 
   /**
    * Constructor
@@ -51,7 +53,26 @@ public class DefaultPowerSensor implements PowerSensor {
                             EventPublisher eventPublisher,
                             EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultPowerSensor(long id,
+                            String label,
+                            Device device,
+                            EventPublisher eventPublisher,
+                            EventFactory eventFactory
+  ) {
     this.id = id;
+    this.label = label;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
@@ -72,6 +93,9 @@ public class DefaultPowerSensor implements PowerSensor {
    * @param newValue the power consumption in watt with the timestamp
    */
   public void setWatt(DataWithTimestamp<Double> newValue) {
+    if (newValue == null) {
+      return;
+    }
     DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
     eventPublisher.publishEvent(eventFactory.createPowerUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
@@ -92,5 +116,13 @@ public class DefaultPowerSensor implements PowerSensor {
   @Override
   public Device getDevice() {
     return device;
+  }
+
+  @Override
+  public String getLabel() {
+    if (label != null) {
+      return label;
+    }
+    return PowerSensor.super.getLabel();
   }
 }

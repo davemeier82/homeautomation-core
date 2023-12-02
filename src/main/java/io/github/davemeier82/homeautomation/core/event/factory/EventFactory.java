@@ -413,4 +413,225 @@ public interface EventFactory {
    * @return the event
    */
   PowerUpdatedEvent createPowerUpdatedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue);
+
+  /**
+   * Creates a {@link CloudBaseChangedEvent}.
+   *
+   * @param sensor        the cloud base sensor that emits the event
+   * @param meter         the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  CloudBaseChangedEvent createCloudBaseChangedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link CloudBaseUpdatedEvent}.
+   *
+   * @param sensor        the cloud base sensor that emits the event
+   * @param meter         the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  CloudBaseUpdatedEvent createCloudBaseUpdatedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link PressureChangedEvent}.
+   *
+   * @param sensor        the pressure sensor that emits the event
+   * @param mbar          the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  PressureChangedEvent createPressureChangedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link PressureUpdatedEvent}.
+   *
+   * @param sensor        the pressure sensor that emits the event
+   * @param mbar          the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  PressureUpdatedEvent createPressureUpdatedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link UvIndexChangedEvent}.
+   *
+   * @param sensor        the UV sensor that emits the event
+   * @param uvIndex       the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  UvIndexChangedEvent createUvIndexChangedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link UvIndexUpdatedEvent}.
+   *
+   * @param sensor        the UV sensor that emits the event
+   * @param uvIndex       the new value
+   * @param previousValue the old value
+   * @return the event
+   */
+  UvIndexUpdatedEvent createUvIndexUpdatedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link RainRateChangedEvent}.
+   *
+   * @param sensor the rain sensor
+   * @param millimeterPerHour the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  RainRateChangedEvent createRainRateChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link RainRateUpdatedEvent}.
+   *
+   * @param sensor the rain sensor
+   * @param millimeterPerHour the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  RainRateUpdatedEvent createRainRateUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link RainIntervalAmountChangedEvent}.
+   *
+   * @param sensor the rain sensor
+   * @param millimeter the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  RainIntervalAmountChangedEvent createRainIntervalAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link RainIntervalAmountUpdatedEvent}.
+   *
+   * @param sensor the rain sensor
+   * @param millimeter the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  RainIntervalAmountUpdatedEvent createRainIntervalAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link RainTodayAmountChangedEvent}.
+   *
+   * @param sensor the rain sensor
+   * @param millimeter the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  RainTodayAmountChangedEvent createRainTodayAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link RainTodayAmountUpdatedEvent}.
+   *
+   * @param sensor the rain sensor
+   * @param millimeter the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  RainTodayAmountUpdatedEvent createRainTodayAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindSpeedChangedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param kmh the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindSpeedChangedEvent createWindSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindSpeedUpdatedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param kmh the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindSpeedUpdatedEvent createWindSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindGustSpeedChangedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param kmh the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindGustSpeedChangedEvent createWindGustSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindGustSpeedUpdatedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param kmh the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindGustSpeedUpdatedEvent createWindGustSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindDirectionChangedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param degree the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindDirectionChangedEvent createWindDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindDirectionUpdatedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param degree the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindDirectionUpdatedEvent createWindDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindGustDirectionChangedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param degree the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindGustDirectionChangedEvent createWindGustDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindGustDirectionUpdatedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param degree the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindGustDirectionUpdatedEvent createWindGustDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+
+  /**
+   * Creates a {@link WindRunChangedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param km the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindRunChangedEvent createWindRunChangedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue);
+
+  /**
+   * Creates a {@link WindRunUpdatedEvent}.
+   *
+   * @param sensor the wind sensor
+   * @param km the new value
+   * @param previousValue the previous value
+   * @return the event
+   */
+  WindRunUpdatedEvent createWindRunUpdatedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue);
+
 }

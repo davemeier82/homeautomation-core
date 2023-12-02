@@ -62,7 +62,7 @@ public class DefaultSmokeStateUpdatedPropertyEvent extends DevicePropertyEventBa
 
   @Override
   public String getMessageKey() {
-    return isActive.getValue() ? "DetectsSmoke" : "DetectsNoSmoke";
+    return isActive.getValue() ? "detectsSmoke" : "detectsNoSmoke";
   }
 
   @Override
