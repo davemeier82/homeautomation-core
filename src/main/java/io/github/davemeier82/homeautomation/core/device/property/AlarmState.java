@@ -23,5 +23,5 @@ package io.github.davemeier82.homeautomation.core.device.property;
  * @since 0.3.0
  */
 public enum AlarmState {
-  OFF, PRE_ALARM, FIRE, BURGLAR
+  OFF, PRE_ALARM, FIRE, BURGLAR, SILENCED
 }

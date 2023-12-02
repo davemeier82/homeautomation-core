@@ -76,6 +76,9 @@ public class DefaultAlarmStateUpdatedPropertyEvent extends DevicePropertyEventBa
       case PRE_ALARM -> {
         return "preAlarmIsActive";
       }
+      case SILENCED -> {
+        return "silencedIsActive";
+      }
     }
     return null;
   }
