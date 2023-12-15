@@ -17,16 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
-import io.github.davemeier82.homeautomation.core.device.property.UvSensor;
 import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link WindSensor}.
@@ -39,12 +35,12 @@ public class DefaultWindSensor implements WindSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> speed = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Float>> gustSpeed = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Float>> direction = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Float>> gustDirection = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Double>> run = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Float> speed;
+  private DataWithTimestamp<Float> gustSpeed;
+  private DataWithTimestamp<Float> direction;
+  private DataWithTimestamp<Float> gustDirection;
+  private DataWithTimestamp<Double> run;
 
   /**
    * Constructor
@@ -88,11 +84,12 @@ public class DefaultWindSensor implements WindSensor {
    *
    * @param newValue
    */
-  public void setSpeed(DataWithTimestamp<Float> newValue) {
+  public synchronized void setSpeed(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.speed.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.speed;
+    this.speed = newValue;
     eventPublisher.publishEvent(eventFactory.createWindSpeedUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindSpeedChangedEvent(this, newValue, previousValue));
@@ -104,11 +101,12 @@ public class DefaultWindSensor implements WindSensor {
    *
    * @param newValue
    */
-  public void setGustSpeed(DataWithTimestamp<Float> newValue) {
+  public synchronized void setGustSpeed(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.gustSpeed.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.gustSpeed;
+    this.gustSpeed = newValue;
     eventPublisher.publishEvent(eventFactory.createWindGustSpeedUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindGustSpeedChangedEvent(this, newValue, previousValue));
@@ -120,11 +118,12 @@ public class DefaultWindSensor implements WindSensor {
    *
    * @param newValue
    */
-  public void setDirection(DataWithTimestamp<Float> newValue) {
+  public synchronized void setDirection(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.direction.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.direction;
+    this.direction = newValue;
     eventPublisher.publishEvent(eventFactory.createWindDirectionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindDirectionChangedEvent(this, newValue, previousValue));
@@ -136,11 +135,12 @@ public class DefaultWindSensor implements WindSensor {
    *
    * @param newValue
    */
-  public void setGustDirection(DataWithTimestamp<Float> newValue) {
+  public synchronized void setGustDirection(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.gustDirection.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.gustDirection;
+    this.gustDirection = newValue;
     eventPublisher.publishEvent(eventFactory.createWindGustDirectionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindGustDirectionChangedEvent(this, newValue, previousValue));
@@ -152,11 +152,12 @@ public class DefaultWindSensor implements WindSensor {
    *
    * @param newValue
    */
-  public void setRun(DataWithTimestamp<Double> newValue) {
+  public synchronized void setRun(DataWithTimestamp<Double> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Double> previousValue = this.run.getAndSet(newValue);
+    DataWithTimestamp<Double> previousValue = this.run;
+    this.run = newValue;
     eventPublisher.publishEvent(eventFactory.createWindRunUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindRunChangedEvent(this, newValue, previousValue));
@@ -165,27 +166,27 @@ public class DefaultWindSensor implements WindSensor {
 
   @Override
   public Optional<DataWithTimestamp<Float>> getSpeedInKmh() {
-    return Optional.ofNullable(speed.get());
+    return Optional.ofNullable(speed);
   }
 
   @Override
   public Optional<DataWithTimestamp<Float>> getGustSpeedInKmh() {
-    return Optional.ofNullable(gustSpeed.get());
+    return Optional.ofNullable(gustSpeed);
   }
 
   @Override
   public Optional<DataWithTimestamp<Float>> getDirectionInDegree() {
-    return Optional.ofNullable(direction.get());
+    return Optional.ofNullable(direction);
   }
 
   @Override
   public Optional<DataWithTimestamp<Float>> getGustDirectionInDegree() {
-    return Optional.ofNullable(gustDirection.get());
+    return Optional.ofNullable(gustDirection);
   }
 
   @Override
   public Optional<DataWithTimestamp<Double>> getIntervalRunInKm() {
-    return Optional.ofNullable(run.get());
+    return Optional.ofNullable(run);
   }
 
   @Override

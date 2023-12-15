@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.PressureSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link PressureSensor}.
@@ -37,7 +35,7 @@ public class DefaultPressureSensor implements PressureSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> pressure = new AtomicReference<>();
+  private DataWithTimestamp<Float> pressure;
   private final String label;
 
   /**
@@ -92,11 +90,12 @@ public class DefaultPressureSensor implements PressureSensor {
    *
    * @param newValue
    */
-  public void setPressureInDegree(DataWithTimestamp<Float> newValue) {
+  public synchronized void setPressureInDegree(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.pressure.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.pressure;
+    this.pressure = newValue;
     eventPublisher.publishEvent(eventFactory.createPressureUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createPressureChangedEvent(this, newValue, previousValue));
@@ -105,7 +104,7 @@ public class DefaultPressureSensor implements PressureSensor {
 
   @Override
   public Optional<DataWithTimestamp<Float>> getMillibar() {
-    return Optional.ofNullable(pressure.get());
+    return Optional.ofNullable(pressure);
   }
 
   @Override

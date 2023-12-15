@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link TemperatureSensor}.
@@ -37,7 +35,7 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> temperature = new AtomicReference<>();
+  private DataWithTimestamp<Float> temperature;
   private final String label;
 
   /**
@@ -87,24 +85,25 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
     setTemperatureInDegree(new DataWithTimestamp<>(temperature));
   }
 
+  @Override
+  public Optional<DataWithTimestamp<Float>> getTemperatureInDegree() {
+    return Optional.ofNullable(temperature);
+  }
+
   /**
    * Sets the temperature
    * @param newValue
    */
-  public void setTemperatureInDegree(DataWithTimestamp<Float> newValue) {
+  public synchronized void setTemperatureInDegree(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.temperature.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.temperature;
+    this.temperature = newValue;
     eventPublisher.publishEvent(eventFactory.createTemperatureUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createTemperatureChangedEvent(this, newValue, previousValue));
     }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Float>> getTemperatureInDegree() {
-    return Optional.ofNullable(temperature.get());
   }
 
   @Override

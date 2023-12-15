@@ -17,15 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
 import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
  * Default implementation of a {@link CloudBaseSensor}.
  *
@@ -37,8 +34,8 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> cloudBase = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Float> cloudBase;
 
   /**
    * Constructor
@@ -91,11 +88,12 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
    * Sets the cloud base
    * @param newValue
    */
-  public void setCloudBaseInDegree(DataWithTimestamp<Float> newValue) {
+  public synchronized void setCloudBaseInDegree(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.cloudBase.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.cloudBase;
+    this.cloudBase = newValue;
     eventPublisher.publishEvent(eventFactory.createCloudBaseUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createCloudBaseChangedEvent(this, newValue, previousValue));
@@ -105,7 +103,7 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
 
   @Override
   public Optional<DataWithTimestamp<Float>> getMeter() {
-    return Optional.ofNullable(cloudBase.get());
+    return Optional.ofNullable(cloudBase);
   }
 
   @Override

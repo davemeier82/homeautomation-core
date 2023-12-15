@@ -17,15 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
 import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link WindowSensor}.
@@ -40,9 +37,9 @@ public class DefaultWindowSensor implements WindowSensor {
   private final boolean tiltingSupported;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Boolean>> isOpen = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Integer>> tiltAngleInDegree = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Boolean> isOpen;
+  private DataWithTimestamp<Integer> tiltAngleInDegree;
 
   /**
    * Constructor
@@ -106,15 +103,26 @@ public class DefaultWindowSensor implements WindowSensor {
     setIsOpen(new DataWithTimestamp<>(open));
   }
 
-  public void setIsOpen(DataWithTimestamp<Boolean> newValue) {
+  public synchronized void setIsOpen(DataWithTimestamp<Boolean> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Boolean> previousValue = isOpen.getAndSet(newValue);
+    DataWithTimestamp<Boolean> previousValue = isOpen;
+    this.isOpen = newValue;
     eventPublisher.publishEvent(eventFactory.createWindowStateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindowStateChangedEvent(this, newValue, previousValue));
     }
+  }
+
+  @Override
+  public Optional<DataWithTimestamp<Boolean>> isOpen() {
+    return Optional.ofNullable(isOpen);
+  }
+
+  @Override
+  public Optional<DataWithTimestamp<Integer>> getTiltAngleInDegree() {
+    return Optional.ofNullable(tiltAngleInDegree);
   }
 
   /**
@@ -122,20 +130,10 @@ public class DefaultWindowSensor implements WindowSensor {
    *
    * @param angleInDegree the tilt angle of the window/door
    */
-  public void setTiltAngleInDegree(int angleInDegree) {
-    if (angleInDegree != -1) {
-      tiltAngleInDegree.set(new DataWithTimestamp<>(angleInDegree));
+  public synchronized void setTiltAngleInDegree(DataWithTimestamp<Integer> angleInDegree) {
+    if (angleInDegree.getValue() != -1) {
+      tiltAngleInDegree = angleInDegree;
     }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Boolean>> isOpen() {
-    return Optional.ofNullable(isOpen.get());
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Integer>> getTiltAngleInDegree() {
-    return Optional.ofNullable(tiltAngleInDegree.get());
   }
 
   @Override

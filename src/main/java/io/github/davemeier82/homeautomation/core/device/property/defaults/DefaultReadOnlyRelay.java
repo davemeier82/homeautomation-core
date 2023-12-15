@@ -17,7 +17,6 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
@@ -56,10 +55,22 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
                               EventPublisher eventPublisher,
                               EventFactory eventFactory
   ) {
+    this(id, null, device, eventPublisher, eventFactory);
+  }
+
+  /**
+   * @param id             the device property id
+   * @param label          the label
+   * @param device         the device
+   * @param eventPublisher the event publisher
+   * @param eventFactory   the event factory
+   */
+  public DefaultReadOnlyRelay(long id, String label, Device device, EventPublisher eventPublisher, EventFactory eventFactory) {
     this.id = id;
     this.device = device;
     this.eventPublisher = eventPublisher;
     this.eventFactory = eventFactory;
+    this.label = label;
   }
 
   /**
@@ -75,7 +86,7 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
    * Sets the relay state
    * @param newValue
    */
-  public void setRelayStateTo(DataWithTimestamp<Boolean> newValue) {
+  public synchronized void setRelayStateTo(DataWithTimestamp<Boolean> newValue) {
     if (newValue == null) {
       return;
     }

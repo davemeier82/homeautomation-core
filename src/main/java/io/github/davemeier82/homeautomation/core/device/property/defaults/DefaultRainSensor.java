@@ -23,7 +23,6 @@ import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link RainSensor}.
@@ -36,10 +35,10 @@ public class DefaultRainSensor implements RainSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> rate = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Float>> rainInterval = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Float>> rainToday = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Float> rate;
+  private DataWithTimestamp<Float> rainInterval;
+  private DataWithTimestamp<Float> rainToday;
 
   /**
    * Constructor
@@ -84,11 +83,12 @@ public class DefaultRainSensor implements RainSensor {
    *
    * @param newValue
    */
-  public void setRate(DataWithTimestamp<Float> newValue) {
+  public synchronized void setRate(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.rate.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.rate;
+    this.rate = newValue;
     eventPublisher.publishEvent(eventFactory.createRainRateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRainRateChangedEvent(this, newValue, previousValue));
@@ -100,11 +100,12 @@ public class DefaultRainSensor implements RainSensor {
    *
    * @param newValue
    */
-  public void setIntervalAmount(DataWithTimestamp<Float> newValue) {
+  public synchronized void setIntervalAmount(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.rainInterval.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.rainInterval;
+    this.rainInterval = newValue;
     eventPublisher.publishEvent(eventFactory.createRainTodayAmountUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRainTodayAmountChangedEvent(this, newValue, previousValue));
@@ -116,11 +117,12 @@ public class DefaultRainSensor implements RainSensor {
    *
    * @param newValue
    */
-  public void setTodayAmount(DataWithTimestamp<Float> newValue) {
+  public synchronized void setTodayAmount(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.rainToday.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.rainToday;
+    this.rainToday = newValue;
     eventPublisher.publishEvent(eventFactory.createRainIntervalAmountUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRainIntervalAmountChangedEvent(this, newValue, previousValue));
@@ -129,17 +131,17 @@ public class DefaultRainSensor implements RainSensor {
 
   @Override
   public Optional<DataWithTimestamp<Float>> getRateInMmph() {
-    return Optional.ofNullable(rate.get());
+    return Optional.ofNullable(rate);
   }
 
   @Override
   public Optional<DataWithTimestamp<Float>> getIntervalMm() {
-    return Optional.ofNullable(rainInterval.get());
+    return Optional.ofNullable(rainInterval);
   }
 
   @Override
   public Optional<DataWithTimestamp<Float>> getTodayInMm() {
-    return Optional.ofNullable(rainToday.get());
+    return Optional.ofNullable(rainToday);
   }
 
   @Override

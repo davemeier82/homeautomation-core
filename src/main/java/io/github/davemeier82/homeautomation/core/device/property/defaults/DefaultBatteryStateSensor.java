@@ -23,7 +23,6 @@ import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link BatteryStateSensor}.
@@ -36,8 +35,8 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> batteryLevel = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Integer> batteryLevel;
 
   /**
    * Constructor
@@ -90,11 +89,12 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
    * Sets the battery level
    * @param newValue
    */
-  public void setBatteryLevel(DataWithTimestamp<Integer> newValue) {
+  public synchronized void setBatteryLevel(DataWithTimestamp<Integer> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Integer> previousValue = this.batteryLevel.getAndSet(newValue);
+    DataWithTimestamp<Integer> previousValue = this.batteryLevel;
+    this.batteryLevel = newValue;
     eventPublisher.publishEvent(eventFactory.createBatteryLevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createBatteryLevelChangedEvent(this, newValue, previousValue));
@@ -103,7 +103,7 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
 
   @Override
   public Optional<DataWithTimestamp<Integer>> batteryLevelInPercent() {
-    return Optional.ofNullable(batteryLevel.get());
+    return Optional.ofNullable(batteryLevel);
   }
 
   @Override

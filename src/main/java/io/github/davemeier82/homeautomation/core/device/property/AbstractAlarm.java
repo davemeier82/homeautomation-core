@@ -22,7 +22,6 @@ import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of an {@link Alarm}.
@@ -35,7 +34,7 @@ public abstract class AbstractAlarm implements Alarm {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<AlarmState>> state = new AtomicReference<>();
+  private DataWithTimestamp<AlarmState> state;
 
   /**
    * Constructor
@@ -61,18 +60,18 @@ public abstract class AbstractAlarm implements Alarm {
    *
    * @param state the state
    */
-  public void setAlarmState(AlarmState state) {
-    DataWithTimestamp<AlarmState> newValue = new DataWithTimestamp<>(state);
-    DataWithTimestamp<AlarmState> previousValue = this.state.getAndSet(newValue);
-    eventPublisher.publishEvent(eventFactory.createAlarmStateUpdatedEvent(this, newValue, previousValue));
+  public synchronized void setAlarmState(AlarmState state) {
+    DataWithTimestamp<AlarmState> previousValue = this.state;
+    this.state = new DataWithTimestamp<>(state);
+    eventPublisher.publishEvent(eventFactory.createAlarmStateUpdatedEvent(this, this.state, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(state)) {
-      eventPublisher.publishEvent(eventFactory.createAlarmStateChangedEvent(this, newValue, previousValue));
+      eventPublisher.publishEvent(eventFactory.createAlarmStateChangedEvent(this, this.state, previousValue));
     }
   }
 
   @Override
   public Optional<DataWithTimestamp<AlarmState>> getState() {
-    return Optional.ofNullable(state.get());
+    return Optional.ofNullable(state);
   }
 
   @Override

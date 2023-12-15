@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.SmokeSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link SmokeSensor}.
@@ -38,8 +36,8 @@ public class DefaultSmokeSensor implements SmokeSensor {
 
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Boolean>> isSmokeDetected = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Boolean> isSmokeDetected;
 
   /**
    * Constructor
@@ -102,11 +100,12 @@ public class DefaultSmokeSensor implements SmokeSensor {
    * Sets the state of the smoke sensor
    * @param newValue
    */
-  public void setSmokeDetected(DataWithTimestamp<Boolean> newValue) {
+  public synchronized void setSmokeDetected(DataWithTimestamp<Boolean> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Boolean> previousValue = isSmokeDetected.getAndSet(newValue);
+    DataWithTimestamp<Boolean> previousValue = isSmokeDetected;
+    isSmokeDetected = newValue;
     eventPublisher.publishEvent(eventFactory.createSmokeStateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createSmokeStateChangedEvent(this, newValue, previousValue));
@@ -115,7 +114,7 @@ public class DefaultSmokeSensor implements SmokeSensor {
 
   @Override
   public Optional<DataWithTimestamp<Boolean>> isSmokeDetected() {
-    return Optional.ofNullable(isSmokeDetected.get());
+    return Optional.ofNullable(isSmokeDetected);
   }
 
 

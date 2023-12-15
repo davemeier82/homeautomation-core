@@ -22,7 +22,6 @@ import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Abstract implementation of a {@link Roller}.
@@ -36,8 +35,8 @@ public abstract class AbstractRoller implements Roller {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<RollerState>> state = new AtomicReference<>();
-  private final AtomicReference<DataWithTimestamp<Integer>> position = new AtomicReference<>();
+  private DataWithTimestamp<RollerState> state;
+  private DataWithTimestamp<Integer> position;
 
   /**
    * Constructor
@@ -63,13 +62,19 @@ public abstract class AbstractRoller implements Roller {
    *
    * @param rollerState the roler state
    */
-  public void setRollerState(RollerState rollerState) {
+  public synchronized void setRollerState(RollerState rollerState) {
     DataWithTimestamp<RollerState> newValue = new DataWithTimestamp<>(rollerState);
-    DataWithTimestamp<RollerState> previousValue = state.getAndSet(newValue);
+    DataWithTimestamp<RollerState> previousValue = state;
+    state = newValue;
     eventPublisher.publishEvent(eventFactory.createRollerStateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(rollerState)) {
       eventPublisher.publishEvent(eventFactory.createRollerStateChangedEvent(this, newValue, previousValue));
     }
+  }
+
+  @Override
+  public Optional<DataWithTimestamp<Integer>> getPositionInPercent() {
+    return Optional.ofNullable(position);
   }
 
   /**
@@ -77,9 +82,10 @@ public abstract class AbstractRoller implements Roller {
    *
    * @param positionInPercent the roller position in percent (0-100)
    */
-  public void setPositionInPercent(int positionInPercent) {
+  public synchronized void setPositionInPercent(int positionInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(positionInPercent);
-    DataWithTimestamp<Integer> previousValue = position.getAndSet(newValue);
+    DataWithTimestamp<Integer> previousValue = position;
+    position = newValue;
     eventPublisher.publishEvent(eventFactory.createRollerPositionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(positionInPercent)) {
       eventPublisher.publishEvent(eventFactory.createRollerPositionChangedEvent(this, newValue, previousValue));
@@ -87,13 +93,8 @@ public abstract class AbstractRoller implements Roller {
   }
 
   @Override
-  public Optional<DataWithTimestamp<Integer>> getPositionInPercent() {
-    return Optional.ofNullable(position.get());
-  }
-
-  @Override
   public Optional<DataWithTimestamp<RollerState>> getState() {
-    return Optional.ofNullable(state.get());
+    return Optional.ofNullable(state);
   }
 
   @Override

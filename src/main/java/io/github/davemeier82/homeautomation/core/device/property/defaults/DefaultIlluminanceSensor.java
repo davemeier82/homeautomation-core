@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link IlluminanceSensor}.
@@ -37,8 +35,8 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> lux = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Integer> lux;
 
   /**
    * Constructor
@@ -86,11 +84,13 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   public void setIlluminanceInLux(int lux) {
     setIlluminanceInLux(new DataWithTimestamp<>(lux));
   }
-  public void setIlluminanceInLux(DataWithTimestamp<Integer> newValue) {
+
+  public synchronized void setIlluminanceInLux(DataWithTimestamp<Integer> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Integer> previousValue = this.lux.getAndSet(newValue);
+    DataWithTimestamp<Integer> previousValue = this.lux;
+    this.lux = newValue;
     eventPublisher.publishEvent(eventFactory.createIlluminanceUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue, previousValue));
@@ -99,7 +99,7 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
 
   @Override
   public Optional<DataWithTimestamp<Integer>> getLux() {
-    return Optional.ofNullable(lux.get());
+    return Optional.ofNullable(lux);
   }
 
   @Override

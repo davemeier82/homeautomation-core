@@ -38,8 +38,8 @@ public class DefaultMotionSensor implements MotionSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Boolean>> motionDetected = new AtomicReference<>();
   private final AtomicReference<ZonedDateTime> lastMotionDetected = new AtomicReference<>();
+  private DataWithTimestamp<Boolean> motionDetected;
   private final String label;
 
   /**
@@ -90,26 +90,27 @@ public class DefaultMotionSensor implements MotionSensor {
     return device;
   }
 
+  @Override
+  public Optional<DataWithTimestamp<Boolean>> getMotionDetected() {
+    return Optional.ofNullable(motionDetected);
+  }
+
   /**
    * Sets timestamp of the detected motion
    *
    * @param newValue the new motion state with the timestamp
    */
-  public void setMotionDetected(DataWithTimestamp<Boolean> newValue) {
+  public synchronized void setMotionDetected(DataWithTimestamp<Boolean> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Boolean> previousValue = motionDetected.getAndSet(newValue);
+    DataWithTimestamp<Boolean> previousValue = motionDetected;
+    this.motionDetected = newValue;
     eventPublisher.publishEvent(eventFactory.createMotionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       lastMotionDetected.set(newValue.getDateTime());
       eventPublisher.publishEvent(eventFactory.createMotionChangedEvent(this, newValue, previousValue));
     }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Boolean>> getMotionDetected() {
-    return Optional.ofNullable(motionDetected.get());
   }
 
   @Override

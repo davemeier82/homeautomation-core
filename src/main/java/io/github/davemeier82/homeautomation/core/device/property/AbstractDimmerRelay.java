@@ -20,7 +20,6 @@ import io.github.davemeier82.homeautomation.core.device.Device;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Abstract implementation of a {@link Dimmer}
@@ -37,7 +36,7 @@ public abstract class AbstractDimmerRelay implements Dimmer {
   /**
    * The current dimming level
    */
-  protected final AtomicReference<DataWithTimestamp<Integer>> dimmingLevel = new AtomicReference<>();
+  protected DataWithTimestamp<Integer> dimmingLevel;
 
   /**
    * @param relay the relay
@@ -65,23 +64,24 @@ public abstract class AbstractDimmerRelay implements Dimmer {
     relay.setRelayStateTo(on);
   }
 
+  @Override
+  public Optional<DataWithTimestamp<Integer>> getDimmingLevelInPercent() {
+    return Optional.ofNullable(dimmingLevel);
+  }
+
   /**
    * Changes the dimming level
    *
    * @param levelInPercent dimming level in percent (0-100)
    */
-  public void setDimmingLevelInPercent(int levelInPercent) {
+  public synchronized void setDimmingLevelInPercent(int levelInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(levelInPercent);
-    DataWithTimestamp<Integer> previousValue = dimmingLevel.getAndSet(newValue);
+    DataWithTimestamp<Integer> previousValue = dimmingLevel;
+    this.dimmingLevel = newValue;
     relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(levelInPercent)) {
       relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelChangedEvent(this, newValue, previousValue));
     }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Integer>> getDimmingLevelInPercent() {
-    return Optional.ofNullable(dimmingLevel.get());
   }
 
   @Override

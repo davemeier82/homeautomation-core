@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link HumiditySensor}.
@@ -37,8 +35,8 @@ public class DefaultHumiditySensor implements HumiditySensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> humidity = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Float> humidity;
 
   /**
    * Constructor
@@ -87,24 +85,25 @@ public class DefaultHumiditySensor implements HumiditySensor {
     setRelativeHumidityInPercent(new DataWithTimestamp<>(humidity));
   }
 
+  @Override
+  public Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent() {
+    return Optional.ofNullable(humidity);
+  }
+
   /**
    * Sets relative humidity
    * @param newValue
    */
-  public void setRelativeHumidityInPercent(DataWithTimestamp<Float> newValue) {
+  public synchronized void setRelativeHumidityInPercent(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.humidity.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.humidity;
+    this.humidity = newValue;
     eventPublisher.publishEvent(eventFactory.createHumidityUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue, previousValue));
     }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent() {
-    return Optional.ofNullable(humidity.get());
   }
 
   @Override

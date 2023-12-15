@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.UvSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link UvSensor}.
@@ -37,8 +35,8 @@ public class DefaultUvSensor implements UvSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Float>> uvIndex = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Float> uvIndex;
 
   /**
    * Constructor
@@ -91,11 +89,12 @@ public class DefaultUvSensor implements UvSensor {
    * Sets the UV index
    * @param newValue the UV index [0, 1]
    */
-  public void setUvIndex(DataWithTimestamp<Float> newValue) {
+  public synchronized void setUvIndex(DataWithTimestamp<Float> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.uvIndex.getAndSet(newValue);
+    DataWithTimestamp<Float> previousValue = this.uvIndex;
+    this.uvIndex = newValue;
     eventPublisher.publishEvent(eventFactory.createUvIndexUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createUvIndexChangedEvent(this, newValue, previousValue));
@@ -104,7 +103,7 @@ public class DefaultUvSensor implements UvSensor {
 
   @Override
   public Optional<DataWithTimestamp<Float>> getIndex() {
-    return Optional.ofNullable(uvIndex.get());
+    return Optional.ofNullable(uvIndex);
   }
 
   @Override

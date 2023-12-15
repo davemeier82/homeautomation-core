@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link Co2Sensor}.
@@ -37,8 +35,8 @@ public class DefaultCo2Sensor implements Co2Sensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Integer>> ppm = new AtomicReference<>();
   private final String label;
+  private DataWithTimestamp<Integer> ppm;
 
   /**
    * Constructor
@@ -86,11 +84,13 @@ public class DefaultCo2Sensor implements Co2Sensor {
   public void setCo2LevelInPpm(int ppm) {
     setCo2LevelInPpm( new DataWithTimestamp<>(ppm));
   }
-  public void setCo2LevelInPpm(DataWithTimestamp<Integer> newValue) {
+
+  public synchronized void setCo2LevelInPpm(DataWithTimestamp<Integer> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Integer> previousValue = this.ppm.getAndSet(newValue);
+    DataWithTimestamp<Integer> previousValue = this.ppm;
+    this.ppm = newValue;
     eventPublisher.publishEvent(eventFactory.createCo2LevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createCo2LevelChangedEvent(this, newValue, previousValue));
@@ -99,7 +99,7 @@ public class DefaultCo2Sensor implements Co2Sensor {
 
   @Override
   public Optional<DataWithTimestamp<Integer>> getPpm() {
-    return Optional.ofNullable(ppm.get());
+    return Optional.ofNullable(ppm);
   }
 
   @Override

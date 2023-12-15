@@ -17,14 +17,12 @@
 package io.github.davemeier82.homeautomation.core.device.property.defaults;
 
 import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
 import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
 import io.github.davemeier82.homeautomation.core.event.EventPublisher;
 import io.github.davemeier82.homeautomation.core.event.factory.EventFactory;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Default implementation of a {@link PowerSensor}.
@@ -37,7 +35,7 @@ public class DefaultPowerSensor implements PowerSensor {
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private final AtomicReference<DataWithTimestamp<Double>> watt = new AtomicReference<>();
+  private DataWithTimestamp<Double> watt;
   private final String label;
 
   /**
@@ -87,25 +85,26 @@ public class DefaultPowerSensor implements PowerSensor {
     setWatt(new DataWithTimestamp<>(watt));
   }
 
+  @Override
+  public Optional<DataWithTimestamp<Double>> getWatt() {
+    return Optional.ofNullable(watt);
+  }
+
   /**
    * Sets the power consumption
    *
    * @param newValue the power consumption in watt with the timestamp
    */
-  public void setWatt(DataWithTimestamp<Double> newValue) {
+  public synchronized void setWatt(DataWithTimestamp<Double> newValue) {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Double> previousValue = watt.getAndSet(newValue);
+    DataWithTimestamp<Double> previousValue = watt;
+    watt = newValue;
     eventPublisher.publishEvent(eventFactory.createPowerUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createPowerChangedEvent(this, newValue, previousValue));
     }
-  }
-
-  @Override
-  public Optional<DataWithTimestamp<Double>> getWatt() {
-    return Optional.ofNullable(watt.get());
   }
 
   @Override
