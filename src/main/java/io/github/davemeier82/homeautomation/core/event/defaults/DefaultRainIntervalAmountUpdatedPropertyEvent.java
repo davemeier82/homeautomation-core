@@ -16,8 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.RainSensor;
-import io.github.davemeier82.homeautomation.core.event.*;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
+import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
+import io.github.davemeier82.homeautomation.core.event.RainIntervalAmountUpdatedEvent;
 
 import java.util.Optional;
 
@@ -27,17 +29,18 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultRainIntervalAmountUpdatedPropertyEvent extends DevicePropertyEventBase<RainSensor> implements RainIntervalAmountUpdatedEvent {
+public class DefaultRainIntervalAmountUpdatedPropertyEvent implements DevicePropertyEvent, RainIntervalAmountUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   DataWithTimestamp<Float> amountInMm;
   DataWithTimestamp<Float> previousAmountInMm;
 
 
-  public DefaultRainIntervalAmountUpdatedPropertyEvent(RainSensor sensor,
+  public DefaultRainIntervalAmountUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                                        DataWithTimestamp<Float> amountInMm,
                                                        DataWithTimestamp<Float> previousAmountInMm
-                                                           ) {
-    super(sensor);
+  ) {
+    this.devicePropertyId = devicePropertyId;
     this.amountInMm = amountInMm;
     this.previousAmountInMm = previousAmountInMm;
   }
@@ -60,6 +63,11 @@ public class DefaultRainIntervalAmountUpdatedPropertyEvent extends DevicePropert
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{amountInMm.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

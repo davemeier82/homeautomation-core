@@ -25,6 +25,8 @@ import io.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 import java.util.List;
 import java.util.Optional;
 
+import static io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId.devicePropertyIdFrom;
+
 /**
  * Default implementation of a {@link EventFactory}.
  *
@@ -49,7 +51,7 @@ public class DefaultEventFactory implements EventFactory {
                                                      DataWithTimestamp<Boolean> motionDetected,
                                                      DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultMotionChangedPropertyEvent(sensor, motionDetected, previousValue);
+    return new DefaultMotionChangedPropertyEvent(devicePropertyIdFrom(sensor), sensor.getDevice().getDisplayName(), motionDetected, previousValue);
   }
 
   @Override
@@ -57,7 +59,7 @@ public class DefaultEventFactory implements EventFactory {
                                                      DataWithTimestamp<Boolean> motionDetected,
                                                      DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultMotionUpdatedPropertyEvent(sensor, motionDetected, previousValue);
+    return new DefaultMotionUpdatedPropertyEvent(devicePropertyIdFrom(sensor), sensor.getDevice().getDisplayName(), motionDetected, previousValue);
   }
 
   @Override
@@ -70,7 +72,7 @@ public class DefaultEventFactory implements EventFactory {
                                                              DataWithTimestamp<Boolean> isOn,
                                                              DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultRelayStateChangedPropertyEvent(relay, isOn, previousValue);
+    return new DefaultRelayStateChangedPropertyEvent(devicePropertyIdFrom(relay), relay.getDevice().getDisplayName(), isOn, previousValue);
   }
 
   @Override
@@ -78,87 +80,87 @@ public class DefaultEventFactory implements EventFactory {
                                                              DataWithTimestamp<Boolean> isOn,
                                                              DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultRelayStateUpdatedPropertyEvent(relay, isOn, previousValue);
+    return new DefaultRelayStateUpdatedPropertyEvent(devicePropertyIdFrom(relay), relay.getDevice().getDisplayName(), isOn, previousValue);
   }
 
   @Override
-  public WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor,
+  public WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor sensor,
                                                                DataWithTimestamp<Boolean> isOpen,
                                                                DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultWindowStateChangedPropertyEvent(windowSensor, isOpen, previousValue);
+    return new DefaultWindowStateChangedPropertyEvent(devicePropertyIdFrom(sensor), sensor.getDevice().getDisplayName(), isOpen, previousValue);
   }
 
   @Override
-  public WindowStateUpdatedEvent createWindowStateUpdatedEvent(WindowSensor windowSensor,
+  public WindowStateUpdatedEvent createWindowStateUpdatedEvent(WindowSensor sensor,
                                                                DataWithTimestamp<Boolean> isOpen,
                                                                DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultWindowStateUpdatedPropertyEvent(windowSensor, isOpen, previousValue);
+    return new DefaultWindowStateUpdatedPropertyEvent(devicePropertyIdFrom(sensor), sensor.getDevice().getDisplayName(), isOpen, previousValue);
   }
 
   @Override
-  public SmokeStateChangedEvent createSmokeStateChangedEvent(SmokeSensor smokeSensor,
+  public SmokeStateChangedEvent createSmokeStateChangedEvent(SmokeSensor sensor,
                                                              DataWithTimestamp<Boolean> isActive,
                                                              DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultSmokeStateChangedPropertyEvent(smokeSensor, isActive, previousValue);
+    return new DefaultSmokeStateChangedPropertyEvent(devicePropertyIdFrom(sensor), sensor.getDevice().getDisplayName(), isActive, previousValue);
   }
 
   @Override
-  public SmokeStateUpdatedEvent createSmokeStateUpdatedEvent(SmokeSensor smokeSensor,
+  public SmokeStateUpdatedEvent createSmokeStateUpdatedEvent(SmokeSensor sensor,
                                                              DataWithTimestamp<Boolean> isActive,
                                                              DataWithTimestamp<Boolean> previousValue
   ) {
-    return new DefaultSmokeStateUpdatedPropertyEvent(smokeSensor, isActive, previousValue);
+    return new DefaultSmokeStateUpdatedPropertyEvent(devicePropertyIdFrom(sensor), sensor.getDevice().getDisplayName(), isActive, previousValue);
   }
 
   @Override
-  public TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor,
+  public TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor sensor,
                                                                DataWithTimestamp<Float> temperatureInDegree,
                                                                DataWithTimestamp<Float> previousValue
   ) {
-    return new DefaultTemperatureChangedPropertyEvent(temperatureSensor, temperatureInDegree, previousValue);
+    return new DefaultTemperatureChangedPropertyEvent(devicePropertyIdFrom(sensor), temperatureInDegree, previousValue);
   }
 
   @Override
-  public TemperatureUpdatedEvent createTemperatureUpdatedEvent(TemperatureSensor temperatureSensor,
+  public TemperatureUpdatedEvent createTemperatureUpdatedEvent(TemperatureSensor sensor,
                                                                DataWithTimestamp<Float> temperatureInDegree,
                                                                DataWithTimestamp<Float> previousValue
   ) {
-    return new DefaultTemperatureUpdatedPropertyEvent(temperatureSensor, temperatureInDegree, previousValue);
+    return new DefaultTemperatureUpdatedPropertyEvent(devicePropertyIdFrom(sensor), temperatureInDegree, previousValue);
   }
 
   @Override
-  public HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor,
+  public HumidityChangedEvent createHumidityChangedEvent(HumiditySensor sensor,
                                                          DataWithTimestamp<Float> relativeHumidityInPercent,
                                                          DataWithTimestamp<Float> previousValue
   ) {
-    return new DefaultHumidityChangedPropertyEvent(humiditySensor, relativeHumidityInPercent, previousValue);
+    return new DefaultHumidityChangedPropertyEvent(devicePropertyIdFrom(sensor), relativeHumidityInPercent, previousValue);
   }
 
   @Override
-  public HumidityUpdatedEvent createHumidityUpdatedEvent(HumiditySensor humiditySensor,
+  public HumidityUpdatedEvent createHumidityUpdatedEvent(HumiditySensor sensor,
                                                          DataWithTimestamp<Float> relativeHumidityInPercent,
                                                          DataWithTimestamp<Float> previousValue
   ) {
-    return new DefaultHumidityUpdatedPropertyEvent(humiditySensor, relativeHumidityInPercent, previousValue);
+    return new DefaultHumidityUpdatedPropertyEvent(devicePropertyIdFrom(sensor), relativeHumidityInPercent, previousValue);
   }
 
   @Override
-  public BatteryLevelChangedEvent createBatteryLevelChangedEvent(BatteryStateSensor batteryStateSensor,
+  public BatteryLevelChangedEvent createBatteryLevelChangedEvent(BatteryStateSensor sensor,
                                                                  DataWithTimestamp<Integer> batteryLevelInPercent,
                                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultBatteryLevelChangedPropertyEvent(batteryStateSensor, batteryLevelInPercent, previousValue);
+    return new DefaultBatteryLevelChangedPropertyEvent(devicePropertyIdFrom(sensor), batteryLevelInPercent, previousValue);
   }
 
   @Override
-  public BatteryLevelUpdatedEvent createBatteryLevelUpdatedEvent(BatteryStateSensor batteryStateSensor,
+  public BatteryLevelUpdatedEvent createBatteryLevelUpdatedEvent(BatteryStateSensor sensor,
                                                                  DataWithTimestamp<Integer> batteryLevelInPercent,
                                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultBatteryLevelUpdatedPropertyEvent(batteryStateSensor, batteryLevelInPercent, previousValue);
+    return new DefaultBatteryLevelUpdatedPropertyEvent(devicePropertyIdFrom(sensor), batteryLevelInPercent, previousValue);
   }
 
   @Override
@@ -166,7 +168,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                  DataWithTimestamp<Integer> levelInPercent,
                                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultDimmingLevelChangedPropertyEvent(dimmer, levelInPercent, previousValue);
+    return new DefaultDimmingLevelChangedPropertyEvent(devicePropertyIdFrom(dimmer), levelInPercent, previousValue);
   }
 
   @Override
@@ -174,7 +176,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                  DataWithTimestamp<Integer> brightnessInPercent,
                                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultDimmingLevelUpdatedPropertyEvent(dimmer, brightnessInPercent, previousValue);
+    return new DefaultDimmingLevelUpdatedPropertyEvent(devicePropertyIdFrom(dimmer), brightnessInPercent, previousValue);
   }
 
   @Override
@@ -192,7 +194,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                DataWithTimestamp<RollerState> state,
                                                                DataWithTimestamp<RollerState> previousValue
   ) {
-    return new DefaultRollerStateChangedPropertyEvent(roller, state, previousValue);
+    return new DefaultRollerStateChangedPropertyEvent(devicePropertyIdFrom(roller), roller.getDevice().getDisplayName(), state, previousValue);
   }
 
   @Override
@@ -200,7 +202,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                DataWithTimestamp<RollerState> state,
                                                                DataWithTimestamp<RollerState> previousValue
   ) {
-    return new DefaultRollerStateUpdatedPropertyEvent(roller, state, previousValue);
+    return new DefaultRollerStateUpdatedPropertyEvent(devicePropertyIdFrom(roller), roller.getDevice().getDisplayName(), state, previousValue);
   }
 
   @Override
@@ -208,7 +210,7 @@ public class DefaultEventFactory implements EventFactory {
                                                              DataWithTimestamp<AlarmState> state,
                                                              DataWithTimestamp<AlarmState> previousValue
   ) {
-    return new DefaultAlarmStateChangedPropertyEvent(alarm, state, previousValue);
+    return new DefaultAlarmStateChangedPropertyEvent(devicePropertyIdFrom(alarm), alarm.getDevice().getDisplayName(), state, previousValue);
   }
 
   @Override
@@ -216,7 +218,7 @@ public class DefaultEventFactory implements EventFactory {
                                                              DataWithTimestamp<AlarmState> state,
                                                              DataWithTimestamp<AlarmState> previousValue
   ) {
-    return new DefaultAlarmStateUpdatedPropertyEvent(alarm, state, previousValue);
+    return new DefaultAlarmStateUpdatedPropertyEvent(devicePropertyIdFrom(alarm), alarm.getDevice().getDisplayName(), state, previousValue);
   }
 
   @Override
@@ -224,7 +226,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                      DataWithTimestamp<Integer> positionInPercent,
                                                                      DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultRollerPositionChangedPropertyEvent(roller, positionInPercent, previousValue);
+    return new DefaultRollerPositionChangedPropertyEvent(devicePropertyIdFrom(roller), roller.getDevice().getDisplayName(), positionInPercent, previousValue);
   }
 
   @Override
@@ -232,7 +234,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                      DataWithTimestamp<Integer> positionInPercent,
                                                                      DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultRollerPositionUpdatedPropertyEvent(roller, positionInPercent, previousValue);
+    return new DefaultRollerPositionUpdatedPropertyEvent(devicePropertyIdFrom(roller), roller.getDevice().getDisplayName(), positionInPercent, previousValue);
   }
 
   @Override
@@ -240,7 +242,7 @@ public class DefaultEventFactory implements EventFactory {
                                                                DataWithTimestamp<Integer> lux,
                                                                DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultIlluminanceChangedPropertyEvent(sensor, lux, previousValue);
+    return new DefaultIlluminanceChangedPropertyEvent(devicePropertyIdFrom(sensor), lux, previousValue);
   }
 
   @Override
@@ -248,136 +250,136 @@ public class DefaultEventFactory implements EventFactory {
                                                                DataWithTimestamp<Integer> lux,
                                                                DataWithTimestamp<Integer> previousValue
   ) {
-    return new DefaultIlluminanceUpdatedPropertyEvent(sensor, lux, previousValue);
+    return new DefaultIlluminanceUpdatedPropertyEvent(devicePropertyIdFrom(sensor), lux, previousValue);
   }
 
   @Override
   public Co2LevelUpdatedEvent createCo2LevelUpdatedEvent(Co2Sensor sensor, DataWithTimestamp<Integer> ppm, DataWithTimestamp<Integer> previousValue) {
-    return new DefaultICo2LevelUpdatedPropertyEvent(sensor, ppm, previousValue);
+    return new DefaultICo2LevelUpdatedPropertyEvent(devicePropertyIdFrom(sensor), ppm, previousValue);
   }
 
   @Override
   public Co2LevelChangedEvent createCo2LevelChangedEvent(Co2Sensor sensor, DataWithTimestamp<Integer> ppm, DataWithTimestamp<Integer> previousValue) {
-    return new DefaultICo2LevelChangedPropertyEvent(sensor, ppm, previousValue);
+    return new DefaultICo2LevelChangedPropertyEvent(devicePropertyIdFrom(sensor), ppm, previousValue);
   }
 
   @Override
   public PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue) {
-    return new DefaultPowerChangedPropertyEvent(sensor, watt, previousValue);
+    return new DefaultPowerChangedPropertyEvent(devicePropertyIdFrom(sensor), watt, previousValue);
   }
 
   @Override
   public PowerUpdatedEvent createPowerUpdatedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue) {
-    return new DefaultPowerUpdatedPropertyEvent(sensor, watt, previousValue);
+    return new DefaultPowerUpdatedPropertyEvent(devicePropertyIdFrom(sensor), watt, previousValue);
   }
 
   @Override
   public CloudBaseChangedEvent createCloudBaseChangedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue) {
-    return new DefaultCloudBaseChangedPropertyEvent(sensor, meter, previousValue) ;
+    return new DefaultCloudBaseChangedPropertyEvent(devicePropertyIdFrom(sensor), meter, previousValue);
   }
 
   @Override
   public CloudBaseUpdatedEvent createCloudBaseUpdatedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue) {
-    return new DefaultCloudBaseUpdatedPropertyEvent(sensor, meter, previousValue);
+    return new DefaultCloudBaseUpdatedPropertyEvent(devicePropertyIdFrom(sensor), meter, previousValue);
   }
 
   @Override
   public PressureChangedEvent createPressureChangedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue) {
-    return new DefaultPressureChangedPropertyEvent(sensor, mbar, previousValue);
+    return new DefaultPressureChangedPropertyEvent(devicePropertyIdFrom(sensor), mbar, previousValue);
   }
 
   @Override
   public PressureUpdatedEvent createPressureUpdatedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue) {
-    return new DefaultPressureUpdatedPropertyEvent(sensor, mbar, previousValue);
+    return new DefaultPressureUpdatedPropertyEvent(devicePropertyIdFrom(sensor), mbar, previousValue);
   }
 
   @Override
   public UvIndexChangedEvent createUvIndexChangedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue) {
-    return new DefaultUvIndexChangedPropertyEvent(sensor, uvIndex, previousValue);
+    return new DefaultUvIndexChangedPropertyEvent(devicePropertyIdFrom(sensor), uvIndex, previousValue);
   }
 
   @Override
   public UvIndexUpdatedEvent createUvIndexUpdatedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue) {
-    return new DefaultUvIndexUpdatedPropertyEvent(sensor, uvIndex, previousValue);
+    return new DefaultUvIndexUpdatedPropertyEvent(devicePropertyIdFrom(sensor), uvIndex, previousValue);
   }
 
   @Override
   public RainRateChangedEvent createRainRateChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue) {
-    return new DefaultRainRateChangedPropertyEvent(sensor, millimeterPerHour, previousValue);
+    return new DefaultRainRateChangedPropertyEvent(devicePropertyIdFrom(sensor), millimeterPerHour, previousValue);
   }
 
   @Override
   public RainRateUpdatedEvent createRainRateUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue) {
-    return new DefaultRainRateUpdatedPropertyEvent(sensor, millimeterPerHour, previousValue);
+    return new DefaultRainRateUpdatedPropertyEvent(devicePropertyIdFrom(sensor), millimeterPerHour, previousValue);
   }
 
   @Override
   public RainIntervalAmountChangedEvent createRainIntervalAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
-    return new DefaultRainIntervalAmountChangedPropertyEvent(sensor, millimeter, previousValue);
+    return new DefaultRainIntervalAmountChangedPropertyEvent(devicePropertyIdFrom(sensor), millimeter, previousValue);
   }
 
   @Override
   public RainIntervalAmountUpdatedEvent createRainIntervalAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
-    return new DefaultRainIntervalAmountUpdatedPropertyEvent(sensor, millimeter, previousValue);
+    return new DefaultRainIntervalAmountUpdatedPropertyEvent(devicePropertyIdFrom(sensor), millimeter, previousValue);
   }
 
   @Override
   public RainTodayAmountChangedEvent createRainTodayAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
-    return new DefaultRainTodayAmountChangedPropertyEvent(sensor, millimeter, previousValue);
+    return new DefaultRainTodayAmountChangedPropertyEvent(devicePropertyIdFrom(sensor), millimeter, previousValue);
   }
 
   @Override
   public RainTodayAmountUpdatedEvent createRainTodayAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue) {
-    return new DefaultRainTodayAmountUpdatedPropertyEvent(sensor, millimeter, previousValue);
+    return new DefaultRainTodayAmountUpdatedPropertyEvent(devicePropertyIdFrom(sensor), millimeter, previousValue);
   }
 
   @Override
   public WindSpeedChangedEvent createWindSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindSpeedChangedPropertyEvent(sensor, kmh, previousValue);
+    return new DefaultWindSpeedChangedPropertyEvent(devicePropertyIdFrom(sensor), kmh, previousValue);
   }
 
   @Override
   public WindSpeedUpdatedEvent createWindSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindSpeedUpdatedPropertyEvent(sensor, kmh, previousValue);
+    return new DefaultWindSpeedUpdatedPropertyEvent(devicePropertyIdFrom(sensor), kmh, previousValue);
   }
 
   @Override
   public WindGustSpeedChangedEvent createWindGustSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindGustSpeedChangedPropertyEvent(sensor, kmh, previousValue);
+    return new DefaultWindGustSpeedChangedPropertyEvent(devicePropertyIdFrom(sensor), kmh, previousValue);
   }
 
   @Override
   public WindGustSpeedUpdatedEvent createWindGustSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindGustSpeedUpdatedPropertyEvent(sensor, kmh, previousValue);
+    return new DefaultWindGustSpeedUpdatedPropertyEvent(devicePropertyIdFrom(sensor), kmh, previousValue);
   }
 
   @Override
   public WindDirectionChangedEvent createWindDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindDirectionChangedPropertyEvent(sensor, degree, previousValue);
+    return new DefaultWindDirectionChangedPropertyEvent(devicePropertyIdFrom(sensor), degree, previousValue);
   }
 
   @Override
   public WindDirectionUpdatedEvent createWindDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindDirectionUpdatedPropertyEvent(sensor, degree, previousValue);
+    return new DefaultWindDirectionUpdatedPropertyEvent(devicePropertyIdFrom(sensor), degree, previousValue);
   }
 
   @Override
   public WindGustDirectionChangedEvent createWindGustDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindGustDirectionChangedPropertyEvent(sensor, degree, previousValue);
+    return new DefaultWindGustDirectionChangedPropertyEvent(devicePropertyIdFrom(sensor), degree, previousValue);
   }
 
   @Override
   public WindGustDirectionUpdatedEvent createWindGustDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue) {
-    return new DefaultWindGustDirectionUpdatedPropertyEvent(sensor, degree, previousValue);
+    return new DefaultWindGustDirectionUpdatedPropertyEvent(devicePropertyIdFrom(sensor), degree, previousValue);
   }
 
   @Override
   public WindRunChangedEvent createWindRunChangedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue) {
-    return new DefaultWindRunChangedPropertyEvent(sensor, km, previousValue);
+    return new DefaultWindRunChangedPropertyEvent(devicePropertyIdFrom(sensor), km, previousValue);
   }
 
   @Override
   public WindRunUpdatedEvent createWindRunUpdatedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue) {
-    return new DefaultWindRunUpdatedPropertyEvent(sensor, km, previousValue);
+    return new DefaultWindRunUpdatedPropertyEvent(devicePropertyIdFrom(sensor), km, previousValue);
   }
 }

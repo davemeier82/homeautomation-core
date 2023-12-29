@@ -16,10 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.BatteryLevelChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 
 import java.util.Optional;
 
@@ -29,22 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEventBase<BatteryStateSensor> implements BatteryLevelChangedEvent {
+public class DefaultBatteryLevelChangedPropertyEvent implements DevicePropertyEvent, BatteryLevelChangedEvent {
+
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Integer> batteryLevelInPercent;
   private final DataWithTimestamp<Integer> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor                the sensor to with the event belongs to
+   * @param devicePropertyId      the id
    * @param batteryLevelInPercent the new value
    * @param previousValue         the previous value
    */
-  public DefaultBatteryLevelChangedPropertyEvent(BatteryStateSensor sensor,
+  public DefaultBatteryLevelChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                                  DataWithTimestamp<Integer> batteryLevelInPercent,
                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.batteryLevelInPercent = batteryLevelInPercent;
     this.previousValue = previousValue;
   }
@@ -57,6 +59,11 @@ public class DefaultBatteryLevelChangedPropertyEvent extends DevicePropertyEvent
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousValue);
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
   @Override

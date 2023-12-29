@@ -28,9 +28,6 @@ import java.util.Optional;
  */
 public interface RainRateUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  RainSensor getDeviceProperty();
-
   /**
    * Returns the rain rate in millimeter to hour
    */

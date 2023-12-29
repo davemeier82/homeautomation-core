@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
  */
 public interface HumidityUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  HumiditySensor getDeviceProperty();
-
   /**
    * @return the relative humidity and the time of the measurement
    */

@@ -17,6 +17,7 @@
 package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 
 import java.util.Optional;
 
@@ -29,9 +30,9 @@ import java.util.Optional;
 public interface DevicePropertyEvent {
 
   /**
-   * @return the device property to which this event belongs to
+   * @return the device property id to which this event belongs to
    */
-  DeviceProperty getDeviceProperty();
+  DevicePropertyId getDevicePropertyId();
 
   /**
    * Message key used for a translatable human-readable message (i.e. push notifications).

@@ -16,10 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.Co2LevelChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 
 import java.util.Optional;
 
@@ -29,22 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.3.0
  */
-public class DefaultICo2LevelChangedPropertyEvent extends DevicePropertyEventBase<Co2Sensor> implements Co2LevelChangedEvent {
+public class DefaultICo2LevelChangedPropertyEvent implements DevicePropertyEvent, Co2LevelChangedEvent {
+
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Integer> ppm;
   private final DataWithTimestamp<Integer> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
+   * @param devicePropertyId the id
    * @param ppm           the new value
    * @param previousValue the old value
    */
-  public DefaultICo2LevelChangedPropertyEvent(Co2Sensor sensor,
+  public DefaultICo2LevelChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                               DataWithTimestamp<Integer> ppm,
                                               DataWithTimestamp<Integer> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.ppm = ppm;
     this.previousValue = previousValue;
   }
@@ -57,6 +59,11 @@ public class DefaultICo2LevelChangedPropertyEvent extends DevicePropertyEventBas
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousValue);
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
   @Override

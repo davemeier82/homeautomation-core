@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
  */
 public interface MotionChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  MotionSensor getDeviceProperty();
-
   /**
    * Caution: Not all MotionSensors send an event when motion ends
    *

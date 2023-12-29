@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.PressureSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.PressureUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultPressureUpdatedPropertyEvent extends DevicePropertyEventBase<PressureSensor> implements PressureUpdatedEvent {
+public class DefaultPressureUpdatedPropertyEvent implements DevicePropertyEvent, PressureUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> mbar;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param mbar          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param mbar             the new value
+   * @param previousValue    the old value
    */
-  public DefaultPressureUpdatedPropertyEvent(PressureSensor sensor,
+  public DefaultPressureUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                              DataWithTimestamp<Float> mbar,
                                              DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.mbar = mbar;
     this.previousValue = previousValue;
   }
@@ -68,6 +69,11 @@ public class DefaultPressureUpdatedPropertyEvent extends DevicePropertyEventBase
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{mbar.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

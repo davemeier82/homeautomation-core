@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.HumidityUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultHumidityUpdatedPropertyEvent extends DevicePropertyEventBase<HumiditySensor> implements HumidityUpdatedEvent {
+public class DefaultHumidityUpdatedPropertyEvent implements DevicePropertyEvent, HumidityUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> relativeHumidityInPercent;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor                    the sensor
+   * @param devicePropertyId                        the id
    * @param relativeHumidityInPercent the new value
    * @param previousValue             the old value
    */
-  public DefaultHumidityUpdatedPropertyEvent(HumiditySensor sensor,
+  public DefaultHumidityUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                              DataWithTimestamp<Float> relativeHumidityInPercent,
                                              DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.relativeHumidityInPercent = relativeHumidityInPercent;
     this.previousValue = previousValue;
   }
@@ -58,6 +59,11 @@ public class DefaultHumidityUpdatedPropertyEvent extends DevicePropertyEventBase
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousValue);
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
   @Override

@@ -27,9 +27,6 @@ import io.github.davemeier82.homeautomation.core.device.property.RollerState;
  */
 public interface RollerStateUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  Roller getDeviceProperty();
-
   /**
    * @return the state and the time of the stage change
    */

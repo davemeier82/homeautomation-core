@@ -16,11 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.WindGustSpeedChangedEvent;
-import io.github.davemeier82.homeautomation.core.event.WindSpeedChangedEvent;
 
 import java.util.Optional;
 
@@ -30,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultWindGustSpeedChangedPropertyEvent extends DevicePropertyEventBase<WindSensor> implements WindGustSpeedChangedEvent {
+public class DefaultWindGustSpeedChangedPropertyEvent implements DevicePropertyEvent, WindGustSpeedChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> km;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param km            the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param km               the new value
+   * @param previousValue    the old value
    */
-  public DefaultWindGustSpeedChangedPropertyEvent(WindSensor sensor,
+  public DefaultWindGustSpeedChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                                   DataWithTimestamp<Float> km,
                                                   DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.km = km;
     this.previousValue = previousValue;
   }
@@ -69,6 +69,11 @@ public class DefaultWindGustSpeedChangedPropertyEvent extends DevicePropertyEven
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{km.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

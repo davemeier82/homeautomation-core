@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.PowerChangedEvent;
 
 import java.util.Optional;
@@ -29,7 +29,9 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<PowerSensor> implements PowerChangedEvent {
+public class DefaultPowerChangedPropertyEvent implements DevicePropertyEvent, PowerChangedEvent {
+
+  private final DevicePropertyId devicePropertyId;
 
   private final DataWithTimestamp<Double> watt;
   private final DataWithTimestamp<Double> previousValue;
@@ -37,15 +39,15 @@ public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<Po
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param watt          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param watt             the new value
+   * @param previousValue    the old value
    */
-  public DefaultPowerChangedPropertyEvent(PowerSensor sensor,
+  public DefaultPowerChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                           DataWithTimestamp<Double> watt,
                                           DataWithTimestamp<Double> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.watt = watt;
     this.previousValue = previousValue;
   }
@@ -68,6 +70,11 @@ public class DefaultPowerChangedPropertyEvent extends DevicePropertyEventBase<Po
   @Override
   public Object[] getMessageArgs() {
     return new Double[]{watt.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

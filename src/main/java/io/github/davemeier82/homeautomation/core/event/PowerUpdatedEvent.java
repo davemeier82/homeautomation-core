@@ -25,8 +25,6 @@ import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
  * @since 0.1.0
  */
 public interface PowerUpdatedEvent extends DevicePropertyEvent {
-  @Override
-  PowerSensor getDeviceProperty();
 
   /**
    * @return the power consumption in watt and the time of the measurement

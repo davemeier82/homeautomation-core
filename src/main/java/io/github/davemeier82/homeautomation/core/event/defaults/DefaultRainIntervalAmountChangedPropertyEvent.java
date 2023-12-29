@@ -16,11 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.RainSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RainIntervalAmountChangedEvent;
-import io.github.davemeier82.homeautomation.core.event.RainRateChangedEvent;
 
 import java.util.Optional;
 
@@ -30,17 +29,23 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultRainIntervalAmountChangedPropertyEvent extends DevicePropertyEventBase<RainSensor> implements RainIntervalAmountChangedEvent {
+public class DefaultRainIntervalAmountChangedPropertyEvent implements DevicePropertyEvent, RainIntervalAmountChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   DataWithTimestamp<Float> amountInMm;
   DataWithTimestamp<Float> previousAmountInMm;
 
 
-  public DefaultRainIntervalAmountChangedPropertyEvent(RainSensor sensor,
+  /**
+   * @param devicePropertyId   the id
+   * @param amountInMm         the new value
+   * @param previousAmountInMm the old value
+   */
+  public DefaultRainIntervalAmountChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                                        DataWithTimestamp<Float> amountInMm,
                                                        DataWithTimestamp<Float> previousAmountInMm
-                                                           ) {
-    super(sensor);
+  ) {
+    this.devicePropertyId = devicePropertyId;
     this.amountInMm = amountInMm;
     this.previousAmountInMm = previousAmountInMm;
   }
@@ -63,6 +68,11 @@ public class DefaultRainIntervalAmountChangedPropertyEvent extends DevicePropert
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{amountInMm.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

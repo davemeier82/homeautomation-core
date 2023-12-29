@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.RainSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RainRateChangedEvent;
 
 import java.util.Optional;
@@ -29,18 +29,19 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultRainRateChangedPropertyEvent extends DevicePropertyEventBase<RainSensor> implements RainRateChangedEvent {
+public class DefaultRainRateChangedPropertyEvent implements DevicePropertyEvent, RainRateChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   DataWithTimestamp<Float> rateInMmph;
   DataWithTimestamp<Float> previousRateInMmph;
 
 
-  public DefaultRainRateChangedPropertyEvent(RainSensor sensor,
+  public DefaultRainRateChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                              DataWithTimestamp<Float> rateInMmph,
                                              DataWithTimestamp<Float> previousRateInMmph
   ) {
-    super(sensor);
-    this.rateInMmph =rateInMmph;
+    this.devicePropertyId = devicePropertyId;
+    this.rateInMmph = rateInMmph;
     this.previousRateInMmph = previousRateInMmph;
   }
 
@@ -62,6 +63,11 @@ public class DefaultRainRateChangedPropertyEvent extends DevicePropertyEventBase
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{rateInMmph.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

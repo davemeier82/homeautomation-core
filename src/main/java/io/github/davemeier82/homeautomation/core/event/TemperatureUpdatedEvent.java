@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.TemperatureSens
  */
 public interface TemperatureUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  TemperatureSensor getDeviceProperty();
-
   /**
    * @return the temperature in degree celsius and the time of the measurement
    */

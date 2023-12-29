@@ -16,10 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.RainSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
-import io.github.davemeier82.homeautomation.core.event.RainIntervalAmountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RainTodayAmountChangedEvent;
 
 import java.util.Optional;
@@ -30,17 +29,18 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultRainTodayAmountChangedPropertyEvent extends DevicePropertyEventBase<RainSensor> implements RainTodayAmountChangedEvent {
+public class DefaultRainTodayAmountChangedPropertyEvent implements DevicePropertyEvent, RainTodayAmountChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   DataWithTimestamp<Float> amountInMm;
   DataWithTimestamp<Float> previousAmountInMm;
 
 
-  public DefaultRainTodayAmountChangedPropertyEvent(RainSensor sensor,
+  public DefaultRainTodayAmountChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                                     DataWithTimestamp<Float> amountInMm,
                                                     DataWithTimestamp<Float> previousAmountInMm
-                                                           ) {
-    super(sensor);
+  ) {
+    this.devicePropertyId = devicePropertyId;
     this.amountInMm = amountInMm;
     this.previousAmountInMm = previousAmountInMm;
   }
@@ -63,6 +63,11 @@ public class DefaultRainTodayAmountChangedPropertyEvent extends DevicePropertyEv
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{amountInMm.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

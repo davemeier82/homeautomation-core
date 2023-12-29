@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.SmokeSensor;
  */
 public interface SmokeStateChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  SmokeSensor getDeviceProperty();
-
   /**
    * @return true if the sensor detected smoke and the time of the state change
    */

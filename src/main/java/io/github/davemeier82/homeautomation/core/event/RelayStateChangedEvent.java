@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
  */
 public interface RelayStateChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  ReadOnlyRelay getDeviceProperty();
-
   /**
    * @return true if the relay got switched on and the time of the state change
    */

@@ -16,10 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.Co2LevelUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 
 import java.util.Optional;
 
@@ -29,22 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.3.0
  */
-public class DefaultICo2LevelUpdatedPropertyEvent extends DevicePropertyEventBase<Co2Sensor> implements Co2LevelUpdatedEvent {
+public class DefaultICo2LevelUpdatedPropertyEvent implements DevicePropertyEvent, Co2LevelUpdatedEvent {
+
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Integer> ppm;
   private final DataWithTimestamp<Integer> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param ppm           the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param ppm              the new value
+   * @param previousValue    the old value
    */
-  public DefaultICo2LevelUpdatedPropertyEvent(Co2Sensor sensor,
+  public DefaultICo2LevelUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                               DataWithTimestamp<Integer> ppm,
                                               DataWithTimestamp<Integer> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.ppm = ppm;
     this.previousValue = previousValue;
   }
@@ -69,4 +71,8 @@ public class DefaultICo2LevelUpdatedPropertyEvent extends DevicePropertyEventBas
     return new Integer[]{ppm.getValue()};
   }
 
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
+  }
 }

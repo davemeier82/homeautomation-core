@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.PressureSensor;
  */
 public interface PressureUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  PressureSensor getDeviceProperty();
-
   /**
    * Returns new the pressure in millibar and the time of the measurement.
    */

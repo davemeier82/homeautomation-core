@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.BatteryStateSen
  */
 public interface BatteryLevelUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  BatteryStateSensor getDeviceProperty();
-
   /**
    * @return the battery level and the measurement timestamp
    */

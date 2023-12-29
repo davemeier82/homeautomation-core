@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
  */
 public interface WindGustDirectionUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  WindSensor getDeviceProperty();
-
   /**
    * Returns the wind direction in degree at the time of the measurement.
    */

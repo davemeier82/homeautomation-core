@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.Dimmer;
  */
 public interface DimmingLevelUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  Dimmer getDeviceProperty();
-
   /**
    * @return the dimming level and the time of the measurement
    */

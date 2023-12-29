@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionChangedEvent;
 
 import java.util.Optional;
@@ -29,24 +29,28 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultMotionChangedPropertyEvent extends DevicePropertyEventBase<MotionSensor> implements MotionChangedEvent {
+public class DefaultMotionChangedPropertyEvent implements DevicePropertyEvent, MotionChangedEvent {
 
-
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<Boolean> motionDetected;
   private final DataWithTimestamp<Boolean> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor         the sensor
-   * @param motionDetected the new value
-   * @param previousValue  the old value
+   * @param devicePropertyId the id
+   * @param displayName      the display name for the event message
+   * @param motionDetected   the new value
+   * @param previousValue    the old value
    */
-  public DefaultMotionChangedPropertyEvent(MotionSensor sensor,
+  public DefaultMotionChangedPropertyEvent(DevicePropertyId devicePropertyId,
+                                           String displayName,
                                            DataWithTimestamp<Boolean> motionDetected,
                                            DataWithTimestamp<Boolean> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.motionDetected = motionDetected;
     this.previousValue = previousValue;
   }
@@ -63,7 +67,7 @@ public class DefaultMotionChangedPropertyEvent extends DevicePropertyEventBase<M
 
   @Override
   public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+    return new String[]{displayName};
   }
 
   @Override
@@ -71,4 +75,8 @@ public class DefaultMotionChangedPropertyEvent extends DevicePropertyEventBase<M
     return Optional.ofNullable(previousValue);
   }
 
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
+  }
 }

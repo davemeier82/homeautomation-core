@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.WindSpeedChangedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultWindSpeedChangedPropertyEvent extends DevicePropertyEventBase<WindSensor> implements WindSpeedChangedEvent {
+public class DefaultWindSpeedChangedPropertyEvent implements DevicePropertyEvent, WindSpeedChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> kmh;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param kmh            the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param kmh              the new value
+   * @param previousValue    the old value
    */
-  public DefaultWindSpeedChangedPropertyEvent(WindSensor sensor,
+  public DefaultWindSpeedChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                               DataWithTimestamp<Float> kmh,
                                               DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.kmh = kmh;
     this.previousValue = previousValue;
   }
@@ -68,6 +69,11 @@ public class DefaultWindSpeedChangedPropertyEvent extends DevicePropertyEventBas
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{kmh.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

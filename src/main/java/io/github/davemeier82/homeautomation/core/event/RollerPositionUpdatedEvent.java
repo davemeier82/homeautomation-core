@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.Roller;
  */
 public interface RollerPositionUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  Roller getDeviceProperty();
-
   /**
    * @return the position in percent and the time of the change
    */

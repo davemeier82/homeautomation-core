@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
  */
 public interface WindowStateUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  WindowSensor getDeviceProperty();
-
   /**
    * @return true if the window is open and the time of the state change
    */

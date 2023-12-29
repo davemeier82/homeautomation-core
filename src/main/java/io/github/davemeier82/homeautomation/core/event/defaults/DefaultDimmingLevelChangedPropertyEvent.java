@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Dimmer;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.DimmingLevelChangedEvent;
 
 import java.util.Optional;
@@ -29,21 +29,22 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultDimmingLevelChangedPropertyEvent extends DevicePropertyEventBase<Dimmer> implements DimmingLevelChangedEvent {
+public class DefaultDimmingLevelChangedPropertyEvent implements DevicePropertyEvent, DimmingLevelChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Integer> dimmingLevelInPercent;
   private final DataWithTimestamp<Integer> previousValue;
 
   /**
-   * @param dimmer                the dimmer to which the event belongs to
+   * @param devicePropertyId            the id
    * @param dimmingLevelInPercent the new value
    * @param previousValue         the previous
    */
-  public DefaultDimmingLevelChangedPropertyEvent(Dimmer dimmer,
+  public DefaultDimmingLevelChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                                  DataWithTimestamp<Integer> dimmingLevelInPercent,
                                                  DataWithTimestamp<Integer> previousValue
   ) {
-    super(dimmer);
+    this.devicePropertyId = devicePropertyId;
     this.dimmingLevelInPercent = dimmingLevelInPercent;
     this.previousValue = previousValue;
   }
@@ -56,6 +57,11 @@ public class DefaultDimmingLevelChangedPropertyEvent extends DevicePropertyEvent
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousValue);
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
   @Override

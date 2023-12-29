@@ -28,9 +28,6 @@ import java.util.Optional;
  */
 public interface RainIntervalAmountChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  RainSensor getDeviceProperty();
-
   /**
    * Returns the rain amount in millimeter for the interval defined in the sensor at the time of the measurement.
    */

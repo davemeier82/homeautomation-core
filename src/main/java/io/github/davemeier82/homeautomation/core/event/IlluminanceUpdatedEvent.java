@@ -25,8 +25,6 @@ import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSens
  * @since 0.1.0
  */
 public interface IlluminanceUpdatedEvent extends DevicePropertyEvent {
-  @Override
-  IlluminanceSensor getDeviceProperty();
 
   /**
    * @return the illumination in lux and the time of the measurement

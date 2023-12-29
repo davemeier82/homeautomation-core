@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RelayStateUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,28 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultRelayStateUpdatedPropertyEvent extends DevicePropertyEventBase<ReadOnlyRelay> implements RelayStateUpdatedEvent {
+public class DefaultRelayStateUpdatedPropertyEvent implements DevicePropertyEvent, RelayStateUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<Boolean> isOn;
   private final DataWithTimestamp<Boolean> previousValue;
 
   /**
    * Constructor
    *
-   * @param relay         the relay
-   * @param isOn          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param displayName      the display name for the event message
+   * @param isOn             the new value
+   * @param previousValue    the old value
    */
-  public DefaultRelayStateUpdatedPropertyEvent(ReadOnlyRelay relay,
+  public DefaultRelayStateUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
+                                               String displayName,
                                                DataWithTimestamp<Boolean> isOn,
                                                DataWithTimestamp<Boolean> previousValue
   ) {
-    super(relay);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.isOn = isOn;
     this.previousValue = previousValue;
   }
@@ -67,7 +72,12 @@ public class DefaultRelayStateUpdatedPropertyEvent extends DevicePropertyEventBa
 
   @Override
   public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+    return new String[]{displayName};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

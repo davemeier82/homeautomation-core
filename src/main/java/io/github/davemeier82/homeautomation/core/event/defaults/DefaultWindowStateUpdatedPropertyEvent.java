@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.WindowStateUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,27 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultWindowStateUpdatedPropertyEvent extends DevicePropertyEventBase<WindowSensor> implements WindowStateUpdatedEvent {
+public class DefaultWindowStateUpdatedPropertyEvent implements DevicePropertyEvent, WindowStateUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<Boolean> isOpen;
   private final DataWithTimestamp<Boolean> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param isOpen        the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param displayName      the display name for the event message
+   * @param isOpen           the new value
+   * @param previousValue    the old value
    */
-  public DefaultWindowStateUpdatedPropertyEvent(WindowSensor sensor,
+  public DefaultWindowStateUpdatedPropertyEvent(DevicePropertyId devicePropertyId, String displayName,
                                                 DataWithTimestamp<Boolean> isOpen,
                                                 DataWithTimestamp<Boolean> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.isOpen = isOpen;
     this.previousValue = previousValue;
   }
@@ -67,7 +71,12 @@ public class DefaultWindowStateUpdatedPropertyEvent extends DevicePropertyEventB
 
   @Override
   public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+    return new String[]{displayName};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

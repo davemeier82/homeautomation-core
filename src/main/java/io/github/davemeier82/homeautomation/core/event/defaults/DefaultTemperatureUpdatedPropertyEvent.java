@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.TemperatureSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.TemperatureUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultTemperatureUpdatedPropertyEvent extends DevicePropertyEventBase<TemperatureSensor> implements TemperatureUpdatedEvent {
+public class DefaultTemperatureUpdatedPropertyEvent implements DevicePropertyEvent, TemperatureUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> temperatureInDegree;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor              the sensor
+   * @param devicePropertyId    the id
    * @param temperatureInDegree the new value
    * @param previousValue       the old value
    */
-  public DefaultTemperatureUpdatedPropertyEvent(TemperatureSensor sensor,
+  public DefaultTemperatureUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                                 DataWithTimestamp<Float> temperatureInDegree,
                                                 DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.temperatureInDegree = temperatureInDegree;
     this.previousValue = previousValue;
   }
@@ -68,6 +69,11 @@ public class DefaultTemperatureUpdatedPropertyEvent extends DevicePropertyEventB
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{temperatureInDegree.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

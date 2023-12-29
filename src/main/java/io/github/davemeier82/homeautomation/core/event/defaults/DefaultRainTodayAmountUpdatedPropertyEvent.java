@@ -16,10 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.RainSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
-import io.github.davemeier82.homeautomation.core.event.RainTodayAmountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RainTodayAmountUpdatedEvent;
 
 import java.util.Optional;
@@ -30,17 +29,17 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultRainTodayAmountUpdatedPropertyEvent extends DevicePropertyEventBase<RainSensor> implements RainTodayAmountUpdatedEvent {
+public class DefaultRainTodayAmountUpdatedPropertyEvent implements DevicePropertyEvent, RainTodayAmountUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   DataWithTimestamp<Float> amountInMm;
   DataWithTimestamp<Float> previousAmountInMm;
 
-
-  public DefaultRainTodayAmountUpdatedPropertyEvent(RainSensor sensor,
+  public DefaultRainTodayAmountUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                                     DataWithTimestamp<Float> amountInMm,
                                                     DataWithTimestamp<Float> previousAmountInMm
-                                                           ) {
-    super(sensor);
+  ) {
+    this.devicePropertyId = devicePropertyId;
     this.amountInMm = amountInMm;
     this.previousAmountInMm = previousAmountInMm;
   }
@@ -63,6 +62,11 @@ public class DefaultRainTodayAmountUpdatedPropertyEvent extends DevicePropertyEv
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{amountInMm.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

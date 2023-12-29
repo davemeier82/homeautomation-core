@@ -28,9 +28,6 @@ import java.util.Optional;
  */
 public interface RainTodayAmountChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  RainSensor getDeviceProperty();
-
   /**
    * Returns the rain amount in millimeter of the current day at the time of the measurement.
    */

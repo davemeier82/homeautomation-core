@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.UvSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.UvIndexChangedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultUvIndexChangedPropertyEvent extends DevicePropertyEventBase<UvSensor> implements UvIndexChangedEvent {
+public class DefaultUvIndexChangedPropertyEvent implements DevicePropertyEvent, UvIndexChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> index;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param index         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param index            the new value
+   * @param previousValue    the old value
    */
-  public DefaultUvIndexChangedPropertyEvent(UvSensor sensor,
+  public DefaultUvIndexChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                             DataWithTimestamp<Float> index,
                                             DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.index = index;
     this.previousValue = previousValue;
   }
@@ -68,6 +69,11 @@ public class DefaultUvIndexChangedPropertyEvent extends DevicePropertyEventBase<
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{index.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

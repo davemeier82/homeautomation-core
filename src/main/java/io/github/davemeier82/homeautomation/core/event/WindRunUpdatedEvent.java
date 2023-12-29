@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
  */
 public interface WindRunUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  WindSensor getDeviceProperty();
-
   /**
    * Returns the wind run in km for the interval defined in the sensor at the time of the measurement.
    */

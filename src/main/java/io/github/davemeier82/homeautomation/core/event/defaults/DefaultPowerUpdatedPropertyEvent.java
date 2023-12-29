@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.PowerSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.PowerUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultPowerUpdatedPropertyEvent extends DevicePropertyEventBase<PowerSensor> implements PowerUpdatedEvent {
+public class DefaultPowerUpdatedPropertyEvent implements DevicePropertyEvent, PowerUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Double> watt;
   private final DataWithTimestamp<Double> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param watt          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param watt             the new value
+   * @param previousValue    the old value
    */
-  public DefaultPowerUpdatedPropertyEvent(PowerSensor sensor,
+  public DefaultPowerUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
                                           DataWithTimestamp<Double> watt,
                                           DataWithTimestamp<Double> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.watt = watt;
     this.previousValue = previousValue;
   }
@@ -68,6 +69,11 @@ public class DefaultPowerUpdatedPropertyEvent extends DevicePropertyEventBase<Po
   @Override
   public Object[] getMessageArgs() {
     return new Double[]{watt.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

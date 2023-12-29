@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Roller;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RollerPositionChangedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,28 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEventBase<Roller> implements RollerPositionChangedEvent {
+public class DefaultRollerPositionChangedPropertyEvent implements DevicePropertyEvent, RollerPositionChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<Integer> positionInPercent;
   private final DataWithTimestamp<Integer> previousValue;
 
   /**
    * Constructor
    *
-   * @param roller            the roller
+   * @param devicePropertyId  the id
+   * @param displayName       the display name for the event message
    * @param positionInPercent the new value
    * @param previousValue     the old value
    */
-  public DefaultRollerPositionChangedPropertyEvent(Roller roller,
+  public DefaultRollerPositionChangedPropertyEvent(DevicePropertyId devicePropertyId,
+                                                   String displayName,
                                                    DataWithTimestamp<Integer> positionInPercent,
                                                    DataWithTimestamp<Integer> previousValue
   ) {
-    super(roller);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.positionInPercent = positionInPercent;
     this.previousValue = previousValue;
   }
@@ -67,7 +72,12 @@ public class DefaultRollerPositionChangedPropertyEvent extends DevicePropertyEve
 
   @Override
   public Object[] getMessageArgs() {
-    return new Object[]{getDevice().getDisplayName(), positionInPercent.getValue()};
+    return new Object[]{displayName, positionInPercent.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

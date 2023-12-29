@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor
  */
 public interface CloudBaseChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  CloudBaseSensor getDeviceProperty();
-
   /**
    * Returns new the cloud base in meter at the time of the measurement.
    */

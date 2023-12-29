@@ -16,11 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.WindRunChangedEvent;
-import io.github.davemeier82.homeautomation.core.event.WindSpeedChangedEvent;
 
 import java.util.Optional;
 
@@ -30,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultWindRunChangedPropertyEvent extends DevicePropertyEventBase<WindSensor> implements WindRunChangedEvent {
+public class DefaultWindRunChangedPropertyEvent implements DevicePropertyEvent, WindRunChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Double> km;
   private final DataWithTimestamp<Double> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param km            the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param km               the new value
+   * @param previousValue    the old value
    */
-  public DefaultWindRunChangedPropertyEvent(WindSensor sensor,
+  public DefaultWindRunChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                             DataWithTimestamp<Double> km,
                                             DataWithTimestamp<Double> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.km = km;
     this.previousValue = previousValue;
   }
@@ -69,6 +69,11 @@ public class DefaultWindRunChangedPropertyEvent extends DevicePropertyEventBase<
   @Override
   public Object[] getMessageArgs() {
     return new Double[]{km.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

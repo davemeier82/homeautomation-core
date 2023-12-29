@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.WindDirectionChangedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,24 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultWindDirectionChangedPropertyEvent extends DevicePropertyEventBase<WindSensor> implements WindDirectionChangedEvent {
+public class DefaultWindDirectionChangedPropertyEvent implements DevicePropertyEvent, WindDirectionChangedEvent {
 
+  private final DevicePropertyId devicePropertyId;
   private final DataWithTimestamp<Float> degree;
   private final DataWithTimestamp<Float> previousValue;
 
   /**
    * Constructor
    *
-   * @param sensor        the sensor
-   * @param degree        the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param degree           the new value
+   * @param previousValue    the old value
    */
-  public DefaultWindDirectionChangedPropertyEvent(WindSensor sensor,
+  public DefaultWindDirectionChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                                   DataWithTimestamp<Float> degree,
                                                   DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.degree = degree;
     this.previousValue = previousValue;
   }
@@ -68,6 +69,11 @@ public class DefaultWindDirectionChangedPropertyEvent extends DevicePropertyEven
   @Override
   public Object[] getMessageArgs() {
     return new Float[]{degree.getValue()};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
  */
 public interface WindGustSpeedUpdatedEvent extends DevicePropertyEvent {
 
-  @Override
-  WindSensor getDeviceProperty();
-
   /**
    * Returns the wind gust speed in km/h at the time of the measurement.
    */

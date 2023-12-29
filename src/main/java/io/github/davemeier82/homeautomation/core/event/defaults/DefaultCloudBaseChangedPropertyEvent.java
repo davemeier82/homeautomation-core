@@ -16,10 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.CloudBaseChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 
 import java.util.Optional;
 
@@ -29,7 +29,9 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.4.0
  */
-public class DefaultCloudBaseChangedPropertyEvent extends DevicePropertyEventBase<CloudBaseSensor> implements CloudBaseChangedEvent {
+public class DefaultCloudBaseChangedPropertyEvent implements DevicePropertyEvent, CloudBaseChangedEvent {
+
+  private final DevicePropertyId devicePropertyId;
 
   private final DataWithTimestamp<Float> meter;
   private final DataWithTimestamp<Float> previousValue;
@@ -37,15 +39,15 @@ public class DefaultCloudBaseChangedPropertyEvent extends DevicePropertyEventBas
   /**
    * Constructor
    *
-   * @param sensor        the sensor
+   * Change access modifier
    * @param meter         the new value
    * @param previousValue the old value
    */
-  public DefaultCloudBaseChangedPropertyEvent(CloudBaseSensor sensor,
+  public DefaultCloudBaseChangedPropertyEvent(DevicePropertyId devicePropertyId,
                                               DataWithTimestamp<Float> meter,
                                               DataWithTimestamp<Float> previousValue
   ) {
-    super(sensor);
+    this.devicePropertyId = devicePropertyId;
     this.meter = meter;
     this.previousValue = previousValue;
   }
@@ -58,6 +60,11 @@ public class DefaultCloudBaseChangedPropertyEvent extends DevicePropertyEventBas
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousValue);
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
   @Override

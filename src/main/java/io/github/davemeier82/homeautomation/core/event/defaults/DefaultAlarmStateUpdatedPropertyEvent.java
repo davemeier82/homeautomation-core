@@ -16,11 +16,11 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Alarm;
 import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.AlarmStateUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 
 import java.util.Optional;
 
@@ -30,23 +30,28 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.3.0
  */
-public class DefaultAlarmStateUpdatedPropertyEvent extends DevicePropertyEventBase<Alarm> implements AlarmStateUpdatedEvent {
+public class DefaultAlarmStateUpdatedPropertyEvent implements DevicePropertyEvent, AlarmStateUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<AlarmState> state;
   private final DataWithTimestamp<AlarmState> previousState;
 
   /**
    * Constructor
    *
-   * @param alarm         the alarm
-   * @param state         the new state
-   * @param previousState the old state
+   * @param devicePropertyId the id
+   * @param displayName      the display name for the event message
+   * @param state            the new state
+   * @param previousState    the old state
    */
-  public DefaultAlarmStateUpdatedPropertyEvent(Alarm alarm,
+  public DefaultAlarmStateUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
+                                               String displayName,
                                                DataWithTimestamp<AlarmState> state,
                                                DataWithTimestamp<AlarmState> previousState
   ) {
-    super(alarm);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.state = state;
     this.previousState = previousState;
   }
@@ -59,6 +64,11 @@ public class DefaultAlarmStateUpdatedPropertyEvent extends DevicePropertyEventBa
   @Override
   public Optional<DataWithTimestamp<?>> getPreviousValue() {
     return Optional.ofNullable(previousState);
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
   @Override
@@ -85,7 +95,7 @@ public class DefaultAlarmStateUpdatedPropertyEvent extends DevicePropertyEventBa
 
   @Override
   public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+    return new String[]{displayName};
   }
 
 }

@@ -16,10 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.Roller;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.device.property.RollerState;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.RollerStateUpdatedEvent;
 
 import java.util.Optional;
@@ -30,23 +30,26 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.1.0
  */
-public class DefaultRollerStateUpdatedPropertyEvent extends DevicePropertyEventBase<Roller> implements RollerStateUpdatedEvent {
+public class DefaultRollerStateUpdatedPropertyEvent implements DevicePropertyEvent, RollerStateUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<RollerState> state;
   private final DataWithTimestamp<RollerState> previousState;
 
   /**
    * Constructor
    *
-   * @param roller        the roller
+   * @param devicePropertyId the id
    * @param state         the new state
    * @param previousState the old state
    */
-  public DefaultRollerStateUpdatedPropertyEvent(Roller roller,
+  public DefaultRollerStateUpdatedPropertyEvent(DevicePropertyId devicePropertyId, String displayName,
                                                 DataWithTimestamp<RollerState> state,
                                                 DataWithTimestamp<RollerState> previousState
   ) {
-    super(roller);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.state = state;
     this.previousState = previousState;
   }
@@ -79,7 +82,12 @@ public class DefaultRollerStateUpdatedPropertyEvent extends DevicePropertyEventB
 
   @Override
   public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+    return new String[]{displayName};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

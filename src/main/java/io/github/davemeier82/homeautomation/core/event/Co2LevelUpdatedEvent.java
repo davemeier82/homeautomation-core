@@ -25,8 +25,6 @@ import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
  * @since 0.3.0
  */
 public interface Co2LevelUpdatedEvent extends DevicePropertyEvent {
-  @Override
-  Co2Sensor getDeviceProperty();
 
   /**
    * @return the new co2 level in ppm and the time of the measurement

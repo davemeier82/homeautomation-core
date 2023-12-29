@@ -26,9 +26,6 @@ import io.github.davemeier82.homeautomation.core.device.property.UvSensor;
  */
 public interface UvIndexChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  UvSensor getDeviceProperty();
-
   /**
    * @return the new UV index [0,1] at the time of the measurement
    */

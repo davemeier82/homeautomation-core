@@ -16,9 +16,9 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.property.SmokeSensor;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
-import io.github.davemeier82.homeautomation.core.event.DevicePropertyEventBase;
+import io.github.davemeier82.homeautomation.core.event.DevicePropertyEvent;
 import io.github.davemeier82.homeautomation.core.event.SmokeStateUpdatedEvent;
 
 import java.util.Optional;
@@ -29,23 +29,28 @@ import java.util.Optional;
  * @author David Meier
  * @since 0.3.0
  */
-public class DefaultSmokeStateUpdatedPropertyEvent extends DevicePropertyEventBase<SmokeSensor> implements SmokeStateUpdatedEvent {
+public class DefaultSmokeStateUpdatedPropertyEvent implements DevicePropertyEvent, SmokeStateUpdatedEvent {
 
+  private final DevicePropertyId devicePropertyId;
+  private final String displayName;
   private final DataWithTimestamp<Boolean> isActive;
   private final DataWithTimestamp<Boolean> previousValue;
 
   /**
    * Constructor
    *
-   * @param smokeSensor   the alarm
-   * @param isActive      the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id
+   * @param displayName      the display name for the event message
+   * @param isActive         the new value
+   * @param previousValue    the old value
    */
-  public DefaultSmokeStateUpdatedPropertyEvent(SmokeSensor smokeSensor,
+  public DefaultSmokeStateUpdatedPropertyEvent(DevicePropertyId devicePropertyId,
+                                               String displayName,
                                                DataWithTimestamp<Boolean> isActive,
                                                DataWithTimestamp<Boolean> previousValue
   ) {
-    super(smokeSensor);
+    this.devicePropertyId = devicePropertyId;
+    this.displayName = displayName;
     this.isActive = isActive;
     this.previousValue = previousValue;
   }
@@ -67,7 +72,12 @@ public class DefaultSmokeStateUpdatedPropertyEvent extends DevicePropertyEventBa
 
   @Override
   public Object[] getMessageArgs() {
-    return new String[]{getDevice().getDisplayName()};
+    return new String[]{displayName};
+  }
+
+  @Override
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 
 }

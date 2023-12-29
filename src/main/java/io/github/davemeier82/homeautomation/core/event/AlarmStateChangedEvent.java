@@ -27,9 +27,6 @@ import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
  */
 public interface AlarmStateChangedEvent extends DevicePropertyEvent {
 
-  @Override
-  Alarm getDeviceProperty();
-
   /**
    * @return the new state and the time of the stage change
    */
