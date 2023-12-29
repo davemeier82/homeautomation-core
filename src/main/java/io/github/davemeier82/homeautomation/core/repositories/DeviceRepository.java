@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.davemeier82.homeautomation.core.device.property;
+package io.github.davemeier82.homeautomation.core.repositories;
 
+import io.github.davemeier82.homeautomation.core.device.Device;
 import io.github.davemeier82.homeautomation.core.device.DeviceId;
 
-import static io.github.davemeier82.homeautomation.core.device.DeviceId.deviceIdFromDevice;
+import java.util.Optional;
+import java.util.Set;
 
-/**
- * @param deviceId device id
- * @param id       id of the device property
- * @since 0.5.0
- */
-public record DevicePropertyId(DeviceId deviceId, int id) {
+public interface DeviceRepository {
 
-  public static DevicePropertyId devicePropertyIdFrom(DeviceProperty deviceProperty) {
-    return new DevicePropertyId(deviceIdFromDevice(deviceProperty.getDevice()), deviceProperty.getId());
-  }
+  Optional<Device> getByDeviceId(DeviceId deviceId);
+
+  Set<Device> getDevices();
 }

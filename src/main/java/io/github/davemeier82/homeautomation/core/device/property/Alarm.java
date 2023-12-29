@@ -28,6 +28,7 @@ import java.util.Optional;
  */
 public interface Alarm extends DeviceProperty {
 
+  String TYPE = "Alarm";
 
   /**
    * Returns the alarm state at the time of the report.
@@ -42,4 +43,9 @@ public interface Alarm extends DeviceProperty {
    * @param state the new state
    */
   void setState(AlarmState state);
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

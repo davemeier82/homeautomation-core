@@ -27,10 +27,18 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public interface PowerSensor extends DeviceProperty {
+
+  String TYPE = "PowerSensor";
+
   /**
    * Returns the power consumption in watt and the time of the measurement.
    *
    * @return Optional.empty() if angle is unknown
    */
   Optional<DataWithTimestamp<Double>> getWatt();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

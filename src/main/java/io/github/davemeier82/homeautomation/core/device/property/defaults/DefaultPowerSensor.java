@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public class DefaultPowerSensor implements PowerSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultPowerSensor implements PowerSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultPowerSensor(long id,
+  public DefaultPowerSensor(int id,
                             Device device,
                             EventPublisher eventPublisher,
                             EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultPowerSensor implements PowerSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultPowerSensor(long id,
+  public DefaultPowerSensor(int id,
                             String label,
                             Device device,
                             EventPublisher eventPublisher,
@@ -108,7 +108,7 @@ public class DefaultPowerSensor implements PowerSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

@@ -27,6 +27,9 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public interface RainSensor extends DeviceProperty {
+
+  String TYPE = "RainSensor";
+
   /**
    * Returns the rain rate in millimeter to hour
    *
@@ -47,4 +50,9 @@ public interface RainSensor extends DeviceProperty {
    * @return Optional.empty() if the rain amount is unknown
    */
   Optional<DataWithTimestamp<Float>> getTodayInMm();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

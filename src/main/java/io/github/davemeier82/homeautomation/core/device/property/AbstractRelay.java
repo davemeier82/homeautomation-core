@@ -37,7 +37,7 @@ public abstract class AbstractRelay extends DefaultReadOnlyRelay implements Rela
    * @param eventPublisher event publisher
    * @param eventFactory   event factory
    */
-  protected AbstractRelay(long id,
+  protected AbstractRelay(int id,
                           Device device,
                           EventPublisher eventPublisher,
                           EventFactory eventFactory

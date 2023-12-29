@@ -30,7 +30,7 @@ import java.util.Optional;
  * @since 0.3.0
  */
 public abstract class AbstractAlarm implements Alarm {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -44,7 +44,7 @@ public abstract class AbstractAlarm implements Alarm {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public AbstractAlarm(long id,
+  public AbstractAlarm(int id,
                        Device device,
                        EventPublisher eventPublisher,
                        EventFactory eventFactory
@@ -75,7 +75,7 @@ public abstract class AbstractAlarm implements Alarm {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

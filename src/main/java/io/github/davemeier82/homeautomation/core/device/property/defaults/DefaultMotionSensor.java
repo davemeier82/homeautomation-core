@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class DefaultMotionSensor implements MotionSensor {
 
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -50,7 +50,7 @@ public class DefaultMotionSensor implements MotionSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultMotionSensor(long id,
+  public DefaultMotionSensor(int id,
                              Device device,
                              EventPublisher eventPublisher,
                              EventFactory eventFactory
@@ -67,7 +67,7 @@ public class DefaultMotionSensor implements MotionSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultMotionSensor(long id,
+  public DefaultMotionSensor(int id,
                              String label,
                              Device device,
                              EventPublisher eventPublisher,
@@ -81,7 +81,7 @@ public class DefaultMotionSensor implements MotionSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 
@@ -105,7 +105,7 @@ public class DefaultMotionSensor implements MotionSensor {
       return;
     }
     DataWithTimestamp<Boolean> previousValue = motionDetected;
-    this.motionDetected = newValue;
+    motionDetected = newValue;
     eventPublisher.publishEvent(eventFactory.createMotionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       lastMotionDetected.set(newValue.getDateTime());

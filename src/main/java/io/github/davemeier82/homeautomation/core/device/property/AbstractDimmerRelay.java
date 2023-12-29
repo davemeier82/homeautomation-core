@@ -46,7 +46,7 @@ public abstract class AbstractDimmerRelay implements Dimmer {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return relay.getId();
   }
 
@@ -77,7 +77,7 @@ public abstract class AbstractDimmerRelay implements Dimmer {
   public synchronized void setDimmingLevelInPercent(int levelInPercent) {
     DataWithTimestamp<Integer> newValue = new DataWithTimestamp<>(levelInPercent);
     DataWithTimestamp<Integer> previousValue = dimmingLevel;
-    this.dimmingLevel = newValue;
+    dimmingLevel = newValue;
     relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(levelInPercent)) {
       relay.getEventPublisher().publishEvent(relay.getEventFactory().createDimmingLevelChangedEvent(this, newValue, previousValue));

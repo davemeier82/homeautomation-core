@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public class DefaultPressureSensor implements PressureSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultPressureSensor implements PressureSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultPressureSensor(long id,
+  public DefaultPressureSensor(int id,
                                Device device,
                                EventPublisher eventPublisher,
                                EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultPressureSensor implements PressureSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultPressureSensor(long id,
+  public DefaultPressureSensor(int id,
                                String label,
                                Device device,
                                EventPublisher eventPublisher,
@@ -94,8 +94,8 @@ public class DefaultPressureSensor implements PressureSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.pressure;
-    this.pressure = newValue;
+    DataWithTimestamp<Float> previousValue = pressure;
+    pressure = newValue;
     eventPublisher.publishEvent(eventFactory.createPressureUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createPressureChangedEvent(this, newValue, previousValue));
@@ -108,7 +108,7 @@ public class DefaultPressureSensor implements PressureSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

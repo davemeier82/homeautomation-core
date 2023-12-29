@@ -31,7 +31,7 @@ import java.util.Optional;
  */
 public abstract class AbstractRoller implements Roller {
 
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public abstract class AbstractRoller implements Roller {
    * @param eventPublisher event publisher
    * @param eventFactory   event factory
    */
-  protected AbstractRoller(long id,
+  protected AbstractRoller(int id,
                            Device device,
                            EventPublisher eventPublisher,
                            EventFactory eventFactory
@@ -98,7 +98,7 @@ public abstract class AbstractRoller implements Roller {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

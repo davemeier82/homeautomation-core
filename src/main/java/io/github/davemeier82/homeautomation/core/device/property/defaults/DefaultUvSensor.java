@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public class DefaultUvSensor implements UvSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultUvSensor implements UvSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultUvSensor(long id,
+  public DefaultUvSensor(int id,
                          Device device,
                          EventPublisher eventPublisher,
                          EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultUvSensor implements UvSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultUvSensor(long id,
+  public DefaultUvSensor(int id,
                          String label,
                          Device device,
                          EventPublisher eventPublisher,
@@ -93,8 +93,8 @@ public class DefaultUvSensor implements UvSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.uvIndex;
-    this.uvIndex = newValue;
+    DataWithTimestamp<Float> previousValue = uvIndex;
+    uvIndex = newValue;
     eventPublisher.publishEvent(eventFactory.createUvIndexUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createUvIndexChangedEvent(this, newValue, previousValue));
@@ -107,7 +107,7 @@ public class DefaultUvSensor implements UvSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

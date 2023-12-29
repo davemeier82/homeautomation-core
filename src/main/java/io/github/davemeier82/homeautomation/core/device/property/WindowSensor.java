@@ -27,6 +27,9 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public interface WindowSensor extends DeviceProperty {
+
+  String TYPE = "WindowSensor";
+
   /**
    * Returns true if the window is open at the time of the measurement.
    *
@@ -45,4 +48,9 @@ public interface WindowSensor extends DeviceProperty {
    * @return true if this sensor supports tilting
    */
   boolean isTiltingSupported();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

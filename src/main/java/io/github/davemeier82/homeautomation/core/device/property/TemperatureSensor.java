@@ -27,10 +27,18 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public interface TemperatureSensor extends DeviceProperty {
+
+  String TYPE = "TemperatureSensor";
+
   /**
    * Returns the temperature in degrees celsius at the time of the measurement.
    *
    * @return Optional.empty() if the temperature is unknown
    */
   Optional<DataWithTimestamp<Float>> getTemperatureInDegree();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

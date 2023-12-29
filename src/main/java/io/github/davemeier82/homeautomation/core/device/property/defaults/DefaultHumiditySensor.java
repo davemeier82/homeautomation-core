@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public class DefaultHumiditySensor implements HumiditySensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultHumiditySensor implements HumiditySensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultHumiditySensor(long id,
+  public DefaultHumiditySensor(int id,
                                Device device,
                                EventPublisher eventPublisher,
                                EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultHumiditySensor implements HumiditySensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultHumiditySensor(long id,
+  public DefaultHumiditySensor(int id,
                                String label,
                                Device device,
                                EventPublisher eventPublisher,
@@ -98,8 +98,8 @@ public class DefaultHumiditySensor implements HumiditySensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.humidity;
-    this.humidity = newValue;
+    DataWithTimestamp<Float> previousValue = humidity;
+    humidity = newValue;
     eventPublisher.publishEvent(eventFactory.createHumidityUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createHumidityChangedEvent(this, newValue, previousValue));
@@ -107,7 +107,7 @@ public class DefaultHumiditySensor implements HumiditySensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

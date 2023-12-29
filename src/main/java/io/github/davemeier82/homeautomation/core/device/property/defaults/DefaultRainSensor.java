@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public class DefaultRainSensor implements RainSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -48,7 +48,7 @@ public class DefaultRainSensor implements RainSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultRainSensor(long id,
+  public DefaultRainSensor(int id,
                            Device device,
                            EventPublisher eventPublisher,
                            EventFactory eventFactory
@@ -65,7 +65,7 @@ public class DefaultRainSensor implements RainSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultRainSensor(long id,
+  public DefaultRainSensor(int id,
                            String label,
                            Device device,
                            EventPublisher eventPublisher,
@@ -87,8 +87,8 @@ public class DefaultRainSensor implements RainSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.rate;
-    this.rate = newValue;
+    DataWithTimestamp<Float> previousValue = rate;
+    rate = newValue;
     eventPublisher.publishEvent(eventFactory.createRainRateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRainRateChangedEvent(this, newValue, previousValue));
@@ -104,8 +104,8 @@ public class DefaultRainSensor implements RainSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.rainInterval;
-    this.rainInterval = newValue;
+    DataWithTimestamp<Float> previousValue = rainInterval;
+    rainInterval = newValue;
     eventPublisher.publishEvent(eventFactory.createRainTodayAmountUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRainTodayAmountChangedEvent(this, newValue, previousValue));
@@ -121,8 +121,8 @@ public class DefaultRainSensor implements RainSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.rainToday;
-    this.rainToday = newValue;
+    DataWithTimestamp<Float> previousValue = rainToday;
+    rainToday = newValue;
     eventPublisher.publishEvent(eventFactory.createRainIntervalAmountUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createRainIntervalAmountChangedEvent(this, newValue, previousValue));
@@ -145,7 +145,7 @@ public class DefaultRainSensor implements RainSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

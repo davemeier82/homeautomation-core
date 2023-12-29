@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public class DefaultWindowSensor implements WindowSensor {
-  private final long id;
+  private final int id;
   private final Device device;
 
   private final boolean tiltingSupported;
@@ -50,7 +50,7 @@ public class DefaultWindowSensor implements WindowSensor {
    * @param eventPublisher   the event publisher
    * @param eventFactory     the event factory
    */
-  public DefaultWindowSensor(long id,
+  public DefaultWindowSensor(int id,
                              Device device,
                              boolean tiltingSupported,
                              EventPublisher eventPublisher,
@@ -69,7 +69,7 @@ public class DefaultWindowSensor implements WindowSensor {
    * @param eventPublisher   the event publisher
    * @param eventFactory     the event factory
    */
-  public DefaultWindowSensor(long id,
+  public DefaultWindowSensor(int id,
                              String label,
                              Device device,
                              boolean tiltingSupported,
@@ -85,7 +85,7 @@ public class DefaultWindowSensor implements WindowSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 
@@ -108,7 +108,7 @@ public class DefaultWindowSensor implements WindowSensor {
       return;
     }
     DataWithTimestamp<Boolean> previousValue = isOpen;
-    this.isOpen = newValue;
+    isOpen = newValue;
     eventPublisher.publishEvent(eventFactory.createWindowStateUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindowStateChangedEvent(this, newValue, previousValue));

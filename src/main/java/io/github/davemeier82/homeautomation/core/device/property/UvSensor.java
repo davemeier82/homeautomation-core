@@ -27,10 +27,18 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public interface UvSensor extends DeviceProperty {
+
+  String TYPE = "UvSensor";
+
   /**
    * Returns the UV index [0,1] at the time of the measurement.
    *
    * @return Optional.empty() if the UV index is unknown
    */
   Optional<DataWithTimestamp<Float>> getIndex();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

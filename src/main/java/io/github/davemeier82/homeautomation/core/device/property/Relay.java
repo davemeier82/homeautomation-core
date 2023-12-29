@@ -24,6 +24,8 @@ package io.github.davemeier82.homeautomation.core.device.property;
  */
 public interface Relay extends ReadOnlyRelay {
 
+  String TYPE = "Relay";
+
   /**
    * switches the relay on.
    */
@@ -33,5 +35,10 @@ public interface Relay extends ReadOnlyRelay {
    * switches the relay off.
    */
   void turnOff();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 
 }

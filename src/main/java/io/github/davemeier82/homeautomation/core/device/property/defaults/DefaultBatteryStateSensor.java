@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public class DefaultBatteryStateSensor implements BatteryStateSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultBatteryStateSensor(long id,
+  public DefaultBatteryStateSensor(int id,
                                    Device device,
                                    EventPublisher eventPublisher,
                                    EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultBatteryStateSensor(long id,
+  public DefaultBatteryStateSensor(int id,
                                    String label,
                                    Device device,
                                    EventPublisher eventPublisher,
@@ -93,8 +93,8 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Integer> previousValue = this.batteryLevel;
-    this.batteryLevel = newValue;
+    DataWithTimestamp<Integer> previousValue = batteryLevel;
+    batteryLevel = newValue;
     eventPublisher.publishEvent(eventFactory.createBatteryLevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createBatteryLevelChangedEvent(this, newValue, previousValue));
@@ -107,7 +107,7 @@ public class DefaultBatteryStateSensor implements BatteryStateSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

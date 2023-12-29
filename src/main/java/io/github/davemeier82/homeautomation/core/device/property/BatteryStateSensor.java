@@ -28,10 +28,17 @@ import java.util.Optional;
  */
 public interface BatteryStateSensor extends DeviceProperty {
 
+  String TYPE = "BatteryStateSensor";
+
   /**
    * Returns the battery level in percent (0 = empty, 100 = fully charged) and the time of the measurement.
    *
    * @return Optional.empty() if illuminance is unknown
    */
   Optional<DataWithTimestamp<Integer>> batteryLevelInPercent();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

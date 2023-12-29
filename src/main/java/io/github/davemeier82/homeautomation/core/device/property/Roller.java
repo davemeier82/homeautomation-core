@@ -28,6 +28,8 @@ import java.util.Optional;
  */
 public interface Roller extends DeviceProperty {
 
+  String TYPE = "Roller";
+
   /**
    * starts opening of the roller
    */
@@ -64,4 +66,9 @@ public interface Roller extends DeviceProperty {
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<RollerState>> getState();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

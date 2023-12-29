@@ -29,12 +29,17 @@ public interface DeviceProperty {
   /**
    * @return id that is unique for a device (but not globally unique)
    */
-  long getId();
+  int getId();
 
   /**
    * @return the device it belongs to
    */
   Device getDevice();
+
+  /**
+   * @return the property type
+   */
+  String getType();
 
   /**
    * @return the label of sensor

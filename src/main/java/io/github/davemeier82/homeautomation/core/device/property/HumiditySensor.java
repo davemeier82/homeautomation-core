@@ -28,10 +28,17 @@ import java.util.Optional;
  */
 public interface HumiditySensor extends DeviceProperty {
 
+  String TYPE = "HumiditySensor";
+
   /**
    * Returns the relative humidity in percent (0 = dry, 100 = humid) and the time of the measurement.
    *
    * @return Optional.empty() if humidity is unknown
    */
   Optional<DataWithTimestamp<Float>> getRelativeHumidityInPercent();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

@@ -28,10 +28,17 @@ import java.util.Optional;
  */
 public interface ReadOnlyRelay extends DeviceProperty {
 
+  String TYPE = "ReadOnlyRelay";
+
   /**
    * Returns true if the relay is switched on and the time of the state change.
    *
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<Boolean>> isOn();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

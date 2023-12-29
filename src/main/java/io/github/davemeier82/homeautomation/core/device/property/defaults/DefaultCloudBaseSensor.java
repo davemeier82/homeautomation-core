@@ -30,7 +30,7 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public class DefaultCloudBaseSensor implements CloudBaseSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -45,7 +45,7 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultCloudBaseSensor(long id,
+  public DefaultCloudBaseSensor(int id,
                                 Device device,
                                 EventPublisher eventPublisher,
                                 EventFactory eventFactory
@@ -62,7 +62,7 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultCloudBaseSensor(long id,
+  public DefaultCloudBaseSensor(int id,
                                 String label,
                                 Device device,
                                 EventPublisher eventPublisher,
@@ -92,8 +92,8 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.cloudBase;
-    this.cloudBase = newValue;
+    DataWithTimestamp<Float> previousValue = cloudBase;
+    cloudBase = newValue;
     eventPublisher.publishEvent(eventFactory.createCloudBaseUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createCloudBaseChangedEvent(this, newValue, previousValue));
@@ -107,7 +107,7 @@ public class DefaultCloudBaseSensor implements CloudBaseSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

@@ -28,11 +28,18 @@ import java.util.Optional;
  */
 public interface Co2Sensor extends DeviceProperty {
 
+  String TYPE = "Co2Sensor";
+
   /**
    * Returns the co2 level in ppm and the time of the measurement.
    *
    * @return Optional.empty() if co2 level is unknown
    */
   Optional<DataWithTimestamp<Integer>> getPpm();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 
 }

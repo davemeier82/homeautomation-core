@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public class DefaultWindSensor implements WindSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -50,7 +50,7 @@ public class DefaultWindSensor implements WindSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultWindSensor(long id,
+  public DefaultWindSensor(int id,
                            Device device,
                            EventPublisher eventPublisher,
                            EventFactory eventFactory
@@ -66,7 +66,7 @@ public class DefaultWindSensor implements WindSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultWindSensor(long id,
+  public DefaultWindSensor(int id,
                            String label,
                            Device device,
                            EventPublisher eventPublisher,
@@ -88,8 +88,8 @@ public class DefaultWindSensor implements WindSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.speed;
-    this.speed = newValue;
+    DataWithTimestamp<Float> previousValue = speed;
+    speed = newValue;
     eventPublisher.publishEvent(eventFactory.createWindSpeedUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindSpeedChangedEvent(this, newValue, previousValue));
@@ -105,8 +105,8 @@ public class DefaultWindSensor implements WindSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.gustSpeed;
-    this.gustSpeed = newValue;
+    DataWithTimestamp<Float> previousValue = gustSpeed;
+    gustSpeed = newValue;
     eventPublisher.publishEvent(eventFactory.createWindGustSpeedUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindGustSpeedChangedEvent(this, newValue, previousValue));
@@ -122,8 +122,8 @@ public class DefaultWindSensor implements WindSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.direction;
-    this.direction = newValue;
+    DataWithTimestamp<Float> previousValue = direction;
+    direction = newValue;
     eventPublisher.publishEvent(eventFactory.createWindDirectionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindDirectionChangedEvent(this, newValue, previousValue));
@@ -139,8 +139,8 @@ public class DefaultWindSensor implements WindSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.gustDirection;
-    this.gustDirection = newValue;
+    DataWithTimestamp<Float> previousValue = gustDirection;
+    gustDirection = newValue;
     eventPublisher.publishEvent(eventFactory.createWindGustDirectionUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindGustDirectionChangedEvent(this, newValue, previousValue));
@@ -156,8 +156,8 @@ public class DefaultWindSensor implements WindSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Double> previousValue = this.run;
-    this.run = newValue;
+    DataWithTimestamp<Double> previousValue = run;
+    run = newValue;
     eventPublisher.publishEvent(eventFactory.createWindRunUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createWindRunChangedEvent(this, newValue, previousValue));
@@ -190,7 +190,7 @@ public class DefaultWindSensor implements WindSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

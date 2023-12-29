@@ -32,11 +32,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 0.1.0
  */
 public class DefaultReadOnlyRelay implements ReadOnlyRelay {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
-  private String label;
+  private final String label;
   /**
    * The relay state and the time of the state change.
    */
@@ -50,7 +50,7 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultReadOnlyRelay(long id,
+  public DefaultReadOnlyRelay(int id,
                               Device device,
                               EventPublisher eventPublisher,
                               EventFactory eventFactory
@@ -65,7 +65,7 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultReadOnlyRelay(long id, String label, Device device, EventPublisher eventPublisher, EventFactory eventFactory) {
+  public DefaultReadOnlyRelay(int id, String label, Device device, EventPublisher eventPublisher, EventFactory eventFactory) {
     this.id = id;
     this.device = device;
     this.eventPublisher = eventPublisher;
@@ -103,7 +103,7 @@ public class DefaultReadOnlyRelay implements ReadOnlyRelay {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

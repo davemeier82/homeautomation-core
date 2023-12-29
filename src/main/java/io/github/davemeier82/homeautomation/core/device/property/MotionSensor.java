@@ -29,6 +29,8 @@ import java.util.Optional;
  */
 public interface MotionSensor extends DeviceProperty {
 
+  String TYPE = "MotionSensor";
+
   /**
    * Returns true if motion was detected and the time of the measurement.
    *
@@ -42,5 +44,10 @@ public interface MotionSensor extends DeviceProperty {
    * @return Optional.empty() if no motion was detected so far
    */
   Optional<ZonedDateTime> getLastMotionDetected();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 
 }

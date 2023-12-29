@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public class DefaultTemperatureSensor implements TemperatureSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultTemperatureSensor(long id,
+  public DefaultTemperatureSensor(int id,
                                   Device device,
                                   EventPublisher eventPublisher,
                                   EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultTemperatureSensor(long id,
+  public DefaultTemperatureSensor(int id,
                                   String label,
                                   Device device,
                                   EventPublisher eventPublisher,
@@ -98,8 +98,8 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Float> previousValue = this.temperature;
-    this.temperature = newValue;
+    DataWithTimestamp<Float> previousValue = temperature;
+    temperature = newValue;
     eventPublisher.publishEvent(eventFactory.createTemperatureUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createTemperatureChangedEvent(this, newValue, previousValue));
@@ -107,7 +107,7 @@ public class DefaultTemperatureSensor implements TemperatureSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

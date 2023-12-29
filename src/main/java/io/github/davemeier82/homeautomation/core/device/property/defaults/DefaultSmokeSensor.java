@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.3.0
  */
 public class DefaultSmokeSensor implements SmokeSensor {
-  private final long id;
+  private final int id;
   private final Device device;
 
   private final EventPublisher eventPublisher;
@@ -47,7 +47,7 @@ public class DefaultSmokeSensor implements SmokeSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultSmokeSensor(long id,
+  public DefaultSmokeSensor(int id,
                             Device device,
                             EventPublisher eventPublisher,
                             EventFactory eventFactory
@@ -64,7 +64,7 @@ public class DefaultSmokeSensor implements SmokeSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultSmokeSensor(long id,
+  public DefaultSmokeSensor(int id,
                             String label,
                             Device device,
                             EventPublisher eventPublisher,
@@ -78,7 +78,7 @@ public class DefaultSmokeSensor implements SmokeSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

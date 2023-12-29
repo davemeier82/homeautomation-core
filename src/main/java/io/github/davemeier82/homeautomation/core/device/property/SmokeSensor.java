@@ -27,11 +27,19 @@ import java.util.Optional;
  * @since 0.3.0
  */
 public interface SmokeSensor extends DeviceProperty {
+
+  String TYPE = "SmokeSensor";
+
   /**
    * Returns true if the sensor detected smoke at the time of the measurement.
    *
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<Boolean>> isSmokeDetected();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 
 }

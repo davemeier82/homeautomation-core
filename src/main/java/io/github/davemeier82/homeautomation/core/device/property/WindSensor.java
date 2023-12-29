@@ -27,6 +27,9 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public interface WindSensor extends DeviceProperty {
+
+  String TYPE = "WindSensor";
+
   /**
    * Returns the sustained wind speed in km/h at the time of the measurement.
    *
@@ -61,4 +64,9 @@ public interface WindSensor extends DeviceProperty {
    * @return Optional.empty() if the distance is unknown
    */
   Optional<DataWithTimestamp<Double>> getIntervalRunInKm();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

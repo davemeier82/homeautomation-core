@@ -28,6 +28,8 @@ import java.util.Optional;
  */
 public interface Dimmer extends Relay {
 
+  String TYPE = "Dimmer";
+
   /**
    * Changes the dimming level
    *
@@ -41,4 +43,9 @@ public interface Dimmer extends Relay {
    * @return Optional.empty() if state is unknown
    */
   Optional<DataWithTimestamp<Integer>> getDimmingLevelInPercent();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.3.0
  */
 public class DefaultCo2Sensor implements Co2Sensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultCo2Sensor implements Co2Sensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultCo2Sensor(long id,
+  public DefaultCo2Sensor(int id,
                           Device device,
                           EventPublisher eventPublisher,
                           EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultCo2Sensor implements Co2Sensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultCo2Sensor(long id,
+  public DefaultCo2Sensor(int id,
                           String label,
                           Device device,
                           EventPublisher eventPublisher,
@@ -89,8 +89,8 @@ public class DefaultCo2Sensor implements Co2Sensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Integer> previousValue = this.ppm;
-    this.ppm = newValue;
+    DataWithTimestamp<Integer> previousValue = ppm;
+    ppm = newValue;
     eventPublisher.publishEvent(eventFactory.createCo2LevelUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createCo2LevelChangedEvent(this, newValue, previousValue));
@@ -103,7 +103,7 @@ public class DefaultCo2Sensor implements Co2Sensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

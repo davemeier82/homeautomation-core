@@ -27,10 +27,18 @@ import java.util.Optional;
  * @since 0.4.0
  */
 public interface CloudBaseSensor extends DeviceProperty {
+
+  String TYPE = "CloudBaseSensor";
+
   /**
    * Returns the cloud base in meter at the time of the measurement.
    *
    * @return Optional.empty() if the cloud base is unknown
    */
   Optional<DataWithTimestamp<Float>> getMeter();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

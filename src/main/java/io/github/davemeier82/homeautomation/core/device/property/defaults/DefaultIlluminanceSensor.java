@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public class DefaultIlluminanceSensor implements IlluminanceSensor {
-  private final long id;
+  private final int id;
   private final Device device;
   private final EventPublisher eventPublisher;
   private final EventFactory eventFactory;
@@ -46,7 +46,7 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultIlluminanceSensor(long id,
+  public DefaultIlluminanceSensor(int id,
                                   Device device,
                                   EventPublisher eventPublisher,
                                   EventFactory eventFactory
@@ -63,7 +63,7 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
    * @param eventPublisher the event publisher
    * @param eventFactory   the event factory
    */
-  public DefaultIlluminanceSensor(long id,
+  public DefaultIlluminanceSensor(int id,
                                   String label,
                                   Device device,
                                   EventPublisher eventPublisher,
@@ -89,8 +89,8 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
     if (newValue == null) {
       return;
     }
-    DataWithTimestamp<Integer> previousValue = this.lux;
-    this.lux = newValue;
+    DataWithTimestamp<Integer> previousValue = lux;
+    lux = newValue;
     eventPublisher.publishEvent(eventFactory.createIlluminanceUpdatedEvent(this, newValue, previousValue));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
       eventPublisher.publishEvent(eventFactory.createIlluminanceChangedEvent(this, newValue, previousValue));
@@ -103,7 +103,7 @@ public class DefaultIlluminanceSensor implements IlluminanceSensor {
   }
 
   @Override
-  public long getId() {
+  public int getId() {
     return id;
   }
 

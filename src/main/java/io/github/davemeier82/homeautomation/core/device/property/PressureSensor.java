@@ -28,10 +28,17 @@ import java.util.Optional;
  */
 public interface PressureSensor extends DeviceProperty {
 
+  String TYPE = "PressureSensor";
+
   /**
    * Returns the pressure in millibar and the time of the measurement.
    *
    * @return Optional.empty() if pressure is unknown
    */
   Optional<DataWithTimestamp<Float>> getMillibar();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 }

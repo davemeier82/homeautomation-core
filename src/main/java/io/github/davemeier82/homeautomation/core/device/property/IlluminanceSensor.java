@@ -28,11 +28,18 @@ import java.util.Optional;
  */
 public interface IlluminanceSensor extends DeviceProperty {
 
+  String TYPE = "IlluminanceSensor";
+
   /**
    * Returns the illuminance in lux and the time of the measurement.
    *
    * @return Optional.empty() if illuminance is unknown
    */
   Optional<DataWithTimestamp<Integer>> getLux();
+
+  @Override
+  default String getType() {
+    return TYPE;
+  }
 
 }
