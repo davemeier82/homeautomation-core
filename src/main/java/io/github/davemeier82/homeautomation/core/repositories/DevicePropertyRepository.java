@@ -31,4 +31,6 @@ public interface DevicePropertyRepository {
   List<DeviceProperty> getByDeviceId(DeviceId deviceId);
 
   Set<DeviceProperty> getByType(String type);
+
+  <T extends DeviceProperty> Set<T> getByClass(Class<T> clazz);
 }

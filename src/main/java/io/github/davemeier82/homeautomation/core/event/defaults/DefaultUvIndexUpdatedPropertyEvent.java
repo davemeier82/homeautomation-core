@@ -53,7 +53,7 @@ public class DefaultUvIndexUpdatedPropertyEvent implements DevicePropertyEvent, 
 
   @Override
   public DataWithTimestamp<Float> getUvIndex() {
-    return null;
+    return index;
   }
 
   @Override
