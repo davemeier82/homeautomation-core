@@ -16,12 +16,68 @@
 
 package io.github.davemeier82.homeautomation.core.event.factory;
 
-import io.github.davemeier82.homeautomation.core.device.Device;
-import io.github.davemeier82.homeautomation.core.device.property.*;
-import io.github.davemeier82.homeautomation.core.event.*;
+import io.github.davemeier82.homeautomation.core.device.DeviceId;
+import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
+import io.github.davemeier82.homeautomation.core.device.property.RollerState;
+import io.github.davemeier82.homeautomation.core.event.AlarmStateChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.AlarmStateUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.BatteryLevelChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.BatteryLevelUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.CloudBaseChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.CloudBaseUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.Co2LevelChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.Co2LevelUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.DataWithTimestamp;
+import io.github.davemeier82.homeautomation.core.event.DimmingLevelChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.DimmingLevelUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.HumidityChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.HumidityUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.IlluminanceChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.IlluminanceUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.MotionChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.MotionUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
+import io.github.davemeier82.homeautomation.core.event.NewDeviceCreatedEvent;
+import io.github.davemeier82.homeautomation.core.event.NewDevicePropertyCreatedEvent;
+import io.github.davemeier82.homeautomation.core.event.PowerChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.PowerUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.PressureChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.PressureUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.RainIntervalAmountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.RainIntervalAmountUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.RainRateChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.RainRateUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.RainTodayAmountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.RainTodayAmountUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.RelayStateChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.RelayStateUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.RollerPositionChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.RollerPositionUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.RollerStateChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.RollerStateUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.SmokeStateChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.SmokeStateUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.TemperatureChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.TemperatureUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.UvIndexChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.UvIndexUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindDirectionChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindDirectionUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindGustDirectionChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindGustDirectionUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindGustSpeedChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindGustSpeedUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindRunChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindRunUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindSpeedChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindSpeedUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindowStateChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindowStateUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindowTiltAngleChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.WindowTiltAngleUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,27 +97,23 @@ public interface EventFactory {
   /**
    * Creates a {@link MotionChangedEvent}.
    *
-   * @param sensor         the sensor that emits the event
-   * @param motionDetected the new value
-   * @param previousValue  the old value
+   * @param devicePropertyId the id of the sensor
+   * @param motionDetected   the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  MotionChangedEvent createMotionChangedEvent(MotionSensor sensor,
-                                              DataWithTimestamp<Boolean> motionDetected,
-                                              DataWithTimestamp<Boolean> previousValue
+  MotionChangedEvent createMotionChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> motionDetected, DataWithTimestamp<Boolean> previousValue, String displayName
   );
 
   /**
    * Creates a {@link MotionUpdatedEvent}.
    *
-   * @param sensor         the sensor that emits the event
-   * @param motionDetected the new value
-   * @param previousValue  the old value
+   * @param devicePropertyId the id of the sensor
+   * @param motionDetected   the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  MotionUpdatedEvent createMotionUpdatedEvent(MotionSensor sensor,
-                                              DataWithTimestamp<Boolean> motionDetected,
-                                              DataWithTimestamp<Boolean> previousValue
+  MotionUpdatedEvent createMotionUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> motionDetected, DataWithTimestamp<Boolean> previousValue, String displayName
   );
 
   /**
@@ -75,563 +127,528 @@ public interface EventFactory {
   /**
    * Creates a {@link RelayStateChangedEvent}.
    *
-   * @param relay         the relay that emits the event
-   * @param isOn          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param isOn             the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  RelayStateChangedEvent createRelayStateChangedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue);
+  RelayStateChangedEvent createRelayStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue, String displayName);
 
   /**
    * Creates a {@link RelayStateUpdatedEvent}.
    *
-   * @param relay         the relay that emits the event
-   * @param isOn          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param isOn             the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  RelayStateUpdatedEvent createRelayStateUpdatedEvent(ReadOnlyRelay relay, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue);
+  RelayStateUpdatedEvent createRelayStateUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> isOn, DataWithTimestamp<Boolean> previousValue, String displayName);
 
   /**
    * Creates a {@link WindowStateChangedEvent}.
    *
-   * @param windowSensor  the window sensor that emits the event
-   * @param isOpen        the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param isOpen           the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  WindowStateChangedEvent createWindowStateChangedEvent(WindowSensor windowSensor,
-                                                        DataWithTimestamp<Boolean> isOpen,
-                                                        DataWithTimestamp<Boolean> previousValue
+  WindowStateChangedEvent createWindowStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> isOpen, DataWithTimestamp<Boolean> previousValue, String displayName
   );
 
   /**
    * Creates a {@link WindowStateUpdatedEvent}.
    *
-   * @param windowSensor  the window sensor that emits the event
-   * @param isOpen        the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param isOpen           the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  WindowStateUpdatedEvent createWindowStateUpdatedEvent(WindowSensor windowSensor,
-                                                        DataWithTimestamp<Boolean> isOpen,
-                                                        DataWithTimestamp<Boolean> previousValue
+  WindowStateUpdatedEvent createWindowStateUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> isOpen, DataWithTimestamp<Boolean> previousValue, String displayName
   );
 
   /**
    * Creates a {@link SmokeStateChangedEvent}.
    *
-   * @param smokeSensor   the alarm that emits the event
-   * @param isOpen        the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param isOpen           the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  SmokeStateChangedEvent createSmokeStateChangedEvent(SmokeSensor smokeSensor,
-                                                      DataWithTimestamp<Boolean> isOpen,
-                                                      DataWithTimestamp<Boolean> previousValue
+  SmokeStateChangedEvent createSmokeStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> isOpen, DataWithTimestamp<Boolean> previousValue, String displayName
   );
 
   /**
    * Creates a {@link SmokeStateUpdatedEvent}.
    *
-   * @param smokeSensor   the alarm that emits the event
-   * @param isOpen        the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param isOpen           the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  SmokeStateUpdatedEvent createSmokeStateUpdatedEvent(SmokeSensor smokeSensor,
-                                                      DataWithTimestamp<Boolean> isOpen,
-                                                      DataWithTimestamp<Boolean> previousValue
+  SmokeStateUpdatedEvent createSmokeStateUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Boolean> isOpen, DataWithTimestamp<Boolean> previousValue, String displayName
   );
 
   /**
    * Creates a {@link TemperatureChangedEvent}.
    *
-   * @param temperatureSensor   the temperature sensor that emits the event
+   * @param devicePropertyId    the id of the sensor
    * @param temperatureInDegree the new value
    * @param previousValue       the old value
    * @return the event
    */
-  TemperatureChangedEvent createTemperatureChangedEvent(TemperatureSensor temperatureSensor,
-                                                        DataWithTimestamp<Float> temperatureInDegree,
-                                                        DataWithTimestamp<Float> previousValue
+  TemperatureChangedEvent createTemperatureChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> temperatureInDegree, DataWithTimestamp<Float> previousValue, String displayName
   );
 
   /**
    * Creates a {@link TemperatureUpdatedEvent}.
    *
-   * @param temperatureSensor   the temperature sensor that emits the event
+   * @param devicePropertyId    the id of the sensor
    * @param temperatureInDegree the new value
    * @param previousValue       the old value
    * @return the event
    */
-  TemperatureUpdatedEvent createTemperatureUpdatedEvent(TemperatureSensor temperatureSensor,
-                                                        DataWithTimestamp<Float> temperatureInDegree,
-                                                        DataWithTimestamp<Float> previousValue
+  TemperatureUpdatedEvent createTemperatureUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> temperatureInDegree, DataWithTimestamp<Float> previousValue, String displayName
   );
 
   /**
    * Creates a {@link HumidityChangedEvent}.
    *
-   * @param humiditySensor            the humidity sensor that emits the event
+   * @param devicePropertyId          the id of the sensor
    * @param relativeHumidityInPercent the new value
    * @param previousValue             the old value
    * @return the event
    */
-  HumidityChangedEvent createHumidityChangedEvent(HumiditySensor humiditySensor,
-                                                  DataWithTimestamp<Float> relativeHumidityInPercent,
-                                                  DataWithTimestamp<Float> previousValue
+  HumidityChangedEvent createHumidityChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> relativeHumidityInPercent, DataWithTimestamp<Float> previousValue, String displayName
   );
 
   /**
    * Creates a {@link HumidityUpdatedEvent}.
    *
-   * @param humiditySensor            the humidity sensor that emits the event
+   * @param devicePropertyId          the id of the sensor
    * @param relativeHumidityInPercent the new value
    * @param previousValue             the old value
    * @return the event
    */
-  HumidityUpdatedEvent createHumidityUpdatedEvent(HumiditySensor humiditySensor,
-                                                  DataWithTimestamp<Float> relativeHumidityInPercent,
-                                                  DataWithTimestamp<Float> previousValue
+  HumidityUpdatedEvent createHumidityUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> relativeHumidityInPercent, DataWithTimestamp<Float> previousValue, String displayName
   );
 
   /**
    * Creates a {@link BatteryLevelChangedEvent}.
    *
-   * @param batteryStateSensor    the battery state sensor that emits the event
+   * @param devicePropertyId      the id of the sensor
    * @param batteryLevelInPercent the new value
    * @param previousValue         the old value
    * @return the event
    */
-  BatteryLevelChangedEvent createBatteryLevelChangedEvent(BatteryStateSensor batteryStateSensor,
+  BatteryLevelChangedEvent createBatteryLevelChangedEvent(DevicePropertyId devicePropertyId,
                                                           DataWithTimestamp<Integer> batteryLevelInPercent,
-                                                          DataWithTimestamp<Integer> previousValue
+                                                          DataWithTimestamp<Integer> previousValue,
+                                                          String displayName
   );
 
   /**
    * Creates a {@link BatteryLevelUpdatedEvent}.
    *
-   * @param batteryStateSensor    the battery state sensor that emits the event
+   * @param devicePropertyId      the id of the sensor
    * @param batteryLevelInPercent the new value
    * @param previousValue         the old value
    * @return the event
    */
-  BatteryLevelUpdatedEvent createBatteryLevelUpdatedEvent(BatteryStateSensor batteryStateSensor,
+  BatteryLevelUpdatedEvent createBatteryLevelUpdatedEvent(DevicePropertyId devicePropertyId,
                                                           DataWithTimestamp<Integer> batteryLevelInPercent,
-                                                          DataWithTimestamp<Integer> previousValue
+                                                          DataWithTimestamp<Integer> previousValue,
+                                                          String displayName
   );
 
   /**
    * Creates a {@link DimmingLevelChangedEvent}.
    *
-   * @param dimmer              the dimmer that emits the event
+   * @param devicePropertyId    the id of the dimmer
    * @param brightnessInPercent the new value
    * @param previousValue       the old value
    * @return the event
    */
-  DimmingLevelChangedEvent createDimmingLevelChangedEvent(Dimmer dimmer,
+  DimmingLevelChangedEvent createDimmingLevelChangedEvent(DevicePropertyId devicePropertyId,
                                                           DataWithTimestamp<Integer> brightnessInPercent,
-                                                          DataWithTimestamp<Integer> previousValue
+                                                          DataWithTimestamp<Integer> previousValue,
+                                                          String displayName
   );
 
   /**
    * Creates a {@link DimmingLevelUpdatedEvent}.
    *
-   * @param dimmer              the dimmer that emits the event
+   * @param devicePropertyId    the id of the dimmer
    * @param brightnessInPercent the new value
    * @param previousValue       the old value
    * @return the event
    */
-  DimmingLevelUpdatedEvent createDimmingLevelUpdatedEvent(Dimmer dimmer,
+  DimmingLevelUpdatedEvent createDimmingLevelUpdatedEvent(DevicePropertyId devicePropertyId,
                                                           DataWithTimestamp<Integer> brightnessInPercent,
-                                                          DataWithTimestamp<Integer> previousValue
+                                                          DataWithTimestamp<Integer> previousValue,
+                                                          String displayName
   );
-
-  /**
-   * Creates a {@link DevicesLoadedEvent}.
-   *
-   * @param devices the loaded devices
-   * @return the event
-   */
-  DevicesLoadedEvent createDevicesLoadedEvent(List<Device> devices);
 
   /**
    * Creates a {@link NewDeviceCreatedEvent}.
    *
-   * @param device the newly created device
+   * @param deviceId the id of the newly created device
    * @return the event
    */
-  NewDeviceCreatedEvent createNewDeviceCreatedEvent(Device device);
+  NewDeviceCreatedEvent createNewDeviceCreatedEvent(DeviceId deviceId);
 
   /**
    * Creates a {@link RollerStateChangedEvent}.
    *
-   * @param roller        the roller that emits the event
-   * @param state         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor roller
+   * @param state            the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  RollerStateChangedEvent createRollerStateChangedEvent(Roller roller,
-                                                        DataWithTimestamp<RollerState> state,
-                                                        DataWithTimestamp<RollerState> previousValue
-  );
+  RollerStateChangedEvent createRollerStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<RollerState> state, DataWithTimestamp<RollerState> previousValue, String displayName);
 
   /**
    * Creates a {@link RollerStateUpdatedEvent}.
    *
-   * @param roller        the roller that emits the event
-   * @param state         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the roller
+   * @param state            the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  RollerStateUpdatedEvent createRollerStateUpdatedEvent(Roller roller,
-                                                        DataWithTimestamp<RollerState> state,
-                                                        DataWithTimestamp<RollerState> previousValue
-  );
+  RollerStateUpdatedEvent createRollerStateUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<RollerState> state, DataWithTimestamp<RollerState> previousValue, String displayName);
 
   /**
    * Creates a {@link AlarmStateChangedEvent}.
    *
-   * @param alarm         the alarm that emits the event
-   * @param state         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param state            the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  AlarmStateChangedEvent createAlarmStateChangedEvent(Alarm alarm,
-                                                      DataWithTimestamp<AlarmState> state,
-                                                      DataWithTimestamp<AlarmState> previousValue
-  );
+  AlarmStateChangedEvent createAlarmStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<AlarmState> state, DataWithTimestamp<AlarmState> previousValue, String displayName);
 
   /**
    * Creates a {@link AlarmStateUpdatedEvent}.
    *
-   * @param alarm         the alarm that emits the event
-   * @param state         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param state            the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  AlarmStateUpdatedEvent createAlarmStateUpdatedEvent(Alarm alarm,
-                                                      DataWithTimestamp<AlarmState> state,
-                                                      DataWithTimestamp<AlarmState> previousValue
-  );
+  AlarmStateUpdatedEvent createAlarmStateUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<AlarmState> state, DataWithTimestamp<AlarmState> previousValue, String displayName);
 
   /**
    * Creates a {@link RollerPositionChangedEvent}.
    *
-   * @param roller            the roller that emits the event
+   * @param devicePropertyId  the id of the roller
    * @param positionInPercent the new value
    * @param previousValue     the old value
    * @return the event
    */
-  RollerPositionChangedEvent createRollerPositionChangedEvent(Roller roller,
+  RollerPositionChangedEvent createRollerPositionChangedEvent(DevicePropertyId devicePropertyId,
                                                               DataWithTimestamp<Integer> positionInPercent,
-                                                              DataWithTimestamp<Integer> previousValue
+                                                              DataWithTimestamp<Integer> previousValue,
+                                                              String displayName
   );
 
   /**
    * Creates a {@link RollerPositionUpdatedEvent}.
    *
-   * @param roller            the roller that emits the event
+   * @param devicePropertyId  the id of the roller
    * @param positionInPercent the new value
    * @param previousValue     the old value
    * @return the event
    */
-  RollerPositionUpdatedEvent createRollerPositionUpdatedEvent(Roller roller,
+  RollerPositionUpdatedEvent createRollerPositionUpdatedEvent(DevicePropertyId devicePropertyId,
                                                               DataWithTimestamp<Integer> positionInPercent,
-                                                              DataWithTimestamp<Integer> previousValue
+                                                              DataWithTimestamp<Integer> previousValue,
+                                                              String displayName
   );
 
   /**
    * Creates a {@link IlluminanceChangedEvent}.
    *
-   * @param sensor        the illuminance sensor that emits the event
-   * @param lux           the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param lux              the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  IlluminanceChangedEvent createIlluminanceChangedEvent(IlluminanceSensor sensor,
-                                                        DataWithTimestamp<Integer> lux,
-                                                        DataWithTimestamp<Integer> previousValue
-  );
+  IlluminanceChangedEvent createIlluminanceChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> lux, DataWithTimestamp<Integer> previousValue, String displayName);
 
   /**
    * Creates a {@link IlluminanceUpdatedEvent}.
    *
-   * @param sensor        the illuminance sensor that emits the event
-   * @param lux           the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param lux              the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  IlluminanceUpdatedEvent createIlluminanceUpdatedEvent(IlluminanceSensor sensor,
-                                                        DataWithTimestamp<Integer> lux,
-                                                        DataWithTimestamp<Integer> previousValue
-  );
+  IlluminanceUpdatedEvent createIlluminanceUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> lux, DataWithTimestamp<Integer> previousValue, String displayName);
 
   /**
    * Creates a {@link Co2LevelUpdatedEvent}.
    *
-   * @param sensor        the co2 sensor that emits the event
-   * @param ppm           the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param ppm              the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  Co2LevelUpdatedEvent createCo2LevelUpdatedEvent(Co2Sensor sensor,
-                                                  DataWithTimestamp<Integer> ppm,
-                                                  DataWithTimestamp<Integer> previousValue
-  );
+  Co2LevelUpdatedEvent createCo2LevelUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> ppm, DataWithTimestamp<Integer> previousValue, String displayName);
 
   /**
    * Creates a {@link Co2LevelChangedEvent}.
    *
-   * @param sensor        the co2 sensor that emits the event
-   * @param ppm           the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param ppm              the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  Co2LevelChangedEvent createCo2LevelChangedEvent(Co2Sensor sensor,
-                                                  DataWithTimestamp<Integer> ppm,
-                                                  DataWithTimestamp<Integer> previousValue
-  );
+  Co2LevelChangedEvent createCo2LevelChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> ppm, DataWithTimestamp<Integer> previousValue, String displayName);
 
   /**
    * Creates a {@link PowerChangedEvent}.
    *
-   * @param sensor        the power sensor that emits the event
-   * @param watt          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param watt             the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  PowerChangedEvent createPowerChangedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue);
+  PowerChangedEvent createPowerChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue, String displayName);
 
   /**
    * Creates a {@link PowerUpdatedEvent}.
    *
-   * @param sensor        the power sensor that emits the event
-   * @param watt          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param watt             the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  PowerUpdatedEvent createPowerUpdatedEvent(PowerSensor sensor, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue);
+  PowerUpdatedEvent createPowerUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Double> watt, DataWithTimestamp<Double> previousValue, String displayName);
 
   /**
    * Creates a {@link CloudBaseChangedEvent}.
    *
-   * @param sensor        the cloud base sensor that emits the event
-   * @param meter         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param meter            the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  CloudBaseChangedEvent createCloudBaseChangedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue);
+  CloudBaseChangedEvent createCloudBaseChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link CloudBaseUpdatedEvent}.
    *
-   * @param sensor        the cloud base sensor that emits the event
-   * @param meter         the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param meter            the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  CloudBaseUpdatedEvent createCloudBaseUpdatedEvent(CloudBaseSensor sensor, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue);
+  CloudBaseUpdatedEvent createCloudBaseUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> meter, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link PressureChangedEvent}.
    *
-   * @param sensor        the pressure sensor that emits the event
-   * @param mbar          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param mbar             the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  PressureChangedEvent createPressureChangedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue);
+  PressureChangedEvent createPressureChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link PressureUpdatedEvent}.
    *
-   * @param sensor        the pressure sensor that emits the event
-   * @param mbar          the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param mbar             the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  PressureUpdatedEvent createPressureUpdatedEvent(PressureSensor sensor, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue);
+  PressureUpdatedEvent createPressureUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> mbar, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link UvIndexChangedEvent}.
    *
-   * @param sensor        the UV sensor that emits the event
-   * @param uvIndex       the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param uvIndex          the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  UvIndexChangedEvent createUvIndexChangedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue);
+  UvIndexChangedEvent createUvIndexChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link UvIndexUpdatedEvent}.
    *
-   * @param sensor        the UV sensor that emits the event
-   * @param uvIndex       the new value
-   * @param previousValue the old value
+   * @param devicePropertyId the id of the sensor
+   * @param uvIndex          the new value
+   * @param previousValue    the old value
    * @return the event
    */
-  UvIndexUpdatedEvent createUvIndexUpdatedEvent(UvSensor sensor, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue);
+  UvIndexUpdatedEvent createUvIndexUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> uvIndex, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link RainRateChangedEvent}.
    *
-   * @param sensor the rain sensor
+   * @param devicePropertyId  the id of the sensor
    * @param millimeterPerHour the new value
-   * @param previousValue the previous value
+   * @param previousValue     the previous value
    * @return the event
    */
-  RainRateChangedEvent createRainRateChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue);
+  RainRateChangedEvent createRainRateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link RainRateUpdatedEvent}.
    *
-   * @param sensor the rain sensor
+   * @param devicePropertyId  the id of the sensor
    * @param millimeterPerHour the new value
-   * @param previousValue the previous value
+   * @param previousValue     the previous value
    * @return the event
    */
-  RainRateUpdatedEvent createRainRateUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue);
+  RainRateUpdatedEvent createRainRateUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> millimeterPerHour, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link RainIntervalAmountChangedEvent}.
    *
-   * @param sensor the rain sensor
-   * @param millimeter the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param millimeter       the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  RainIntervalAmountChangedEvent createRainIntervalAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+  RainIntervalAmountChangedEvent createRainIntervalAmountChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue, String displayName
+  );
 
   /**
    * Creates a {@link RainIntervalAmountUpdatedEvent}.
    *
-   * @param sensor the rain sensor
-   * @param millimeter the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param millimeter       the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  RainIntervalAmountUpdatedEvent createRainIntervalAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+  RainIntervalAmountUpdatedEvent createRainIntervalAmountUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue, String displayName
+  );
 
   /**
    * Creates a {@link RainTodayAmountChangedEvent}.
    *
-   * @param sensor the rain sensor
-   * @param millimeter the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param millimeter       the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  RainTodayAmountChangedEvent createRainTodayAmountChangedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+  RainTodayAmountChangedEvent createRainTodayAmountChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link RainTodayAmountUpdatedEvent}.
    *
-   * @param sensor the rain sensor
-   * @param millimeter the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param millimeter       the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  RainTodayAmountUpdatedEvent createRainTodayAmountUpdatedEvent(RainSensor sensor, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue);
+  RainTodayAmountUpdatedEvent createRainTodayAmountUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> millimeter, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindSpeedChangedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param kmh the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param kmh              the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindSpeedChangedEvent createWindSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+  WindSpeedChangedEvent createWindSpeedChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindSpeedUpdatedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param kmh the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param kmh              the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindSpeedUpdatedEvent createWindSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+  WindSpeedUpdatedEvent createWindSpeedUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindGustSpeedChangedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param kmh the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param kmh              the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindGustSpeedChangedEvent createWindGustSpeedChangedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+  WindGustSpeedChangedEvent createWindGustSpeedChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindGustSpeedUpdatedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param kmh the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param kmh              the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindGustSpeedUpdatedEvent createWindGustSpeedUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue);
+  WindGustSpeedUpdatedEvent createWindGustSpeedUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> kmh, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindDirectionChangedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param degree the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param degree           the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindDirectionChangedEvent createWindDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+  WindDirectionChangedEvent createWindDirectionChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindDirectionUpdatedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param degree the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param degree           the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindDirectionUpdatedEvent createWindDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+  WindDirectionUpdatedEvent createWindDirectionUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindGustDirectionChangedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param degree the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param degree           the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindGustDirectionChangedEvent createWindGustDirectionChangedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+  WindGustDirectionChangedEvent createWindGustDirectionChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindGustDirectionUpdatedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param degree the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param degree           the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindGustDirectionUpdatedEvent createWindGustDirectionUpdatedEvent(WindSensor sensor, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue);
+  WindGustDirectionUpdatedEvent createWindGustDirectionUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> degree, DataWithTimestamp<Float> previousValue, String displayName);
 
   /**
    * Creates a {@link WindRunChangedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param km the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param km               the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindRunChangedEvent createWindRunChangedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue);
+  WindRunChangedEvent createWindRunChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue, String displayName);
 
   /**
    * Creates a {@link WindRunUpdatedEvent}.
    *
-   * @param sensor the wind sensor
-   * @param km the new value
-   * @param previousValue the previous value
+   * @param devicePropertyId the id of the sensor
+   * @param km               the new value
+   * @param previousValue    the previous value
    * @return the event
    */
-  WindRunUpdatedEvent createWindRunUpdatedEvent(WindSensor sensor, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue);
+  WindRunUpdatedEvent createWindRunUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Double> km, DataWithTimestamp<Double> previousValue, String displayName);
 
+  NewDevicePropertyCreatedEvent createNewDevicePropertyCreatedEvent(DevicePropertyId devicePropertyId);
+
+  WindowTiltAngleChangedEvent createWindowTiltAngleChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> newValue, DataWithTimestamp<Integer> previousValue, String displayName);
+
+  WindowTiltAngleUpdatedEvent createWindowTiltAngleUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> newValue, DataWithTimestamp<Integer> previousValue, String displayName);
 }

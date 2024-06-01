@@ -16,19 +16,16 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.Co2Sensor;
-
 /**
- * Event that gets emitted when the co2 level of a {@link Co2Sensor} got updated.
+ * Event that gets emitted when the co2 level got updated.
  *
  * @author David Meier
  * @since 0.3.0
  */
-public interface Co2LevelChangedEvent extends DevicePropertyEvent {
+public interface Co2LevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
   /**
-   * @return the co2 level in ppm and the time of the measurement
+   * @return the co2 level in ppm
    */
-  DataWithTimestamp<Integer> getPpm();
-
+  Integer getPpm();
 }

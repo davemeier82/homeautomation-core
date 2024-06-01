@@ -19,31 +19,14 @@ package io.github.davemeier82.homeautomation.core.device;
 /**
  * A {@link Device} can uniquely be identified by a type and an id.
  */
-public record DeviceId(String id, String type) {
+public record DeviceId(String id, DeviceType type) {
 
-  /**
-   * Constructor
-   *
-   * @param id   the id
-   * @param type the type
-   */
-  public DeviceId(String id, String type) {
-    this.id = id;
-    this.type = type.toUpperCase();
-  }
-
-  /**
-   * Creates a DeviceId from a Device
-   *
-   * @param device the device
-   * @return the id
-   */
   public static DeviceId deviceIdFromDevice(Device device) {
     return new DeviceId(device.getId(), device.getType());
   }
 
   @Override
   public String toString() {
-    return type + "-" + id;
+    return type.getTypeName() + "-" + id;
   }
 }

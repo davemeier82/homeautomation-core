@@ -16,23 +16,15 @@
 
 package io.github.davemeier82.homeautomation.core.device;
 
-import io.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
-
-import java.util.List;
 import java.util.Map;
 
-/**
- * A device. Devices contain several {@link DeviceProperty}.
- *
- * @author David Meier
- * @since 0.1.0
- */
+
 public interface Device {
 
   /**
    * @return the type of the device (is unique in combination with {@link Device#getId()}
    */
-  String getType();
+  DeviceType getType();
 
   /**
    * @return the id of the device (is unique in combination with {@link Device#getType()}
@@ -48,11 +40,6 @@ public interface Device {
    * @param displayName the human-readable name
    */
   void setDisplayName(String displayName);
-
-  /**
-   * @return list of device properties
-   */
-  List<? extends DeviceProperty> getDeviceProperties();
 
   /**
    * @return the parameters used to create this device

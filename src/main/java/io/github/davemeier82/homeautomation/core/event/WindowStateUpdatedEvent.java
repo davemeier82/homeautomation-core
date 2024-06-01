@@ -16,19 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindowSensor;
-
 /**
  * Event that gets emitted when the state of the window got updated (open/closed).
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface WindowStateUpdatedEvent extends DevicePropertyEvent {
+public interface WindowStateUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
   /**
-   * @return true if the window is open and the time of the state change
+   * @return true if the window got opened
    */
-  DataWithTimestamp<Boolean> isOpen();
+  Boolean isOpen();
 
 }

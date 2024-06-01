@@ -27,4 +27,9 @@ public interface DeviceRepository {
   Optional<Device> getByDeviceId(DeviceId deviceId);
 
   Set<Device> getDevices();
+
+  void save(Device device);
+
+  void delete(DeviceId deviceId);
 }
+

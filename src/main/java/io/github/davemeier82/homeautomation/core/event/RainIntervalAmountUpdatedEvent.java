@@ -16,21 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.RainSensor;
-
-import java.util.Optional;
-
 /**
- * Event that gets emitted when the rain of {@link RainSensor} changes.
+ * Event that gets emitted when the rain changes.
  *
  * @author David Meier
  * @since 0.4.0
  */
-public interface RainIntervalAmountUpdatedEvent extends DevicePropertyEvent {
+public interface RainIntervalAmountUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
 
   /**
-   * Returns the rain amount in millimeter for the interval defined in the sensor at the time of the measurement.
+   * Returns the rain amount in millimeter for the interval defined in the sensor
    */
-  DataWithTimestamp<Float> getMillimeter();
+  Float getMillimeter();
 
 }

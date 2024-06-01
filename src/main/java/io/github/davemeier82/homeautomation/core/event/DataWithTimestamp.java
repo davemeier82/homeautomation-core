@@ -16,7 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * Represents a value at a defined time.
@@ -27,7 +27,7 @@ import java.time.ZonedDateTime;
  */
 public class DataWithTimestamp<T> {
 
-  private final ZonedDateTime dateTime;
+  private final OffsetDateTime dateTime;
   private final T value;
 
   /**
@@ -37,7 +37,7 @@ public class DataWithTimestamp<T> {
    */
   public DataWithTimestamp(T value) {
     this.value = value;
-    dateTime = ZonedDateTime.now();
+    dateTime = OffsetDateTime.now();
   }
 
   /**
@@ -46,7 +46,7 @@ public class DataWithTimestamp<T> {
    * @param dateTime the timestamp
    * @param value    the value
    */
-  public DataWithTimestamp(ZonedDateTime dateTime, T value) {
+  public DataWithTimestamp(OffsetDateTime dateTime, T value) {
     this.dateTime = dateTime;
     this.value = value;
   }
@@ -54,7 +54,7 @@ public class DataWithTimestamp<T> {
   /**
    * @return the timestamp
    */
-  public ZonedDateTime getDateTime() {
+  public OffsetDateTime getDateTime() {
     return dateTime;
   }
 

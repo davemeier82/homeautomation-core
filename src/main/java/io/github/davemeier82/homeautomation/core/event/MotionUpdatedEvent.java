@@ -16,21 +16,18 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.MotionSensor;
-
 /**
- * Event emitted when the motion state of a {@link MotionSensor} got updated.
+ * Event emitted when the motion state got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface MotionUpdatedEvent extends DevicePropertyEvent {
-
+public interface MotionUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
   /**
    * Caution: Not all MotionSensors send an event when motion ends
    *
-   * @return true if motion was detected and the time of the measurement
+   * @return true if motion was detected
    */
-  DataWithTimestamp<Boolean> motionDetected();
+  Boolean motionDetected();
 }

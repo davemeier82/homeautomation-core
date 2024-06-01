@@ -19,6 +19,7 @@ package io.github.davemeier82.homeautomation.core.repositories;
 import io.github.davemeier82.homeautomation.core.device.DeviceId;
 import io.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyType;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +27,13 @@ import java.util.Set;
 
 public interface DevicePropertyRepository {
 
-  Optional<DeviceProperty> getByDevicePropertyId(DevicePropertyId devicePropertyId);
+  Optional<DeviceProperty> findByDevicePropertyId(DevicePropertyId devicePropertyId);
 
-  List<DeviceProperty> getByDeviceId(DeviceId deviceId);
+  List<DeviceProperty> findByDeviceId(DeviceId deviceId);
 
-  Set<DeviceProperty> getByType(String type);
+  Set<DeviceProperty> findByType(DevicePropertyType type);
 
-  <T extends DeviceProperty> Set<T> getByClass(Class<T> clazz);
+  void save(DeviceProperty deviceProperty);
+
+  void delete(DevicePropertyId devicePropertyId);
 }

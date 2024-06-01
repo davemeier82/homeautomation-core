@@ -16,19 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
-
 /**
- * Event that gets emitted when the wind of {@link WindSensor} got updated.
+ * Event that gets emitted when the wind got updated.
  *
  * @author David Meier
  * @since 0.4.0
  */
-public interface WindRunUpdatedEvent extends DevicePropertyEvent {
+public interface WindRunUpdatedEvent extends DevicePropertyEvent<Double>, DevicePropertyUpdatedEvent {
 
   /**
-   * Returns the wind run in km for the interval defined in the sensor at the time of the measurement.
+   * Returns the new wind run in km for the interval defined in the sensor
    */
-  DataWithTimestamp<Double> getKilometer();
+  Double getKilometer();
 
 }

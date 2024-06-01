@@ -16,20 +16,18 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.Alarm;
 import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
 
 /**
- * Event that gets emitted when the state of the {@link Alarm} got updated.
+ * Event that gets emitted when the state got updated.
  *
  * @author David Meier
  * @since 0.3.0
  */
-public interface AlarmStateUpdatedEvent extends DevicePropertyEvent {
+public interface AlarmStateUpdatedEvent extends DevicePropertyEvent<AlarmState>, DevicePropertyUpdatedEvent {
 
   /**
-   * @return the state and the time of the stage change
+   * @return the current state
    */
-  DataWithTimestamp<AlarmState> getState();
-
+  AlarmState getState();
 }

@@ -16,19 +16,15 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.CloudBaseSensor;
-
 /**
- * Event that gets emitted when the cloud base of a {@link CloudBaseSensor} changes.
+ * Event that gets emitted when the cloud base changes.
  *
  * @author David Meier
  * @since 0.4.0
  */
-public interface CloudBaseChangedEvent extends DevicePropertyEvent {
-
+public interface CloudBaseChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
   /**
-   * Returns new the cloud base in meter at the time of the measurement.
+   * Returns new the cloud base in meter
    */
-  DataWithTimestamp<Float> getCloudBaseInMeter();
-
+  Float getCloudBaseInMeter();
 }

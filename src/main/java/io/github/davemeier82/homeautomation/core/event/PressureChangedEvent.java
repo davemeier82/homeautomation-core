@@ -16,19 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.PressureSensor;
-
 /**
- * Event that gets emitted when pressure of a {@link PressureSensor} changes.
+ * Event that gets emitted when pressure changes.
  *
  * @author David Meier
  * @since 0.4.0
  */
-public interface PressureChangedEvent extends DevicePropertyEvent {
+public interface PressureChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
   /**
-   * Returns new the pressure in millibar and the time of the measurement.
+   * Returns new the pressure in millibar
    */
-  DataWithTimestamp<Float> getPressureInMbar();
+  Float getPressureInMbar();
 
 }

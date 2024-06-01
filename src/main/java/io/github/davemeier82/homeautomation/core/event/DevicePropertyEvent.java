@@ -16,23 +16,22 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyValueType;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
-/**
- * An event that gets emitted when a value of a {@link DeviceProperty} changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
-public interface DevicePropertyEvent {
+public interface DevicePropertyEvent<T> {
 
   /**
    * @return the device property id to which this event belongs to
    */
   DevicePropertyId getDevicePropertyId();
+
+  DevicePropertyValueType getValueType();
+
+  String getDisplayName();
 
   /**
    * Message key used for a translatable human-readable message (i.e. push notifications).
@@ -47,10 +46,19 @@ public interface DevicePropertyEvent {
    */
   Object[] getMessageArgs();
 
+  T getNewValue();
+
+  OffsetDateTime getNewTimestamp();
+
   /**
    * @return the value of the sensor before this event, if available
    */
-  Optional<DataWithTimestamp<?>> getPreviousValue();
+  Optional<T> getPreviousValue();
+
+  /**
+   * @return the timestamp of the previous value, if available
+   */
+  Optional<OffsetDateTime> getPreviousTimestamp();
 
   /**
    * @return true if the previous value is set

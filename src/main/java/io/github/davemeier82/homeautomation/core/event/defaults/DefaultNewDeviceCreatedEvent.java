@@ -16,30 +16,19 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.DeviceId;
 import io.github.davemeier82.homeautomation.core.event.NewDeviceCreatedEvent;
 
-/**
- * Default implementation of a {@link NewDeviceCreatedEvent}.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public class DefaultNewDeviceCreatedEvent implements NewDeviceCreatedEvent {
 
-  private final Device device;
+  private final DeviceId deviceId;
 
-  /**
-   * Constructor
-   *
-   * @param device the device
-   */
-  public DefaultNewDeviceCreatedEvent(Device device) {
-    this.device = device;
+  public DefaultNewDeviceCreatedEvent(DeviceId deviceId) {
+    this.deviceId = deviceId;
   }
 
   @Override
-  public Device getDevice() {
-    return device;
+  public DeviceId getDeviceId() {
+    return deviceId;
   }
 }

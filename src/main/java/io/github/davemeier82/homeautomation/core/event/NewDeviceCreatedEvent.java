@@ -16,7 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.Device;
+import io.github.davemeier82.homeautomation.core.device.DeviceId;
 
 /**
  * Event emitted when a new device is created in a {@link io.github.davemeier82.homeautomation.core.device.DeviceFactory}
@@ -27,7 +27,7 @@ import io.github.davemeier82.homeautomation.core.device.Device;
 public interface NewDeviceCreatedEvent {
 
   /**
-   * @return the newly created device
+   * @return the id of the newly created device
    */
-  Device getDevice();
+  DeviceId getDeviceId();
 }

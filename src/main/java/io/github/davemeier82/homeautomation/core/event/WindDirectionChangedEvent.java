@@ -16,19 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.WindSensor;
-
 /**
- * Event that gets emitted when the wind of {@link WindSensor} changed.
+ * Event that gets emitted when the wind changed.
  *
  * @author David Meier
  * @since 0.4.0
  */
-public interface WindDirectionChangedEvent extends DevicePropertyEvent {
+public interface WindDirectionChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
   /**
-   * Returns the new wind direction in degree at the time of the measurement.
+   * Returns the new wind direction in degree
    */
-  DataWithTimestamp<Float> getDegree();
+  Float getDegree();
 
 }

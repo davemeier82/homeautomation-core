@@ -18,16 +18,10 @@ package io.github.davemeier82.homeautomation.core.device.property;
 
 import io.github.davemeier82.homeautomation.core.device.DeviceId;
 
-import static io.github.davemeier82.homeautomation.core.device.DeviceId.deviceIdFromDevice;
+public record DevicePropertyId(DeviceId deviceId, String id) {
 
-/**
- * @param deviceId device id
- * @param id       id of the device property
- * @since 0.5.0
- */
-public record DevicePropertyId(DeviceId deviceId, int id) {
-
-  public static DevicePropertyId devicePropertyIdFrom(DeviceProperty deviceProperty) {
-    return new DevicePropertyId(deviceIdFromDevice(deviceProperty.getDevice()), deviceProperty.getId());
+  @Override
+  public String toString() {
+    return deviceId.toString() + "-" + id;
   }
 }

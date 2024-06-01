@@ -16,19 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.ReadOnlyRelay;
-
 /**
- * Event that gets emitted when the state (on/off) of a {@link ReadOnlyRelay} got updated.
+ * Event that gets emitted when the state (on/off) got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface RelayStateUpdatedEvent extends DevicePropertyEvent {
+public interface RelayStateUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
   /**
-   * @return true if the relay is on and the time of the state change
+   * @return true if the relay got switched on
    */
-  DataWithTimestamp<Boolean> isOn();
+  Boolean isOn();
 
 }

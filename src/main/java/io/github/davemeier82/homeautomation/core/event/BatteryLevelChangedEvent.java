@@ -16,19 +16,15 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.BatteryStateSensor;
-
 /**
- * This event gets emitted when the battery level of a {@link BatteryStateSensor} changes.
+ * This event gets emitted when the battery level changes.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface BatteryLevelChangedEvent extends DevicePropertyEvent {
-
+public interface BatteryLevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
   /**
-   * @return the battery level and the measurement timestamp
+   * @return the battery level
    */
-  DataWithTimestamp<Integer> getBatteryLevelInPercent();
-
+  Integer getBatteryLevelInPercent();
 }

@@ -16,19 +16,10 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.IlluminanceSensor;
-
-/**
- * Event that gets emitted when the illumination of a {@link IlluminanceSensor} changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
-public interface IlluminanceChangedEvent extends DevicePropertyEvent {
+public interface IlluminanceChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
   /**
-   * @return the new illumination in lux and the time of the measurement
+   * @return the new illumination in lux
    */
-  DataWithTimestamp<Integer> getLux();
-
+  Integer getLux();
 }

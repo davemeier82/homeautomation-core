@@ -19,21 +19,10 @@ package io.github.davemeier82.homeautomation.core.event.defaults;
 import io.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
 import io.github.davemeier82.homeautomation.core.mqtt.MqttClient;
 
-/**
- * Default implementation of a {@link MqttClientConnectedEvent}.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public class DefaultMqttClientConnectedEvent implements MqttClientConnectedEvent {
 
   private final MqttClient mqttClient;
 
-  /**
-   * Constructor
-   *
-   * @param mqttClient the MQTT client
-   */
   public DefaultMqttClientConnectedEvent(MqttClient mqttClient) {
     this.mqttClient = mqttClient;
   }

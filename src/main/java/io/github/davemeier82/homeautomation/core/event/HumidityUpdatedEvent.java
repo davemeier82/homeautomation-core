@@ -16,19 +16,16 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.HumiditySensor;
-
 /**
- * Event that gets emitted when the relative humidity of a {@link HumiditySensor} got updated.
+ * Event that gets emitted when the relative humidity got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface HumidityUpdatedEvent extends DevicePropertyEvent {
+public interface HumidityUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
 
   /**
-   * @return the relative humidity and the time of the measurement
+   * @return the new relative humidity
    */
-  DataWithTimestamp<Float> getRelativeHumidityInPercent();
-
+  Float getRelativeHumidityInPercent();
 }

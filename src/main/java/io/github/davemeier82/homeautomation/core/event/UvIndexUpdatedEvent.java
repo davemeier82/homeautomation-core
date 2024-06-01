@@ -16,19 +16,18 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.UvSensor;
-
 /**
- * Event that gets emitted when the UV index of a {@link UvSensor} got updated.
+ * Event that gets emitted when the UV index got updated.
  *
  * @author David Meier
  * @since 0.4.0
  */
-public interface UvIndexUpdatedEvent extends DevicePropertyEvent {
+public interface UvIndexUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
 
   /**
-   * @return the UV index [0,1] at the time of the measurement
+   * @return the new UV index [0,1]
    */
-  DataWithTimestamp<Float> getUvIndex();
+  Float getUvIndex();
+
 
 }

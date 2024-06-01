@@ -16,19 +16,17 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-import io.github.davemeier82.homeautomation.core.device.property.Roller;
-
 /**
- * Event that gets emitted when the position of the {@link Roller} got updated.
+ * Event that gets emitted when the position got updated.
  *
  * @author David Meier
  * @since 0.1.0
  */
-public interface RollerPositionUpdatedEvent extends DevicePropertyEvent {
+public interface RollerPositionUpdatedEvent extends DevicePropertyEvent<Integer>, DevicePropertyUpdatedEvent {
 
   /**
-   * @return the position in percent and the time of the change
+   * @return the new position in percent
    */
-  DataWithTimestamp<Integer> getPositionInPercent();
+  Integer getPositionInPercent();
 
 }
