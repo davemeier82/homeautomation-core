@@ -20,6 +20,7 @@ import io.github.davemeier82.homeautomation.core.device.Device;
 import io.github.davemeier82.homeautomation.core.device.DeviceId;
 import io.github.davemeier82.homeautomation.core.device.DeviceType;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -34,5 +35,7 @@ public interface DeviceRepository {
   void delete(DeviceId deviceId);
 
   <T> Set<? extends T> getDeviceByType(DeviceType deviceType, Class<T> clazz);
+
+  Map<DeviceId, Map<String, String>> getAllCustomIdentifiers();
 }
 

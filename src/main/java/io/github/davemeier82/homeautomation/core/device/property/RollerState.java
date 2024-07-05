@@ -16,12 +16,6 @@
 
 package io.github.davemeier82.homeautomation.core.device.property;
 
-/**
- * {@link Roller} states
- *
- * @author David Meier
- * @since 0.1.0
- */
 public enum RollerState {
   /**
    * The roller is opening
