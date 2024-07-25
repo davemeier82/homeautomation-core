@@ -60,7 +60,7 @@ public class DefaultPressureValueUpdateService extends AbstractValueUpdateServic
 
   @Override
   protected DevicePropertyEvent<Float> createChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Float> newValue, DataWithTimestamp<Float> previousValue, String displayName) {
-    return eventFactory.createHumidityChangedEvent(devicePropertyId, newValue, previousValue, displayName);
+    return eventFactory.createPressureChangedEvent(devicePropertyId, newValue, previousValue, displayName);
   }
 
 }
