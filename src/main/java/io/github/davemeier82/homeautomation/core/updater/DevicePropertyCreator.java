@@ -40,10 +40,10 @@ public class DevicePropertyCreator {
     this.eventFactory = eventFactory;
   }
 
-  public DeviceProperty createDevicePropertyIfItDoesNotExist(DevicePropertyId devicePropertyId, DevicePropertyType devicePropertyType) {
+  public DeviceProperty createDevicePropertyIfItDoesNotExist(DevicePropertyId devicePropertyId, DevicePropertyType devicePropertyType, String displayName) {
     Optional<DeviceProperty> devicePropertyOptional = devicePropertyRepository.findByDevicePropertyId(devicePropertyId);
     if (devicePropertyOptional.isEmpty()) {
-      DeviceProperty deviceProperty = devicePropertyFactory.createDeviceProperty(devicePropertyId, devicePropertyType);
+      DeviceProperty deviceProperty = devicePropertyFactory.createDeviceProperty(devicePropertyId, devicePropertyType, displayName);
       devicePropertyRepository.save(deviceProperty);
       eventPublisher.publishEvent(eventFactory.createNewDevicePropertyCreatedEvent(devicePropertyId));
       return deviceProperty;

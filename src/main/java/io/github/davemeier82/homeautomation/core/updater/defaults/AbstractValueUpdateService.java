@@ -16,6 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.updater.defaults;
 
+import io.github.davemeier82.homeautomation.core.device.property.DeviceProperty;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyType;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyValueType;
@@ -54,13 +55,13 @@ public abstract class AbstractValueUpdateService<T> {
   protected abstract DevicePropertyEvent<T> createChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<T> newValue, DataWithTimestamp<T> previousValue, String displayName);
 
   public void setValue(T value, OffsetDateTime timestamp, DevicePropertyId devicePropertyId, String displayName) {
-    devicePropertyCreator.createDevicePropertyIfItDoesNotExist(devicePropertyId, getDevicePropertyType());
+    DeviceProperty deviceProperty = devicePropertyCreator.createDevicePropertyIfItDoesNotExist(devicePropertyId, getDevicePropertyType(), displayName);
     DataWithTimestamp<T> previousValue = devicePropertyValueRepository.findLatestValue(devicePropertyId, getDevicePropertyValueType(), clazz).orElse(null);
     DataWithTimestamp<T> newValue = new DataWithTimestamp<>(timestamp, value);
 
-    eventPublisher.publishEvent(createUpdatedEvent(devicePropertyId, newValue, previousValue, displayName));
+    eventPublisher.publishEvent(createUpdatedEvent(devicePropertyId, newValue, previousValue, deviceProperty.getDisplayName()));
     if (previousValue == null || !previousValue.getValue().equals(newValue.getValue())) {
-      eventPublisher.publishEvent(createChangedEvent(devicePropertyId, newValue, previousValue, displayName));
+      eventPublisher.publishEvent(createChangedEvent(devicePropertyId, newValue, previousValue, deviceProperty.getDisplayName()));
     }
   }
 
