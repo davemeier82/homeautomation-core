@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when pressure changes.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface PressureChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
-  /**
-   * Returns new the pressure in millibar
-   */
   Float getPressureInMbar();
 
 }

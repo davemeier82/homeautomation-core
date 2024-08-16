@@ -16,12 +16,6 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event emitted when the motion state changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface MotionChangedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyChangedEvent {
 
   /**

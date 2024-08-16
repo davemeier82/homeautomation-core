@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the temperature changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface TemperatureChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
-  /**
-   * @return the new temperature in degree Celsius
-   */
   Float getTemperatureInDegree();
 
 }

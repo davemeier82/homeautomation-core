@@ -22,6 +22,6 @@ import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyV
 
 import java.util.List;
 
-public record EventPushNotificationConfig(DeviceId deviceId, DevicePropertyId devicePropertyId, DevicePropertyValueType devicePropertyValueType, boolean onChangeOnly, List<String> serviceIds) {
+public record EventPushNotificationConfig(DeviceId deviceId, DevicePropertyId devicePropertyId, DevicePropertyValueType devicePropertyValueType, List<String> serviceIds) {
 
 }

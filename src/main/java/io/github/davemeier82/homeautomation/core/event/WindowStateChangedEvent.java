@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the state of the window changes (open/closed).
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface WindowStateChangedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyChangedEvent {
 
-  /**
-   * @return true if the window got opened
-   */
   Boolean isOpen();
 
 }

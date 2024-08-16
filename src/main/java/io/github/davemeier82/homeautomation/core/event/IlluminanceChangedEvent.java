@@ -18,8 +18,5 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface IlluminanceChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
-  /**
-   * @return the new illumination in lux
-   */
   Integer getLux();
 }

@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the rain changes.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface RainIntervalAmountChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
-  /**
-   * Returns the rain amount in millimeter for the interval defined in the sensor
-   */
   Float getMillimeter();
 
 }

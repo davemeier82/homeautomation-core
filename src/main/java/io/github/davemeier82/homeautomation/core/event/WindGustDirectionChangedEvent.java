@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the wind changed.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface WindGustDirectionChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
-  /**
-   * Returns the new wind direction in degree
-   */
   Float getDegree();
 
 }

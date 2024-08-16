@@ -18,9 +18,6 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface RollerPositionUpdatedEvent extends DevicePropertyEvent<Integer>, DevicePropertyUpdatedEvent {
 
-  /**
-   * @return the new position in percent
-   */
   Integer getPositionInPercent();
 
 }

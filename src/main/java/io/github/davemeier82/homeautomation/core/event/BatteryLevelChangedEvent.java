@@ -16,15 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * This event gets emitted when the battery level changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface BatteryLevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
-  /**
-   * @return the battery level
-   */
+
   Integer getBatteryLevelInPercent();
 }

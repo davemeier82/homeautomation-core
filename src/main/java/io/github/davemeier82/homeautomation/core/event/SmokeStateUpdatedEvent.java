@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the state of the smoke sensor got updated.
- *
- * @author David Meier
- * @since 0.3.0
- */
 public interface SmokeStateUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
-  /**
-   * @return true if the sensor detected smoke
-   */
   Boolean isSmokeDetected();
 
 }

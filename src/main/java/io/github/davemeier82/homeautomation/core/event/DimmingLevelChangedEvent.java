@@ -16,16 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the dimming level changed.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface DimmingLevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
-  /**
-   * @return the new dimming level
-   */
   Integer getDimmingLevelInPercent();
 }

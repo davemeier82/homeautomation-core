@@ -16,15 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the cloud base got updated.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface CloudBaseUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
-  /**
-   * Returns new the cloud base in meter
-   */
+
   Float getCloudBaseInMeter();
 }

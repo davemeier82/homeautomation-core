@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the wind changes.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface WindRunChangedEvent extends DevicePropertyEvent<Double>, DevicePropertyChangedEvent {
 
-  /**
-   * Returns the new wind run in km for the interval defined in the sensor
-   */
   Double getKilometer();
 
 }

@@ -16,12 +16,6 @@
 
 package io.github.davemeier82.homeautomation.core.device.property;
 
-/**
- * Event that gets emitted when the co2 level of a {@link Co2Sensor} got updated.
- *
- * @author David Meier
- * @since 0.3.0
- */
 public enum AlarmState {
   OFF, PRE_ALARM, FIRE, BURGLAR, SILENCED
 }

@@ -18,17 +18,8 @@ package io.github.davemeier82.homeautomation.core.event;
 
 import io.github.davemeier82.homeautomation.core.device.property.RollerState;
 
-/**
- * Event that gets emitted when the state got updated.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface RollerStateUpdatedEvent extends DevicePropertyEvent<RollerState>, DevicePropertyUpdatedEvent {
 
-  /**
-   * @return the new state
-   */
   RollerState getState();
 
 }

@@ -16,16 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the power consumption changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface PowerChangedEvent extends DevicePropertyEvent<Double>, DevicePropertyChangedEvent {
 
-  /**
-   * @return the power consumption in watt
-   */
   Double getWatt();
 }

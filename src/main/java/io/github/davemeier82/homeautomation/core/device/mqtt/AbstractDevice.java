@@ -21,23 +21,11 @@ import io.github.davemeier82.homeautomation.core.device.Device;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * Abstract implementation of a {@link MqttSubscriber}.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public abstract class AbstractDevice implements Device {
 
   private String displayName;
   private Map<String, String> customIdentifiers;
 
-  /**
-   * Constructor
-   *
-   * @param displayName       the display name
-   * @param customIdentifiers optional custom identifier
-   */
   protected AbstractDevice(String displayName, Map<String, String> customIdentifiers) {
     this.displayName = displayName;
     this.customIdentifiers = customIdentifiers;

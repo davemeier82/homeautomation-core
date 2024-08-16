@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the state (on/off) changes.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface RelayStateChangedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyChangedEvent {
 
-  /**
-   * @return true if the relay got switched on
-   */
   Boolean isOn();
 
 }

@@ -37,5 +37,7 @@ public interface DeviceRepository {
   <T> Set<? extends T> getDeviceByType(DeviceType deviceType, Class<T> clazz);
 
   Map<DeviceId, Map<String, String>> getAllCustomIdentifiers();
+
+  Map<DeviceId, Map<String, String>> getAllParameters();
 }
 

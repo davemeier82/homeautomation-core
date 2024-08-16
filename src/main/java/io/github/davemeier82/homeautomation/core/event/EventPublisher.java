@@ -16,18 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Emits events.
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface EventPublisher {
 
-  /**
-   * Emit an event.
-   *
-   * @param event the event
-   */
   void publishEvent(Object event);
 }

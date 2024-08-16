@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the wind changes.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface WindSpeedChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
-  /**
-   * Returns the new wind speed in km/h
-   */
   Float getKilometerPerHour();
 
 }

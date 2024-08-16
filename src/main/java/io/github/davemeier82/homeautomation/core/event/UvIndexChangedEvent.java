@@ -16,17 +16,8 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the UV index changes.
- *
- * @author David Meier
- * @since 0.4.0
- */
 public interface UvIndexChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
-  /**
-   * @return the new UV index [0,1]
-   */
   Float getUvIndex();
 
 }

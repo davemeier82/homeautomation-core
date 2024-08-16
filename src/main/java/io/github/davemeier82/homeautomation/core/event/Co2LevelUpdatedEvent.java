@@ -16,16 +16,7 @@
 
 package io.github.davemeier82.homeautomation.core.event;
 
-/**
- * Event that gets emitted when the co2 level changes.
- *
- * @author David Meier
- * @since 0.3.0
- */
 public interface Co2LevelUpdatedEvent extends DevicePropertyEvent<Integer>, DevicePropertyUpdatedEvent {
 
-  /**
-   * @return the co2 level in ppm
-   */
   Integer getPpm();
 }

@@ -16,28 +16,12 @@
 
 package io.github.davemeier82.homeautomation.core.device.property;
 
-/**
- * A property of a Device (i.e. a Sensor or a Relay)
- *
- * @author David Meier
- * @since 0.1.0
- */
 public interface DeviceProperty {
 
-  /**
-   * @return id that is unique for a device (but not globally unique)
-   */
   DevicePropertyId getId();
 
-  /**
-   * @return the property type
-   */
   DevicePropertyType getType();
 
-  /**
-   * @return the label of sensor
-   * @since 0.4.0
-   */
   default String getDisplayName() {
     return getClass().getSimpleName();
   }

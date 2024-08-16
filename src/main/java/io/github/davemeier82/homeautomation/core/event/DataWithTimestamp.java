@@ -20,47 +20,26 @@ import java.time.OffsetDateTime;
 
 /**
  * Represents a value at a defined time.
- *
- * @param <T> value type
- * @author David Meier
- * @since 0.1.0
  */
 public class DataWithTimestamp<T> {
 
   private final OffsetDateTime dateTime;
   private final T value;
 
-  /**
-   * Constructor
-   *
-   * @param value the value
-   */
   public DataWithTimestamp(T value) {
     this.value = value;
     dateTime = OffsetDateTime.now();
   }
 
-  /**
-   * Constructor
-   *
-   * @param dateTime the timestamp
-   * @param value    the value
-   */
   public DataWithTimestamp(OffsetDateTime dateTime, T value) {
     this.dateTime = dateTime;
     this.value = value;
   }
 
-  /**
-   * @return the timestamp
-   */
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
-  /**
-   * @return the value
-   */
   public T getValue() {
     return value;
   }

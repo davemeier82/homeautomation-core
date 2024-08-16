@@ -37,10 +37,6 @@ public class DefaultEventPushNotificationSender implements EventPushNotification
     translator = eventPushNotificationMessageTranslator;
   }
 
-  private static boolean sendToAll(Set<EventPushNotificationConfig> serviceIds) {
-    return serviceIds.stream().anyMatch(c -> c.serviceIds().isEmpty());
-  }
-
   @Override
   public void sendNotifications(DevicePropertyEvent<?> event) {
     Set<EventPushNotificationConfig> configs = repository.findAllByEvent(event);
@@ -54,5 +50,9 @@ public class DefaultEventPushNotificationSender implements EventPushNotification
         serviceIds.forEach(id -> pushNotificationServices.stream().filter(service -> service.getServiceIds().contains(id)).forEach(s -> s.sendTextMessageToServiceWithId(id, title, message)));
       }
     }
+  }
+
+  private static boolean sendToAll(Set<EventPushNotificationConfig> serviceIds) {
+    return serviceIds.stream().anyMatch(c -> c.serviceIds().isEmpty());
   }
 }

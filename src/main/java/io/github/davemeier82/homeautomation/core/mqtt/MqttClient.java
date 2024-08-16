@@ -22,9 +22,6 @@ import java.util.function.BiConsumer;
 
 /**
  * Client that connects to a MQTT broker to send and receive messages.
- *
- * @author David Meier
- * @since 0.1.0
  */
 public interface MqttClient {
 
