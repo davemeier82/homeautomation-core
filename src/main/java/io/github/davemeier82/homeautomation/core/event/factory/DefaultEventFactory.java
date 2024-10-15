@@ -35,6 +35,10 @@ import io.github.davemeier82.homeautomation.core.event.HumidityChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.HumidityUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.IlluminanceChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.IlluminanceUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningCountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningCountUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningDistanceChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningDistanceUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
@@ -90,6 +94,10 @@ import io.github.davemeier82.homeautomation.core.event.defaults.DefaultHumidityC
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultHumidityUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultIlluminanceChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultIlluminanceUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.defaults.DefaultLightningCountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.defaults.DefaultLightningCountUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.defaults.DefaultLightningDistanceChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.defaults.DefaultLightningDistanceUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultMotionChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultMotionUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultMqttClientConnectedEvent;
@@ -525,5 +533,41 @@ public class DefaultEventFactory implements EventFactory {
                                                                        String displayName
   ) {
     return new DefaultWindowTiltAngleUpdatedEvent(devicePropertyId, displayName, newValue, previousValue);
+  }
+
+  @Override
+  public LightningCountChangedEvent createLightningCountChangedEvent(DevicePropertyId devicePropertyId,
+                                                                     DataWithTimestamp<Integer> newValue,
+                                                                     DataWithTimestamp<Integer> previousValue,
+                                                                     String displayName
+  ) {
+    return new DefaultLightningCountChangedEvent(devicePropertyId, displayName, newValue, previousValue);
+  }
+
+  @Override
+  public LightningCountUpdatedEvent createLightningCountUpdatedEvent(DevicePropertyId devicePropertyId,
+                                                                     DataWithTimestamp<Integer> newValue,
+                                                                     DataWithTimestamp<Integer> previousValue,
+                                                                     String displayName
+  ) {
+    return new DefaultLightningCountUpdatedEvent(devicePropertyId, displayName, newValue, previousValue);
+  }
+
+  @Override
+  public LightningDistanceChangedEvent createLightningDistanceChangedEvent(DevicePropertyId devicePropertyId,
+                                                                           DataWithTimestamp<Integer> newValue,
+                                                                           DataWithTimestamp<Integer> previousValue,
+                                                                           String displayName
+  ) {
+    return new DefaultLightningDistanceChangedEvent(devicePropertyId, displayName, newValue, previousValue);
+  }
+
+  @Override
+  public LightningDistanceUpdatedEvent createLightningDistanceUpdatedEvent(DevicePropertyId devicePropertyId,
+                                                                           DataWithTimestamp<Integer> newValue,
+                                                                           DataWithTimestamp<Integer> previousValue,
+                                                                           String displayName
+  ) {
+    return new DefaultLightningDistanceUpdatedEvent(devicePropertyId, displayName, newValue, previousValue);
   }
 }

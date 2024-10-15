@@ -48,7 +48,9 @@ public enum DefaultDevicePropertyValueType implements DevicePropertyValueType {
   SMOKE_STATE("SmokeState", SMOKE_SENSOR, Boolean.class, "on/off"),
   ALARM_STATE("AlarmState", ALARM, AlarmState.class, ""),
   ROLLER_POSITION("RollerPosition", ROLLER, Integer.class, "%"),
-  ROLLER_STATE("RollerState", ROLLER, RollerState.class, "");
+  ROLLER_STATE("RollerState", ROLLER, RollerState.class, ""),
+  LIGHTNING_DISTANCE("LightningDistance", ROLLER, Integer.class, "km"),
+  LIGHTNING_COUNT("LightningCount", ROLLER, Integer.class, "");
 
   private final String typeName;
 

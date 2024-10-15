@@ -35,6 +35,10 @@ import io.github.davemeier82.homeautomation.core.event.HumidityChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.HumidityUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.IlluminanceChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.IlluminanceUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningCountChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningCountUpdatedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningDistanceChangedEvent;
+import io.github.davemeier82.homeautomation.core.event.LightningDistanceUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
@@ -229,4 +233,20 @@ public interface EventFactory {
   WindowTiltAngleChangedEvent createWindowTiltAngleChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> newValue, DataWithTimestamp<Integer> previousValue, String displayName);
 
   WindowTiltAngleUpdatedEvent createWindowTiltAngleUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> newValue, DataWithTimestamp<Integer> previousValue, String displayName);
+
+  LightningCountChangedEvent createLightningCountChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> newValue, DataWithTimestamp<Integer> previousValue, String displayName);
+
+  LightningCountUpdatedEvent createLightningCountUpdatedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<Integer> newValue, DataWithTimestamp<Integer> previousValue, String displayName);
+
+  LightningDistanceChangedEvent createLightningDistanceChangedEvent(DevicePropertyId devicePropertyId,
+                                                                    DataWithTimestamp<Integer> newValue,
+                                                                    DataWithTimestamp<Integer> previousValue,
+                                                                    String displayName
+  );
+
+  LightningDistanceUpdatedEvent createLightningDistanceUpdatedEvent(DevicePropertyId devicePropertyId,
+                                                                    DataWithTimestamp<Integer> newValue,
+                                                                    DataWithTimestamp<Integer> previousValue,
+                                                                    String displayName
+  );
 }

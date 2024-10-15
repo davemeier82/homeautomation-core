@@ -39,7 +39,8 @@ public enum DefaultDevicePropertyType implements DevicePropertyType {
   ILLUMINANCE_SENSOR("IlluminanceSensor"),
   PRESSURE_SENSOR("PressureSensor"),
   DIMMER("Dimmer"),
-  ALARM("Alarm");
+  ALARM("Alarm"),
+  LIGHTNING_SENSOR("LightningSensor");
 
   private final String type;
 

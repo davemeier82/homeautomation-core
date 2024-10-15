@@ -28,7 +28,7 @@ public abstract class AbstractDevice implements Device {
 
   protected AbstractDevice(String displayName, Map<String, String> customIdentifiers) {
     this.displayName = displayName;
-    this.customIdentifiers = customIdentifiers;
+    this.customIdentifiers = Objects.requireNonNullElseGet(customIdentifiers, Map::of);
   }
 
   @Override
@@ -48,7 +48,7 @@ public abstract class AbstractDevice implements Device {
 
   @Override
   public void setCustomIdentifiers(Map<String, String> customIdentifiers) {
-    this.customIdentifiers = customIdentifiers;
+    this.customIdentifiers = Objects.requireNonNullElseGet(customIdentifiers, Map::of);
   }
 
   @Override
