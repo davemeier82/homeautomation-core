@@ -24,7 +24,7 @@
     </parent>
 
     <artifactId>homeautomation-core</artifactId>
-    <version>0.6.1-SNAPSHOT</version>
+    <version>0.6.2</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>HomeAutomation Core</description>
@@ -47,7 +47,7 @@
         <connection>scm:git:git://github.com/davemeier82/homeautomation-core.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/davemeier82/homeautomation-core.git</developerConnection>
         <url>https://github.com/davemeier82/homeautomation-core</url>
-        <tag>HEAD</tag>
+        <tag>homeautomation-core-0.6.2</tag>
     </scm>
     <issueManagement>
         <system>GitHub</system>
