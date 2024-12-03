@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface WindSpeedChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return WindSpeedChangedEvent.class.getSimpleName();
+  }
+
   Float getKilometerPerHour();
 
 }

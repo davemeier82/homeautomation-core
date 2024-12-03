@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface WindRunUpdatedEvent extends DevicePropertyEvent<Double>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return WindRunUpdatedEvent.class.getSimpleName();
+  }
+
   Double getKilometer();
 
 }

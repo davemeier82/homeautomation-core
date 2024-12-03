@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface HumidityChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return HumidityChangedEvent.class.getSimpleName();
+  }
+
   Float getRelativeHumidityInPercent();
 }

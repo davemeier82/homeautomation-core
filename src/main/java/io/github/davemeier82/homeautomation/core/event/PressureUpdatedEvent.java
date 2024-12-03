@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface PressureUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return PressureUpdatedEvent.class.getSimpleName();
+  }
+
   Float getPressureInMbar();
 
 }

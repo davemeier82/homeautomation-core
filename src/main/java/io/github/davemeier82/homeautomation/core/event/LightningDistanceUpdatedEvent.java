@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface LightningDistanceUpdatedEvent extends DevicePropertyEvent<Integer>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return LightningDistanceUpdatedEvent.class.getSimpleName();
+  }
+
   Integer getKm();
 }

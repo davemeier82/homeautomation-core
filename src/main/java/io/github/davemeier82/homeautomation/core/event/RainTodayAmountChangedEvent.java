@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface RainTodayAmountChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return RainTodayAmountChangedEvent.class.getSimpleName();
+  }
+
   Float getMillimeter();
 
 }

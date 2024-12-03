@@ -20,6 +20,11 @@ import io.github.davemeier82.homeautomation.core.device.property.RollerState;
 
 public interface RollerStateChangedEvent extends DevicePropertyEvent<RollerState>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return RollerStateChangedEvent.class.getSimpleName();
+  }
+
   RollerState getState();
 
 }

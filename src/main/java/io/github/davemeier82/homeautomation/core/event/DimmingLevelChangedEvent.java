@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface DimmingLevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return DimmingLevelChangedEvent.class.getSimpleName();
+  }
+
   Integer getDimmingLevelInPercent();
 }

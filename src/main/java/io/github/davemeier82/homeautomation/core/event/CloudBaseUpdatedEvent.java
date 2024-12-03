@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface CloudBaseUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return CloudBaseUpdatedEvent.class.getSimpleName();
+  }
+
   Float getCloudBaseInMeter();
 }

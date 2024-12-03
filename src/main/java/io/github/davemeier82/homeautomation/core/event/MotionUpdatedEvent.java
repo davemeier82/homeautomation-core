@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface MotionUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return MotionUpdatedEvent.class.getSimpleName();
+  }
+
   /**
    * Caution: Not all MotionSensors send an event when motion ends
    *

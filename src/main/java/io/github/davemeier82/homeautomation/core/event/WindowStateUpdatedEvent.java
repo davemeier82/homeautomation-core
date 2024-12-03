@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface WindowStateUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return WindowStateUpdatedEvent.class.getSimpleName();
+  }
+
   Boolean isOpen();
 
 }

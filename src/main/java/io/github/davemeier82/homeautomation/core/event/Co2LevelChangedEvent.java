@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface Co2LevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return Co2LevelChangedEvent.class.getSimpleName();
+  }
+
   Integer getPpm();
 }

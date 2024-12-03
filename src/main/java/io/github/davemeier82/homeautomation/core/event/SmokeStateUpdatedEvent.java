@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface SmokeStateUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return SmokeStateUpdatedEvent.class.getSimpleName();
+  }
+
   Boolean isSmokeDetected();
 
 }

@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface IlluminanceChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return IlluminanceChangedEvent.class.getSimpleName();
+  }
+
   Integer getLux();
 }

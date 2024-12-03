@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface LightningCountUpdatedEvent extends DevicePropertyEvent<Integer>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return LightningCountUpdatedEvent.class.getSimpleName();
+  }
+
   Integer getCount();
 }

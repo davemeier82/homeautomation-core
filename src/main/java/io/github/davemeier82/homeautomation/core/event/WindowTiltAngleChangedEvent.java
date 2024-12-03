@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface WindowTiltAngleChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return WindowTiltAngleChangedEvent.class.getSimpleName();
+  }
+
   Integer getDegree();
 }

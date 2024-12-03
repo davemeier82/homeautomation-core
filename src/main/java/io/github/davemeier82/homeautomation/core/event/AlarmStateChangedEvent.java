@@ -21,5 +21,10 @@ import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
 
 public interface AlarmStateChangedEvent extends DevicePropertyEvent<AlarmState>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return AlarmStateChangedEvent.class.getSimpleName();
+  }
+
   AlarmState getState();
 }

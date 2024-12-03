@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface PowerChangedEvent extends DevicePropertyEvent<Double>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return PowerChangedEvent.class.getSimpleName();
+  }
+
   Double getWatt();
 }

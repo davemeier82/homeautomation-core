@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface WindGustDirectionUpdatedEvent extends DevicePropertyEvent<Float>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return WindGustDirectionUpdatedEvent.class.getSimpleName();
+  }
+
   Float getDegree();
 
 }

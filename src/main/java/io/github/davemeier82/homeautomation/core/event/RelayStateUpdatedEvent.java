@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface RelayStateUpdatedEvent extends DevicePropertyEvent<Boolean>, DevicePropertyUpdatedEvent {
 
+  @Override
+  default String getEventName() {
+    return RelayStateUpdatedEvent.class.getSimpleName();
+  }
+
   Boolean isOn();
 
 }

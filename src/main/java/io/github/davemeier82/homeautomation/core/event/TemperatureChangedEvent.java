@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface TemperatureChangedEvent extends DevicePropertyEvent<Float>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return TemperatureChangedEvent.class.getSimpleName();
+  }
+
   Float getTemperatureInDegree();
 
 }

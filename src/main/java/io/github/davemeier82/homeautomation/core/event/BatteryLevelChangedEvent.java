@@ -18,5 +18,10 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface BatteryLevelChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return BatteryLevelChangedEvent.class.getSimpleName();
+  }
+
   Integer getBatteryLevelInPercent();
 }

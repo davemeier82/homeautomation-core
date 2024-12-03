@@ -18,6 +18,11 @@ package io.github.davemeier82.homeautomation.core.event;
 
 public interface RollerPositionChangedEvent extends DevicePropertyEvent<Integer>, DevicePropertyChangedEvent {
 
+  @Override
+  default String getEventName() {
+    return RollerPositionChangedEvent.class.getSimpleName();
+  }
+
   Integer getPositionInPercent();
 
 }

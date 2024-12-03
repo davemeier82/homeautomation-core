@@ -24,6 +24,8 @@ import java.util.Optional;
 
 public interface DevicePropertyEvent<T> {
 
+  String getEventName();
+
   /**
    * @return the device property id to which this event belongs to
    */
