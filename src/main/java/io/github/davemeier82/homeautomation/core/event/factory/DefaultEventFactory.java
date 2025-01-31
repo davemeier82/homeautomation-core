@@ -16,7 +16,6 @@
 
 package io.github.davemeier82.homeautomation.core.event.factory;
 
-import io.github.davemeier82.homeautomation.core.device.DeviceId;
 import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.device.property.RollerState;
@@ -42,7 +41,6 @@ import io.github.davemeier82.homeautomation.core.event.LightningDistanceUpdatedE
 import io.github.davemeier82.homeautomation.core.event.MotionChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
-import io.github.davemeier82.homeautomation.core.event.NewDeviceCreatedEvent;
 import io.github.davemeier82.homeautomation.core.event.NewDevicePropertyCreatedEvent;
 import io.github.davemeier82.homeautomation.core.event.PowerChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.PowerUpdatedEvent;
@@ -101,8 +99,7 @@ import io.github.davemeier82.homeautomation.core.event.defaults.DefaultLightning
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultMotionChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultMotionUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultMqttClientConnectedEvent;
-import io.github.davemeier82.homeautomation.core.event.defaults.DefaultNewDeviceCreatedEvent;
-import io.github.davemeier82.homeautomation.core.event.defaults.DefaultNewDeviceEvent;
+import io.github.davemeier82.homeautomation.core.event.defaults.DefaultNewDevicePropertyCreatedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultPowerChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultPowerUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.defaults.DefaultPressureChangedEvent;
@@ -281,10 +278,6 @@ public class DefaultEventFactory implements EventFactory {
     return new DefaultDimmingLevelUpdatedEvent(devicePropertyId, displayName, brightnessInPercent, previousValue);
   }
 
-  @Override
-  public NewDeviceCreatedEvent createNewDeviceCreatedEvent(DeviceId deviceId) {
-    return new DefaultNewDeviceCreatedEvent(deviceId);
-  }
 
   @Override
   public RollerStateChangedEvent createRollerStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<RollerState> state, DataWithTimestamp<RollerState> previousValue, String displayName
@@ -514,7 +507,7 @@ public class DefaultEventFactory implements EventFactory {
 
   @Override
   public NewDevicePropertyCreatedEvent createNewDevicePropertyCreatedEvent(DevicePropertyId devicePropertyId) {
-    return new DefaultNewDeviceEvent(devicePropertyId);
+    return new DefaultNewDevicePropertyCreatedEvent(devicePropertyId);
   }
 
   @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2021 the original author or authors.
+ * Copyright 2021-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,19 @@
 
 package io.github.davemeier82.homeautomation.core.event.defaults;
 
-import io.github.davemeier82.homeautomation.core.device.DeviceId;
-import io.github.davemeier82.homeautomation.core.event.NewDeviceCreatedEvent;
+import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
+import io.github.davemeier82.homeautomation.core.event.NewDevicePropertyCreatedEvent;
 
-public class DefaultNewDeviceCreatedEvent implements NewDeviceCreatedEvent {
+public class DefaultNewDevicePropertyCreatedEvent implements NewDevicePropertyCreatedEvent {
 
-  private final DeviceId deviceId;
+  private final DevicePropertyId devicePropertyId;
 
-  public DefaultNewDeviceCreatedEvent(DeviceId deviceId) {
-    this.deviceId = deviceId;
+  public DefaultNewDevicePropertyCreatedEvent(DevicePropertyId devicePropertyId) {
+    this.devicePropertyId = devicePropertyId;
   }
 
   @Override
-  public DeviceId getDeviceId() {
-    return deviceId;
+  public DevicePropertyId getDevicePropertyId() {
+    return devicePropertyId;
   }
 }

@@ -16,7 +16,6 @@
 
 package io.github.davemeier82.homeautomation.core.event.factory;
 
-import io.github.davemeier82.homeautomation.core.device.DeviceId;
 import io.github.davemeier82.homeautomation.core.device.property.AlarmState;
 import io.github.davemeier82.homeautomation.core.device.property.DevicePropertyId;
 import io.github.davemeier82.homeautomation.core.device.property.RollerState;
@@ -42,7 +41,6 @@ import io.github.davemeier82.homeautomation.core.event.LightningDistanceUpdatedE
 import io.github.davemeier82.homeautomation.core.event.MotionChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.MotionUpdatedEvent;
 import io.github.davemeier82.homeautomation.core.event.MqttClientConnectedEvent;
-import io.github.davemeier82.homeautomation.core.event.NewDeviceCreatedEvent;
 import io.github.davemeier82.homeautomation.core.event.NewDevicePropertyCreatedEvent;
 import io.github.davemeier82.homeautomation.core.event.PowerChangedEvent;
 import io.github.davemeier82.homeautomation.core.event.PowerUpdatedEvent;
@@ -147,8 +145,6 @@ public interface EventFactory {
                                                           DataWithTimestamp<Integer> previousValue,
                                                           String displayName
   );
-
-  NewDeviceCreatedEvent createNewDeviceCreatedEvent(DeviceId deviceId);
 
   RollerStateChangedEvent createRollerStateChangedEvent(DevicePropertyId devicePropertyId, DataWithTimestamp<RollerState> state, DataWithTimestamp<RollerState> previousValue, String displayName);
 
